@@ -21,6 +21,7 @@ typedef struct {
 
 int estVide(ELEMENT l);
 int elementLibre(ListeEntier *l);
+int elementLibre2(ListeEntier *l, int i);
 int estPleine(ListeEntier *l);
 ListeEntier createList(int taille);
 ListeEntier createListFromList(int values[], int taille);
@@ -33,6 +34,7 @@ void insertListe(ListeEntier* L, int values[], int taille);
 void supprimer(int k, ListeEntier *l);
 void compacterListe(ListeEntier *l);
 void compacterListeV2(ListeEntier *l);
+void compacterListeRecursif(ListeEntier *l, int i);
 
 
 #endif

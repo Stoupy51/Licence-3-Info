@@ -12,10 +12,15 @@ int estVide(ELEMENT l) {
 
 /**
  * Renvoie un index libre dans la liste
+ * Sa deuxième définition permet de commencer à partir d'un indice
 **/
 int elementLibre(ListeEntier *l) {
 	int i;
 	for (i=1; i <= l->Size && l->List[i].next != -1; i++);
+	return i;
+}
+int elementLibre2(ListeEntier *l, int i) {
+	for (; i <= l->Size && l->List[i].next != -1; i++);
 	return i;
 }
 
@@ -214,7 +219,7 @@ void supprimer(int k, ListeEntier *l) {
 void compacterListe(ListeEntier *l) {
 	int i, j, prePos;
 	for (i = 1, j = 2; i < l->Size; i++, j++) {
-		// Si l'index actuel est libre mais le prochain, alors le déplacer.
+		// Si l'index actuel est libre mais pas le prochain, alors le déplacer.
 		if (l->List[i].next == -1 && l->List[j].next != -1) {
 			Element e = l->List[i];
 			l->List[i] = l->List[j];
@@ -238,6 +243,31 @@ void compacterListeV2(ListeEntier *l) {
 	free(l->List);
 	l->List = newListe.List;
 }
+
+/**
+ * Compacte la liste en déplaçant les cases du tableau livre vers la fin de celui-ci
+ * de manière récursive.
+**/
+void compacterListeRecursif(ListeEntier *l, int i) {
+	int j = elementLibre2(l,i-1);
+	// Si l'index actuel est libre mais pas le prochain, alors le déplacer.
+	if (j == i-1 && l->List[i].next != -1 && l->List[j].next == -1) {
+		Element e = l->List[i];
+		l->List[i] = l->List[j];
+		l->List[j] = e;
+		// Retrouver le précedeur de l'index à déplacer
+		int prePos;
+		for (prePos = 0; l->List[prePos].next != i; prePos = l->List[prePos].next);
+		l->List[prePos].next = j;
+	}
+	if (i < l->Size) {
+		compacterListeRecursif(l, i+1);
+	}
+}
+
+
+
+
 
 
 
