@@ -1,5 +1,6 @@
 
-#include "ListeEntier.c"
+#include "ListeEntier.h"
+#include <stdio.h>
 
 int main() {
 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
