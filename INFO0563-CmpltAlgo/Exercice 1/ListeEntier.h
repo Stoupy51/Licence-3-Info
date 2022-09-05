@@ -30,7 +30,7 @@ void printListValues(ListeEntier *l);
 void printListStruct(ListeEntier *l);
 int chercher(int x, ELEMENT l, int *posX, int *prePos);
 void insert(int x, ListeEntier *l);
-void insertListe(ListeEntier* L, int values[], int taille);
+void insertListe(ListeEntier* l, int values[], int taille);
 void supprimer(int k, ListeEntier *l);
 void compacterListe(ListeEntier *l);
 void compacterListeV2(ListeEntier *l);

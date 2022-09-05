@@ -41,9 +41,8 @@ ListeEntier createList(int taille) {
 	list[0].next = 0;
 	list[0].value = 0;
 	list[0].occurences = 0;
-	for (i = 1; i <= taille; i++) {
+	for (i = 1; i <= taille; i++)
 		list[i].value = list[i].occurences = list[i].next = -1;
-	}
 	L.List = list;
 	L.Size = taille;
 	return L;
@@ -56,9 +55,8 @@ ListeEntier createList(int taille) {
 ListeEntier createListFromList(int values[], int taille) {
 	ListeEntier L = createList(taille);
 	int i;
-	for (i = 0; i < taille; i++) {
+	for (i = 0; i < taille; i++)
 		insert(values[i], &L);
-	}
 	return L;
 }
 
@@ -90,9 +88,8 @@ void printListValues(ListeEntier *l) {
 	}
 	int i;
 	printf("\nLa liste contient les valeurs suivantes : ");
-	for (i = l->List[0].next; l->List[i].next; i = l->List[i].next) {
+	for (i = l->List[0].next; l->List[i].next; i = l->List[i].next)
 		printf("%d (x%d), ", l->List[i].value, l->List[i].occurences);
-	}
 	printf("%d (x%d)", l->List[i].value, l->List[i].occurences);
 }
 
@@ -102,19 +99,16 @@ void printListValues(ListeEntier *l) {
 void printListStruct(ListeEntier *l) {
 	int i;
 	printf("\nSize : %d\n[",l->Size);
-	for (i = 0; i < l->Size; i++) {
+	for (i = 0; i < l->Size; i++)
 		printf("%d, ", l->List[i].value);
-	}
 	printf("%d] Values\n", l->List[i].value);
 	printf("[");
-	for (i = 0; i < l->Size; i++) {
+	for (i = 0; i < l->Size; i++)
 		printf("%d, ", l->List[i].occurences);
-	}
 	printf("%d] Occurences\n", l->List[i].occurences);
 	printf("[");
-	for (i = 0; i < l->Size; i++) {
+	for (i = 0; i < l->Size; i++)
 		printf("%d, ", l->List[i].next);
-	}
 	printf("%d] Next Index\n", l->List[i].next);
 }
 
@@ -126,9 +120,8 @@ void printListStruct(ListeEntier *l) {
 int chercher(int x, ELEMENT l, int *posX, int *prePos) {
 	*posX = -1;
 	*prePos = 0;
-	if (estVide(l)) {
+	if (estVide(l))
 		return 0;
-	}
 	int i;
 	for (i = 0; x > l[i].value && l[i].next; *prePos = i, i = l[i].next) {
 		if (x == l[i].value) {
@@ -140,9 +133,8 @@ int chercher(int x, ELEMENT l, int *posX, int *prePos) {
 		*posX = i;
 		return 1;
 	}
-	if (x > l[i].value) {
+	if (x > l[i].value)
 		for (; l[*prePos].next != 0; *prePos = l[*prePos].next);
-	}
 	return 0;
 }
 
@@ -157,21 +149,16 @@ void insert(int x, ListeEntier *l) {
 	int posX, prePos;
 	// Augmenter l'occurence si la valeur est trouvée
 	if (chercher(x, l->List, &posX, &prePos)) {
-		printf("\nLe nombre d'occurences de la valeur %d a bien ete augmentee", x);
+		//printf("\nLe nombre d'occurences de la valeur %d a bien ete augmentee", x);
 		l->List[posX].occurences++;
 		return;
 	}
 	// Sinon,
 	posX = elementLibre(l);
-	// Si la liste est pas pleine, l'aggrandir
-	if (posX > l->Size) {
-		printf("\nLe tableau est plein, il a ete aggrandi pour accueillir la valeur");
+	// Aggrandir la liste est si elle est pleine
+	if (posX > l->Size)
 		(*l) = increaseListLength(l);
-	}
-	else {
-		printf("\nLa valeur %d a bien ete ajoutee a la liste", x);
-	}
-	// Ajouter la valeur dans les deux cas
+	// Ajouter la valeur
 	l->List[posX].value = x;
 	l->List[posX].occurences = 1;
 	l->List[posX].next = l->List[prePos].next;
@@ -181,11 +168,10 @@ void insert(int x, ListeEntier *l) {
 /**
  * Permet d'insérer plusieurs valeurs d'un seul coup
 **/
-void insertListe(ListeEntier* L, int values[], int taille) {
+void insertListe(ListeEntier* l, int values[], int taille) {
 	int i;
-	for (i = 0; i < taille; i++) {
-		insert(values[i], L);
-	}
+	for (i = 0; i < taille; i++)
+		insert(values[i], l);
 }
 
 
@@ -198,9 +184,8 @@ void supprimer(int k, ListeEntier *l) {
 	// Si la position est trouvée :
 	if (k == 0) {
 		// Réduire l'occurence si possible
-		if (l->List[i].occurences > 1) {
+		if (l->List[i].occurences > 1)
 			l->List[i].occurences--;
-		}
 		// Sinon, supprimer l'élément
 		else {
 			l->List[prePos].next = l->List[i].next;
@@ -208,9 +193,8 @@ void supprimer(int k, ListeEntier *l) {
 		}
 	}
 	// Si la position n'est pas trouvée, afficher un message d'erreur
-	else {
+	else
 		printf("\nSuppression impossible, l'indice est en dehors de la liste");
-	}
 }
 
 /**
@@ -260,9 +244,8 @@ void compacterListeRecursif(ListeEntier *l, int i) {
 		for (prePos = 0; l->List[prePos].next != i; prePos = l->List[prePos].next);
 		l->List[prePos].next = j;
 	}
-	if (i < l->Size) {
+	if (i < l->Size)
 		compacterListeRecursif(l, i+1);
-	}
 }
 
 

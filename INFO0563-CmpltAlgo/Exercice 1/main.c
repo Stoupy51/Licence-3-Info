@@ -49,6 +49,8 @@ int main() {
 	insertListe(&Liste, values2, 4);
 	printListValues(&Liste);
 	printListStruct(&Liste);
+	compacterListeV2(&Liste);
+	printListStruct(&Liste);
 
 	printf("\nFin de la fonction main()\n");
 	return 0;
