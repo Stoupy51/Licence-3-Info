@@ -49,7 +49,7 @@ void delete(MONOME *m, unsigned int d) {
 		free(ex);
 	}
 	else
-		printf("\nAucun Monome de degre %d a ete trouve",d);
+		fprintf(stderr,"\nAucun Monome de degre %d a ete trouve",d);
 }
 
 
@@ -87,11 +87,11 @@ void add(MONOME *m, MONOME a) {
  * Affiche l'entièreté du Polynome
 **/
 void printPolynome(POLYNOME p) {
-	printf("\nPolygone : ");
-	printf("%fx^%d",p->c,p->d);
+	fprintf(stderr,"\nPolygone : ");
+	fprintf(stderr,"%fx^%d",p->c,p->d);
 	MONOME next;
 	for (next = p->m; !isNull(next); next = next->m)
-		printf(", %fx^%d",next->c,next->d);
+		fprintf(stderr,", %fx^%d",next->c,next->d);
 }
 
 

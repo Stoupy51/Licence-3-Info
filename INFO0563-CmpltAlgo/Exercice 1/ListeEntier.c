@@ -83,14 +83,14 @@ ListeEntier increaseListLength(ListeEntier *l) {
 **/
 void printListValues(ListeEntier *l) {
 	if (estVide(l->List)) {
-		printf("\nLa liste est vide");
+		fprintf(stderr,"\nLa liste est vide");
 		return;
 	}
 	int i;
-	printf("\nLa liste contient les valeurs suivantes : ");
+	fprintf(stderr,"\nLa liste contient les valeurs suivantes : ");
 	for (i = l->List[0].next; l->List[i].next; i = l->List[i].next)
-		printf("%d (x%d), ", l->List[i].value, l->List[i].occurences);
-	printf("%d (x%d)", l->List[i].value, l->List[i].occurences);
+		fprintf(stderr,"%d (x%d), ", l->List[i].value, l->List[i].occurences);
+	fprintf(stderr,"%d (x%d)", l->List[i].value, l->List[i].occurences);
 }
 
 /**
@@ -98,18 +98,18 @@ void printListValues(ListeEntier *l) {
 **/
 void printListStruct(ListeEntier *l) {
 	int i;
-	printf("\nSize : %d\n[",l->Size);
+	fprintf(stderr,"\nSize : %d\n[",l->Size);
 	for (i = 0; i < l->Size; i++)
-		printf("%d, ", l->List[i].value);
-	printf("%d] Values\n", l->List[i].value);
-	printf("[");
+		fprintf(stderr,"%d, ", l->List[i].value);
+	fprintf(stderr,"%d] Values\n", l->List[i].value);
+	fprintf(stderr,"[");
 	for (i = 0; i < l->Size; i++)
-		printf("%d, ", l->List[i].occurences);
-	printf("%d] Occurences\n", l->List[i].occurences);
-	printf("[");
+		fprintf(stderr,"%d, ", l->List[i].occurences);
+	fprintf(stderr,"%d] Occurences\n", l->List[i].occurences);
+	fprintf(stderr,"[");
 	for (i = 0; i < l->Size; i++)
-		printf("%d, ", l->List[i].next);
-	printf("%d] Next Index\n", l->List[i].next);
+		fprintf(stderr,"%d, ", l->List[i].next);
+	fprintf(stderr,"%d] Next Index\n", l->List[i].next);
 }
 
 /**
@@ -149,7 +149,7 @@ void insert(int x, ListeEntier *l) {
 	int posX, prePos;
 	// Augmenter l'occurence si la valeur est trouvée
 	if (chercher(x, l->List, &posX, &prePos)) {
-		//printf("\nLe nombre d'occurences de la valeur %d a bien ete augmentee", x);
+		//fprintf(stderr,"\nLe nombre d'occurences de la valeur %d a bien ete augmentee", x);
 		l->List[posX].occurences++;
 		return;
 	}
@@ -194,7 +194,7 @@ void supprimer(int k, ListeEntier *l) {
 	}
 	// Si la position n'est pas trouvée, afficher un message d'erreur
 	else
-		printf("\nSuppression impossible, l'indice est en dehors de la liste");
+		fprintf(stderr,"\nSuppression impossible, l'indice est en dehors de la liste");
 }
 
 /**
