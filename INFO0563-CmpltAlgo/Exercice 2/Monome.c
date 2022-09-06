@@ -25,6 +25,7 @@ MONOME create(unsigned int d, double c) {
 	m->d = d;
 	m->c = c;
 	m->m = init();
+	return m;
 }
 
 /**
@@ -41,7 +42,7 @@ MONOME head(MONOME *m) {
 **/
 void delete(MONOME *m, unsigned int d) {
 	MONOME next;
-	for (next = (*m); !isNull(next->m) && next->m->d != d; next = next->m);
+	for (next = (*m); !isNull(next) && next->m->d != d; next = next->m);
 	if (next->m->d == d) {
 		MONOME ex = next->m;
 		next->m = ex->m;
@@ -85,12 +86,12 @@ void add(MONOME *m, MONOME a) {
 /**
  * Affiche l'entièreté du Polynome
 **/
-void printPolygone(POLYNOME *p) {
+void printPolynome(POLYNOME p) {
 	printf("\nPolygone : ");
+	printf("%fx^%d",p->c,p->d);
 	MONOME next;
-	for (next = (*p); !isNull(next->m); next = next->m)
-		printf("%fx^%d, ",next->c,next->d);
-	printf("%fx^%d",next->c,next->d);
+	for (next = p->m; !isNull(next); next = next->m)
+		printf(", %fx^%d",next->c,next->d);
 }
 
 

@@ -8,7 +8,7 @@ int main() {
 	printf("Debut de la fonction main()");
 
 	POLYNOME p = create(4,7);
-	printPolygone(&p);
+	printPolynome(p);
 
 
 
