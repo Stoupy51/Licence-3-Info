@@ -49,7 +49,7 @@ void delete(MONOME *m, unsigned int d) {
 		free(ex);
 	}
 	else
-		fprintf(stderr,"\nAucun Monome de degre %d a ete trouve",d);
+		fprintf(stderr,"\nAucun Monome de degre %d a ete trouve.",d);
 }
 
 
@@ -57,30 +57,34 @@ void delete(MONOME *m, unsigned int d) {
  * Ajoute un Monome dans le Polygone
 **/
 void add(MONOME *m, MONOME a) {
+	fprintf(stderr,"\nici 1");
 	if (isNull(*m)) {
 		(*m) = a;
 		return;
 	}
-	MONOME t = head(m);
-	// Si le degré de a est supérieur eu degré de d,
+	fprintf(stderr,"\na=%d, m=%d",a->d,(*m)->d);
+	// Si le degré de a est supérieur au degré de m,
 	// alors insérer dans la chaîne tout en inversant
 	if (a->d > (*m)->d) {
-		a->m = t;
-		(*m)->m = a;
+		a->m = (*m);
+		(*m) = a;
+		return;
 	}
 	// Sinon
-	else {
-		// Si le degré de a est == au degré de la tête,
-		// alors augmenter le coefficient et supprimer
-		// la tête si son coefficient est égale à 0
-		if (a->d == t->d) {
-			if (!(t->c += a->c)) {
-				delete(m, t->d);
-				return;
-			}
+	// Si le degré de a est == au degré de la tête,
+	// alors augmenter le coefficient et supprimer
+	// la tête si son coefficient est égale à 0
+	MONOME t = head(m);
+	if (a->d == t->d) {
+		if (!(t->c += a->c)) {
+			delete(m, t->d);
+			return;
 		}
-		(*m) = t;
 	}
+	// Sinon, si le degré est inférieur, chercher une place dans la chaîne -- TODO
+	else
+		add(m, a);
+	(*m) = t;
 }
 
 /**

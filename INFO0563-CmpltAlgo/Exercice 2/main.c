@@ -12,7 +12,10 @@ int main() {
 	printPolynome(p);
 
 	fprintf(stderr,"\n\n-------------Add--------------\n");
-	add(&p, create(5,3));
+	//add(&p, create(5,3));
+	//add(&p, create(5,3));
+	//add(&p, create(7,3));
+	add(&p, create(2,3));
 	printPolynome(p);
 
 
