@@ -5,11 +5,12 @@
 /**
  * Structure d'un Monome
 **/
-typedef struct monome {
+typedef struct monome Monome, *MONOME, *POLYNOME;
+struct monome {
 	unsigned int	d; // Degré
 	double			c; // Coefficient
 	MONOME			m; // Monome suivant
-} Monome, *MONOME, *POLYNOME;
+};
 
 int isNull(MONOME m);
 void add(MONOME *m, MONOME a);
