@@ -13,10 +13,12 @@ struct monome {
 };
 
 int isNull(MONOME m);
-void add(MONOME *m, MONOME a);
 MONOME init();
 MONOME create(unsigned int d, double c);
 MONOME head(MONOME *m);
+void delete(MONOME *m, unsigned int d);
+void add(MONOME *m, MONOME a);
+void printPolygone(POLYNOME *p);
 
 
 #endif
