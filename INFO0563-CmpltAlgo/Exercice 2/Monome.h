@@ -21,8 +21,8 @@ void deleteRecursif(MONOME *m, unsigned int d);
 void add(MONOME *m, MONOME a);
 void print(POLYNOME m);
 POLYNOME copyPolynome(POLYNOME p);
-POLYNOME fusion(POLYNOME p, POLYNOME a);
-POLYNOME multiply(POLYNOME p, POLYNOME a);
+POLYNOME fusion(POLYNOME a, POLYNOME b);
+POLYNOME multiply(POLYNOME a, POLYNOME b);
 
 
 #endif

@@ -129,8 +129,8 @@ POLYNOME copyPolynome(POLYNOME p) {
 /**
  * @return Résultat de la fusion des deux polynomes
 **/
-POLYNOME fusion(POLYNOME p, POLYNOME a) {
-	POLYNOME p2 = copyPolynome(p);
+POLYNOME fusion(POLYNOME a, POLYNOME b) {
+	POLYNOME p2 = copyPolynome(a);
 	MONOME next;
 	for (next = a; !isNull(next); next = next->m)
 		add(&p2, copy(next));
@@ -140,7 +140,7 @@ POLYNOME fusion(POLYNOME p, POLYNOME a) {
 /**
  * @return Résultat de la multiplication de deux polynomes
 **/
-POLYNOME multiply(POLYNOME p, POLYNOME a) {
+POLYNOME multiply(POLYNOME a, POLYNOME b) {
 	POLYNOME p2 = init();
 
 	return p2;
