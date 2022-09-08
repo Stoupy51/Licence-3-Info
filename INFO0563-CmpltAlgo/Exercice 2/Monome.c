@@ -103,7 +103,7 @@ void add(MONOME *m, MONOME a) {
 /**
  * Ajoute un Polynome dans le premier Polynome passé en paramètre
 **/
-void addPolynome(POLYNOME *p, POLYNOME a) {
+void fusion(POLYNOME *p, POLYNOME a) {
 	MONOME next;
 	for (next = a; !isNull(next); next = next->m)
 		add(p, copy(next));

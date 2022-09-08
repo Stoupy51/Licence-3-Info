@@ -20,7 +20,7 @@ int main() {
 
 	fprintf(stderr,"\n\n----------Add Polynome--------\n");
 	POLYNOME p2 = init();
-	addPolynome(&p2, p);
+	fusion(&p2, p);
 	printPolynome(p);
 	printPolynome(p2);
 
