@@ -89,7 +89,7 @@ void add(MONOME *m, MONOME a) {
 	// alors augmenter le coefficient et supprimer
 	// la tête si son coefficient est égale à 0
 	if ((*m)->d == a->d) {
-		if !((*m)->c += a->c)) {
+		if (!((*m)->c += a->c)) {
 			delete(m, (*m)->d);
 			return;
 		}
