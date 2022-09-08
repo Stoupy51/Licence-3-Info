@@ -15,10 +15,11 @@ struct monome {
 int isNull(MONOME m);
 MONOME init();
 MONOME create(unsigned int d, double c);
-MONOME head(MONOME *m);
-void delete(MONOME m, unsigned int d);
-void deleteRecursif(MONOME m, unsigned int d);
+MONOME copy(MONOME m);
+void delete(MONOME *m, unsigned int d);
+void deleteRecursif(MONOME *m, unsigned int d);
 void add(MONOME *m, MONOME a);
+void addPolynome(POLYNOME *p, POLYNOME a);
 void printPolynome(MONOME m);
 
 

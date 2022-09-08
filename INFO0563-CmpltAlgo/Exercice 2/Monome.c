@@ -29,20 +29,18 @@ MONOME create(unsigned int d, double c) {
 }
 
 /**
- * Renvoie la tête du Monome et "s'approndit" dans la chaîne
+ * Renvoie une copie detachée du Monome
 **/
-MONOME head(MONOME *m) {
-	MONOME head = (*m);
-	(*m) = (*m)->m;
-	return head;
+MONOME copy(MONOME m) {
+	return create(m->d,m->c);
 }
 
 /**
- * Supprime un Monome dans la chaîne du Polygone
+ * Supprime un Monome dans la chaîne du Polynome
 **/
-void delete(MONOME m, unsigned int d) {
+void delete(MONOME *m, unsigned int d) {
 	MONOME next;
-	for (next = m; !isNull(next) && next->m->d != d; next = next->m);
+	for (next = (*m); !isNull(next) && next->m->d != d; next = next->m);
 	if (next->m->d == d) {
 		MONOME ex = next->m;
 		next->m = ex->m;
@@ -53,34 +51,32 @@ void delete(MONOME m, unsigned int d) {
 }
 
 /**
- * Supprime un Monome dans la chaîne du Polygone de manière récursive
+ * Supprime un Monome dans la chaîne du Polynome de manière récursive
 **/
-void deleteRecursif(MONOME m, unsigned int d) {
-	if (isNull(m)) {
+void deleteRecursif(MONOME *m, unsigned int d) {
+	if (isNull(*m)) {
 		fprintf(stderr,"\nAucun Monome de degre %d a ete trouve.",d);
 		return;
 	}
-	if (d == m->d) {
-		MONOME ex = m;
-		m = m->m;
+	if (d == (*m)->d) {
+		MONOME ex = (*m);
+		(*m) = (*m)->m;
 		free(ex);
 		return;
 	}
-	if (d < m->d)
-		deleteRecursif(m->m, d);
+	if (d < (*m)->d)
+		deleteRecursif(&(*m)->m, d);
 }
 
 
 /**
- * Ajoute un Monome dans le Polygone
+ * Ajoute un Monome dans le Polynome de manière récursive
 **/
 void add(MONOME *m, MONOME a) {
-	fprintf(stderr,"\nici 1");
 	if (isNull(*m)) {
 		(*m) = a;
 		return;
 	}
-	fprintf(stderr,"\na=%d, m=%d",a->d,(*m)->d);
 	// Si le degré de a est supérieur au degré de m,
 	// alors insérer dans la chaîne tout en inversant
 	if (a->d > (*m)->d) {
@@ -92,25 +88,33 @@ void add(MONOME *m, MONOME a) {
 	// Si le degré de a est == au degré de la tête,
 	// alors augmenter le coefficient et supprimer
 	// la tête si son coefficient est égale à 0
-	MONOME t = head(m);
-	if (a->d == t->d) {
-		if (!(t->c += a->c)) {
-			delete(*m, t->d);
+	if ((*m)->d == a->d) {
+		if !((*m)->c += a->c)) {
+			delete(m, (*m)->d);
 			return;
 		}
 	}
 	// Sinon, si le degré est inférieur,
 	// chercher une place dans la chaîne -- TODO
 	else
-		add(m, a);
-	(*m) = t;
+		add(&(*m)->m, a);
 }
+
+/**
+ * Ajoute un Polynome dans le premier Polynome passé en paramètre
+**/
+void addPolynome(POLYNOME *p, POLYNOME a) {
+	MONOME next;
+	for (next = a; !isNull(next); next = next->m)
+		add(p, copy(next));
+}
+
 
 /**
  * Affiche l'entièreté du Polynome
 **/
 void printPolynome(POLYNOME p) {
-	fprintf(stderr,"\nPolygone : ");
+	fprintf(stderr,"\nPolynome : ");
 	fprintf(stderr,"%fx^%d",p->c,p->d);
 	MONOME next;
 	for (next = p->m; !isNull(next); next = next->m)
