@@ -13,6 +13,8 @@ struct monome {
 };
 
 int isNull(MONOME m);
+int abs_mul(MONOME m);
+int neutre(MONOME m);
 MONOME init();
 MONOME create(unsigned int d, double c);
 MONOME copy(MONOME m);
@@ -23,6 +25,7 @@ void print(POLYNOME m);
 POLYNOME copyPolynome(POLYNOME p);
 POLYNOME fusion(POLYNOME a, POLYNOME b);
 POLYNOME multiply(POLYNOME a, POLYNOME b);
+POLYNOME divide(POLYNOME a, POLYNOME b);
 
 
 #endif

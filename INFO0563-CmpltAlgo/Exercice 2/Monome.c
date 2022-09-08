@@ -4,11 +4,26 @@
 #include <stdio.h>
 
 /**
- * Permet de vérifier si la Monome est null
+ * @return Vrai si le Monome est null
 **/
 int isNull(MONOME m) {
 	return m == (MONOME)NULL;
 }
+
+/**
+ * @return Vrai si le coefficient et le degré du Monome sont à 0
+**/
+int abs_mul(MONOME m) {
+	return (!m->c && !m->d);
+}
+
+/**
+ * @return Vrai si le degré du Monome sont à 0
+**/
+int neutre(MONOME m) {
+	return (!m->d && m->c);
+}
+
 
 /**
  * @return Monome initialisé à null
@@ -113,7 +128,11 @@ void print(POLYNOME p) {
 		fprintf(stderr,", %fx^%d",next->c,next->d);
 }
 
+
+///////////////////////////////////////////////
 ////////////////// POLYNOMES //////////////////
+///////////////////////////////////////////////
+
 
 /**
  * @return Copie detachée du Polynome
@@ -130,22 +149,40 @@ POLYNOME copyPolynome(POLYNOME p) {
  * @return Résultat de la fusion des deux polynomes
 **/
 POLYNOME fusion(POLYNOME a, POLYNOME b) {
-	POLYNOME p2 = copyPolynome(a);
+	POLYNOME p = copyPolynome(a);
 	MONOME next;
 	for (next = a; !isNull(next); next = next->m)
-		add(&p2, copy(next));
-	return p2;
+		add(&p, copy(next));
+	return p;
 }
 
 /**
  * @return Résultat de la multiplication de deux polynomes
 **/
 POLYNOME multiply(POLYNOME a, POLYNOME b) {
-	POLYNOME p2 = init();
-
-	return p2;
+	POLYNOME p = init();
+	if (isNull(a)) return a;
+	if (isNull(b)) return b;
+	if (abs_mul(a)) return a;
+	if (abs_mul(b)) return b;
+	if (neutre(a)) return b;
+	if (neutre(b)) return a;
+	MONOME x, y;
+	for (x = a; !isNull(x); x = x->m) {
+		for (y = b; !isNull(y); y = y->m) {
+			add(&p, create(x->d + y->d, x->c * y->c));
+		}
+	}
+	return p;
 }
 
+/**
+ * @return Résultat de la division de deux polynomes
+**/
+POLYNOME divide(POLYNOME a, POLYNOME b) {
+	POLYNOME p = init();
+	return p;
+}
 
 
 
