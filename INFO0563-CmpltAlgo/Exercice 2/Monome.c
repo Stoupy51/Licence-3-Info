@@ -191,10 +191,8 @@ POLYNOME divide(POLYNOME a, POLYNOME b) {
 	for (x = p; !isNull(x); x = x->m) {
 		for (y = b; !isNull(y); y = y->m) {
 			x->c /= y->c;
-			if (x->d != y->d && x->d != 0)
+			if (x->d != y->d)
 				x->d -= y->d;
-			else
-				x->d = 0;
 		}
 	}
 	return p;
