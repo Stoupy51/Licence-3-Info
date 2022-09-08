@@ -151,7 +151,7 @@ POLYNOME copyPolynome(POLYNOME p) {
 POLYNOME fusion(POLYNOME a, POLYNOME b) {
 	POLYNOME p = copyPolynome(a);
 	MONOME next;
-	for (next = a; !isNull(next); next = next->m)
+	for (next = b; !isNull(next); next = next->m)
 		add(&p, copy(next));
 	return p;
 }
@@ -191,8 +191,7 @@ POLYNOME divide(POLYNOME a, POLYNOME b) {
 	for (x = p; !isNull(x); x = x->m) {
 		for (y = b; !isNull(y); y = y->m) {
 			x->c /= y->c;
-			if (x->d != y->d)
-				x->d -= y->d;
+			x->d -= y->d;
 		}
 	}
 	return p;
