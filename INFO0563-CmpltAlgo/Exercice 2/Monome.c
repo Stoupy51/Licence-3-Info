@@ -160,13 +160,13 @@ POLYNOME fusion(POLYNOME a, POLYNOME b) {
  * @return Résultat de la multiplication de deux polynomes
 **/
 POLYNOME multiply(POLYNOME a, POLYNOME b) {
-	POLYNOME p = init();
 	if (isNull(a)) return a;
 	if (isNull(b)) return b;
 	if (abs_mul(a)) return a;
 	if (abs_mul(b)) return b;
 	if (neutre(a)) return b;
 	if (neutre(b)) return a;
+	POLYNOME p = init();
 	MONOME x, y;
 	for (x = a; !isNull(x); x = x->m) {
 		for (y = b; !isNull(y); y = y->m) {
@@ -180,7 +180,23 @@ POLYNOME multiply(POLYNOME a, POLYNOME b) {
  * @return Résultat de la division de deux polynomes
 **/
 POLYNOME divide(POLYNOME a, POLYNOME b) {
-	POLYNOME p = init();
+	if (isNull(a)) return a;
+	if (isNull(b)) return b;
+	if (abs_mul(a)) return a;
+	if (abs_mul(b)) return b;
+	if (neutre(a)) return b;
+	if (neutre(b)) return a;
+	POLYNOME p = copyPolynome(a);
+	MONOME x, y;
+	for (x = p; !isNull(x); x = x->m) {
+		for (y = b; !isNull(y); y = y->m) {
+			x->c /= y->c;
+			if (x->d != y->d && x->d != 0)
+				x->d -= y->d;
+			else
+				x->d = 0;
+		}
+	}
 	return p;
 }
 
