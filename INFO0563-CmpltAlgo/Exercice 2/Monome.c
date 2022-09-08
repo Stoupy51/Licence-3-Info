@@ -40,9 +40,9 @@ MONOME head(MONOME *m) {
 /**
  * Supprime un Monome dans la chaîne du Polygone
 **/
-void delete(MONOME *m, unsigned int d) {
+void delete(MONOME m, unsigned int d) {
 	MONOME next;
-	for (next = (*m); !isNull(next) && next->m->d != d; next = next->m);
+	for (next = m; !isNull(next) && next->m->d != d; next = next->m);
 	if (next->m->d == d) {
 		MONOME ex = next->m;
 		next->m = ex->m;
@@ -50,6 +50,24 @@ void delete(MONOME *m, unsigned int d) {
 	}
 	else
 		fprintf(stderr,"\nAucun Monome de degre %d a ete trouve.",d);
+}
+
+/**
+ * Supprime un Monome dans la chaîne du Polygone de manière récursive
+**/
+void deleteRecursif(MONOME m, unsigned int d) {
+	if (isNull(m)) {
+		fprintf(stderr,"\nAucun Monome de degre %d a ete trouve.",d);
+		return;
+	}
+	if (d == m->d) {
+		MONOME ex = m;
+		m = m->m;
+		free(ex);
+		return;
+	}
+	if (d < m->d)
+		deleteRecursif(m->m, d);
 }
 
 
@@ -77,11 +95,12 @@ void add(MONOME *m, MONOME a) {
 	MONOME t = head(m);
 	if (a->d == t->d) {
 		if (!(t->c += a->c)) {
-			delete(m, t->d);
+			delete(*m, t->d);
 			return;
 		}
 	}
-	// Sinon, si le degré est inférieur, chercher une place dans la chaîne -- TODO
+	// Sinon, si le degré est inférieur,
+	// chercher une place dans la chaîne -- TODO
 	else
 		add(m, a);
 	(*m) = t;
