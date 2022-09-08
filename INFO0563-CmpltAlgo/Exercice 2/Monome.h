@@ -19,9 +19,10 @@ MONOME copy(MONOME m);
 void delete(MONOME *m, unsigned int d);
 void deleteRecursif(MONOME *m, unsigned int d);
 void add(MONOME *m, MONOME a);
-void fusion(POLYNOME *p, POLYNOME a);
-void multiply(POLYNOME *p, POLYNOME a);
-void printPolynome(MONOME m);
+void print(POLYNOME m);
+POLYNOME copyPolynome(POLYNOME p);
+POLYNOME fusion(POLYNOME p, POLYNOME a);
+POLYNOME multiply(POLYNOME p, POLYNOME a);
 
 
 #endif

@@ -9,20 +9,23 @@ int main() {
 
 	fprintf(stderr,"\n\n--------Create & Print--------\n");
 	POLYNOME p = create(4,7);
-	printPolynome(p);
+	print(p);
 
 	fprintf(stderr,"\n\n-------------Add--------------\n");
 	add(&p, create(5,3));
 	add(&p, create(5,3));
 	add(&p, create(7,3));
 	add(&p, create(2,3));
-	printPolynome(p);
+	print(p);
 
 	fprintf(stderr,"\n\n----------Add Polynome--------\n");
-	POLYNOME p2 = init();
-	fusion(&p2, p);
-	printPolynome(p);
-	printPolynome(p2);
+	POLYNOME p2 = fusion(p, p);
+	print(p);
+	print(p2);
+
+	fprintf(stderr,"\n\n----------Multiply Polynome--------\n");
+	POLYNOME p3 = multiply(p, p2);
+	print(p3);
 
 	fprintf(stderr,"\nFin de la fonction main()\n");
 	return 0;

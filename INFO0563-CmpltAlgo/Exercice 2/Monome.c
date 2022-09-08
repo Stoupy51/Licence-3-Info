@@ -11,7 +11,7 @@ int isNull(MONOME m) {
 }
 
 /**
- * Renvoie un Monome initialisé à null
+ * @return Monome initialisé à null
 **/
 MONOME init() {
 	return (MONOME)NULL;
@@ -29,7 +29,7 @@ MONOME create(unsigned int d, double c) {
 }
 
 /**
- * Renvoie une copie detachée du Monome
+ * @return Copie detachée du Monome
 **/
 MONOME copy(MONOME m) {
 	return create(m->d,m->c);
@@ -101,19 +101,11 @@ void add(MONOME *m, MONOME a) {
 }
 
 /**
- * Ajoute un Polynome dans le premier Polynome passé en paramètre
-**/
-void fusion(POLYNOME *p, POLYNOME a) {
-	MONOME next;
-	for (next = a; !isNull(next); next = next->m)
-		add(p, copy(next));
-}
-
-
-/**
  * Affiche l'entièreté du Polynome
 **/
-void printPolynome(POLYNOME p) {
+void print(POLYNOME p) {
+	if (isNull(p))
+		return;
 	fprintf(stderr,"\nPolynome : ");
 	fprintf(stderr,"%fx^%d",p->c,p->d);
 	MONOME next;
@@ -121,6 +113,38 @@ void printPolynome(POLYNOME p) {
 		fprintf(stderr,", %fx^%d",next->c,next->d);
 }
 
+////////////////// POLYNOMES //////////////////
+
+/**
+ * @return Copie detachée du Polynome
+**/
+POLYNOME copyPolynome(POLYNOME p) {
+	POLYNOME p2 = init();
+	MONOME next;
+	for (next = p; !isNull(next); next = next->m)
+		add(&p2, copy(next));
+	return p2;
+}
+
+/**
+ * @return Résultat de la fusion des deux polynomes
+**/
+POLYNOME fusion(POLYNOME p, POLYNOME a) {
+	POLYNOME p2 = copyPolynome(p);
+	MONOME next;
+	for (next = a; !isNull(next); next = next->m)
+		add(&p2, copy(next));
+	return p2;
+}
+
+/**
+ * @return Résultat de la multiplication de deux polynomes
+**/
+POLYNOME multiply(POLYNOME p, POLYNOME a) {
+	POLYNOME p2 = init();
+
+	return p2;
+}
 
 
 
