@@ -72,6 +72,12 @@ MONOME negativeCopy(MONOME m) {
  * Supprime un Monome dans la chaîne du Polynome
 **/
 void delete(MONOME *m, unsigned int d) {
+	if (!isNull(*m) && (*m)->d == d) {
+		MONOME ex = (*m);
+		(*m) = ex->m;
+		free(ex);
+	}
+
 	MONOME next;
 	for (next = (*m); !isNull(next) && next->d != d; next = next->m);
 	if (!isNull(next) && next->d == d) {
@@ -122,7 +128,9 @@ void add(MONOME *m, MONOME a) {
 	// la tête si son coefficient est égale à 0
 	if ((*m)->d == a->d) {
 		if (!((*m)->c += a->c)) {
-			delete(m, (*m)->d);
+			fprintf(stderr,"\ndelete : %f & %d",(*m)->c, (*m)->d);
+			print(*m);
+			delete(*m, (*m)->d);
 			return;
 		}
 	}
@@ -194,6 +202,10 @@ POLYNOME sub(POLYNOME a, POLYNOME b) {
 	POLYNOME p = copyPolynome(a);
 	MONOME next;
 	for (next = b; !isNull(next); next = next->m) {
+		print(p);
+		print(copy(next));
+		fprintf(stderr,"\nnegative copy : ");
+		print(negativeCopy(next));
 		add(&p, negativeCopy(next));
 	}
 	return p;
