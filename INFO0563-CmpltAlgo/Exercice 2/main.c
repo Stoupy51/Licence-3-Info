@@ -28,26 +28,27 @@ int main() {
 	print(p3);
 
 	fprintf(stderr,"\n\n--------Divide Polynome-------\n");
-	POLYNOME a = create(0,4);
-	add(&a, create(1,-1));
-	add(&a, create(3,1));
-	POLYNOME b = create(0,1);
+	POLYNOME a = init();
+	add(&a, create(5,1));
+	add(&a, create(3,-3));
+	add(&a, create(1,2));
+	add(&a, create(0,-10));
+	POLYNOME b = init();
+	add(&b, create(2,-1));
 	add(&b, create(1,1));
-	POLYNOME p4 = divide(a,b);
-	print(a);
-	print(b);
-	print(p4);
+	add(&b, create(0,1));
+	divideResult d = divide(a,b);
+	print(d.q);
+	print(d.r);
 
-	fprintf(stderr,"\n\n-------Divide Polynome 2-------\n");
-	POLYNOME p5 = divide(a,a);
-	POLYNOME p6 = divide(b,b);
-	POLYNOME p7 = multiply(p4,p4);
-	POLYNOME p8 = divide(p7,p4);
-	//print(p5);
-	//print(p6);
-	print(p4);
+	/*fprintf(stderr,"\n\n-------Divide Polynome 2------\n");
+	print(divide(a,a).q);
+	print(divide(b,b).q);
+	POLYNOME p6 = divide(b,b).q;
+	POLYNOME p7 = multiply(d.q,d.q);
+	print(d.q);
 	print(p7);
-	print(p8);
+	print(divide(p7,d.q).q);*/
 
 	fprintf(stderr,"\n\nFin de la fonction main()\n");
 	return 0;
