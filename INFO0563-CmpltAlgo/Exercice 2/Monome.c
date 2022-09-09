@@ -76,8 +76,8 @@ void delete(MONOME *m, unsigned int d) {
 		MONOME ex = (*m);
 		(*m) = ex->m;
 		free(ex);
+		return;
 	}
-
 	MONOME next;
 	for (next = (*m); !isNull(next) && next->d != d; next = next->m);
 	if (!isNull(next) && next->d == d) {
@@ -128,9 +128,7 @@ void add(MONOME *m, MONOME a) {
 	// la tête si son coefficient est égale à 0
 	if ((*m)->d == a->d) {
 		if (!((*m)->c += a->c)) {
-			fprintf(stderr,"\ndelete : %f & %d",(*m)->c, (*m)->d);
-			print(*m);
-			delete(*m, (*m)->d);
+			delete(&(*m), (*m)->d);
 			return;
 		}
 	}
@@ -202,10 +200,6 @@ POLYNOME sub(POLYNOME a, POLYNOME b) {
 	POLYNOME p = copyPolynome(a);
 	MONOME next;
 	for (next = b; !isNull(next); next = next->m) {
-		print(p);
-		print(copy(next));
-		fprintf(stderr,"\nnegative copy : ");
-		print(negativeCopy(next));
 		add(&p, negativeCopy(next));
 	}
 	return p;
@@ -249,20 +243,10 @@ divideResult divide(POLYNOME a, POLYNOME b) {
 	// Cas good
 	d.r = copyPolynome(a);
 	while (d.r->d >= b->d) {
-		fprintf(stderr,"\nEt encore !");
 		POLYNOME x = create(d.r->d - b->d, d.r->c / b->c);
 		add(&d.q, x);
-		print(d.r);
-		print(x);
-		print(multiply(b,x));
 		d.r = sub(d.r, multiply(b,x));
-		print(d.r);
-		MONOME cc;
-		cc->d = cc;
-		//print(d.q);
-		//print(d.r);
 	}
-	fprintf(stderr,"\nFin divide !");
 	return d;
 }
 
