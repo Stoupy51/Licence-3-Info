@@ -1,7 +1,5 @@
 
 #include "liste.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 int main() {
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");

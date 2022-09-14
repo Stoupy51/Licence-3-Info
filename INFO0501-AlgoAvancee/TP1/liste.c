@@ -1,7 +1,5 @@
 
 #include "liste.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 Liste initListe() {
 	Liste l;

@@ -17,3 +17,4 @@ void deleteFromListe(Liste *l, CELLULE *c);
 void destroyListe(Liste *l);
 
 #endif
+
