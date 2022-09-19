@@ -23,4 +23,25 @@ union(x,y)
 		z.ensemble = x.ensemble
 
 
+### Tas ###
+parent(i)
+	return i / 2
 
+gauche(i)
+	return 2 * i
+
+droite(i)
+	return 2 * i + 1
+
+entasser-max(t,i)
+	g = gauche(i)
+	d = droite(i)
+	si g <= t.taille && t[g] > t[i]
+		max = g
+	sinon
+		max = i
+	si d <= t.taille && t[d] > t[max]
+		max = d
+	si max != i
+		echanger t[i] et t[max]
+		entasser-max(t,max)
