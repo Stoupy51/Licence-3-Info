@@ -10,3 +10,17 @@ composantes-connexes(G)
 meme-composante(u,v)
 	return trouver-ensemble(u) == trouver-ensemble(v)
 
+crée-ensemble(x)
+	créer une nouvelle liste chainée dont l'objet unique est x
+
+trouver-ensemble(x)
+	return x.ensemble.tete
+
+union(x,y)
+	x.ensemble.queue.succ = y.ensemble.tete
+	x.ensemble.queue = y.ensemble.queue
+	pour chaque objet z faisant partie de l'ensemble de y
+		z.ensemble = x.ensemble
+
+
+
