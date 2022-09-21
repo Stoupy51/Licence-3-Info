@@ -43,7 +43,17 @@ int main() {
 	destroyGraphe(&g);
 	printGraphe(g);
 
-	fprintf(stderr,"\n\nFin du main()\n");	
+
+	fprintf(stderr,"\n------Graphe (Partie 3.3)------\n");
+	char ch_temp[64];
+	fprintf(stderr,"\nEntrez le nom du fichier du graphe : ");
+	scanf("%s", ch_temp);
+	initGraphe(&g, ch_temp);
+	printGraphe(g);
+	destroyGraphe(&g);
+
+
+	fprintf(stderr,"\nFin du main()\n");	
 	return 0;
 }
 

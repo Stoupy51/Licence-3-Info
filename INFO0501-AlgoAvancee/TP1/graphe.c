@@ -32,7 +32,7 @@ void initGraphe(Graphe* g, char* fileName) {
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCellule(j));
 				insertListe(&g->l_adj[j], newCellule(i));
-				g->m_adj[i][j] = 1;
+				g->m_adj[i][j] = g->m_adj[j][i] = 1;
 			}
 		}
 		else {
@@ -52,20 +52,20 @@ void initGraphe(Graphe* g, char* fileName) {
 }
 
 void printGraphe(Graphe g) {
-	fprintf(stderr,"\n------Graphe------\n");
+	fprintf(stderr,"\n<------ Graphe ------>");
 	fprintf(stderr,"\nNombre de sommets : %d", g.n_sommets);
 	fprintf(stderr,"\nEst-orienté : %s", g.oriente ? "Oui":"Non");
 	fprintf(stderr,"\nValeur du graphe : %d", g.value);
 	int i, j;
 	if (g.n_sommets == 0) {
-		fprintf(stderr,"\nGraphe vide");
+		fprintf(stderr,"\nGraphe vide\n");
 		return;
 	}
 
 	// Affichage Liste des adjacences
 	fprintf(stderr,"\nListe des adjacences :");
 	for (i = 0; i < g.n_sommets; i++) {
-		fprintf(stderr,"\n%d -> ", i);
+		fprintf(stderr,i < 10 ? "\n%d  -> ":"\n%d -> ", i);
 		printListe(g.l_adj[i]);
 	}
 
@@ -77,8 +77,9 @@ void printGraphe(Graphe g) {
 	for (i = 0; i < g.n_sommets; i++) {
 		fprintf(stderr,i < 10 ? "\n%d ":"\n%d", i);
 		for (j = 0; j < g.n_sommets; j++)
-			fprintf(stderr,i < 10 ? "  %d":" %d", g.m_adj[i][j]);
+			fprintf(stderr,"  %d", g.m_adj[i][j]);
 	}
+	fprintf(stderr,"\n");
 }
 
 void destroyGraphe(Graphe* g) {

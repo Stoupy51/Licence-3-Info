@@ -22,11 +22,11 @@ void printListe(Liste l) {
 		fprintf(stderr,"[]");
 	else {
 		CELLULE c = l.head;
-		fprintf(stderr,"[%d",c->value);
+		fprintf(stderr,c->value < 10 ? "[ %d":"[%d",c->value);
 		for (c = c->next; c != NULL; c = c->next) {
-			fprintf(stderr,", %d",c->value);
+			fprintf(stderr,c->value < 10 ? ",  %d":", %d",c->value);
 		}
-		fprintf(stderr,"]");
+		fprintf(stderr," ]");
 	}
 }
 
