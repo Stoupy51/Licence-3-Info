@@ -36,9 +36,11 @@ int main() {
 	/**
 	 * Tests du graphe
 	**/
-	fprintf(stderr,"\n------Test du graphe------");
+	fprintf(stderr,"\n------Graphe (Partie 3.2)------\n");
 	Graphe g;
 	initGraphe(&g, "graphe1.txt");
+	printGraphe(g);
+	destroyGraphe(&g);
 	printGraphe(g);
 
 	fprintf(stderr,"\n\nFin du main()\n");	

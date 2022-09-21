@@ -15,6 +15,7 @@ typedef struct graphe_t {
 
 void initGraphe(Graphe* g, char* fileName);
 void printGraphe(Graphe g);
+void destroyGraphe(Graphe* g);
 
 
 #endif

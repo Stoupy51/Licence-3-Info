@@ -52,13 +52,18 @@ void initGraphe(Graphe* g, char* fileName) {
 }
 
 void printGraphe(Graphe g) {
+	fprintf(stderr,"\n------Graphe------\n");
 	fprintf(stderr,"\nNombre de sommets : %d", g.n_sommets);
-	fprintf(stderr,"\nEst-orienté : %s", g.oriente ? "oui":"non");
+	fprintf(stderr,"\nEst-orienté : %s", g.oriente ? "Oui":"Non");
 	fprintf(stderr,"\nValeur du graphe : %d", g.value);
-	fprintf(stderr,"\nListe des adjacences :");
 	int i, j;
+	if (g.n_sommets == 0) {
+		fprintf(stderr,"\nGraphe vide");
+		return;
+	}
 
 	// Affichage Liste des adjacences
+	fprintf(stderr,"\nListe des adjacences :");
 	for (i = 0; i < g.n_sommets; i++) {
 		fprintf(stderr,"\n%d -> ", i);
 		printListe(g.l_adj[i]);
@@ -75,4 +80,16 @@ void printGraphe(Graphe g) {
 			fprintf(stderr,i < 10 ? "  %d":" %d", g.m_adj[i][j]);
 	}
 }
+
+void destroyGraphe(Graphe* g) {
+	int m = g->n_sommets * g->n_sommets;
+	int i;
+	for (i = 0; i < g->n_sommets; i++)
+		destroyListe(&g->l_adj[i]);
+	free(g->l_adj);
+	free(g->m_stockage);
+	free(g->m_adj);
+	g->n_sommets = g->oriente = g->value = 0;
+}
+
 
