@@ -47,7 +47,7 @@ void initGraphe(Graphe* g, char* fileName) {
 		}
 	}
 	else {
-		fprintf(stderr,"\nFichier introuvable");
+		fprintf(stderr,"\n@@@ Fichier introuvable @@@\n");
 	}
 }
 
