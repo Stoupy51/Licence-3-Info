@@ -5,9 +5,11 @@
 int main() {
 	fprintf(stderr,"\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
 
+#define TP 1
+#if TP == 1
 	/**
 	 * Tests de la liste chaînée
-	** /
+	**/
 	int x;
 	Liste l = initListe();
 	CELLULE c;
@@ -31,7 +33,6 @@ int main() {
 		scanf("%s", &prompt);
 	}
 	destroyListe(&l);
-	**/
 
 	/**
 	 * Tests du graphe
@@ -51,7 +52,10 @@ int main() {
 	initGraphe(&g, ch_temp);
 	printGraphe(g);
 	destroyGraphe(&g);
+#endif
+#if TP == 2
 
+#endif
 
 	fprintf(stderr,"\nFin du main()\n");	
 	return 0;

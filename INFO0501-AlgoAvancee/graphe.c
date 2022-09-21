@@ -82,15 +82,6 @@ void printGraphe(Graphe g) {
 	fprintf(stderr,"\n");
 }
 
-typedef struct graphe_t {
-	int n_sommets,
-		oriente,
-		value;
-	Liste* l_adj;
-	int* m_stockage;
-	int** m_adj;
-} Graphe;
-
 void destroyGraphe(Graphe* g) {
 	int i;
 	for (i = 0; i < g->n_sommets; i++)
