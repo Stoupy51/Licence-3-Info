@@ -50,27 +50,29 @@ void initGraphe(Graphe* g, char* fileName) {
 		fprintf(stderr,"\nFichier introuvable");
 	}
 }
-/**
-typedef struct graphe_t {
-	int n_sommets,
-		oriente,
-		value;
-	Liste* l_adj;
-	int* m_stockage;
-	int** m_adj;
-} Graphe;
-**/
+
 void printGraphe(Graphe g) {
 	fprintf(stderr,"\nNombre de sommets : %d", g.n_sommets);
 	fprintf(stderr,"\nEst-orienté : %s", g.oriente ? "oui":"non");
 	fprintf(stderr,"\nValeur du graphe : %d", g.value);
 	fprintf(stderr,"\nListe des adjacences :");
-	int i;
-	CELLULE c;
+	int i, j;
+
+	// Affichage Liste des adjacences
 	for (i = 0; i < g.n_sommets; i++) {
-		fprintf(stderr,"\n%d : ", i);
+		fprintf(stderr,"\n%d -> ", i);
 		printListe(g.l_adj[i]);
 	}
 
+	// Affichage Matrice d'adjacences
+	fprintf(stderr,"\n\nMatrice d'adjacences :\n\nx ");
+	for (i = 0; i < g.n_sommets; i++)
+		fprintf(stderr,i < 10 ? "  %d":" %d", i);
+	fprintf(stderr,"\n");
+	for (i = 0; i < g.n_sommets; i++) {
+		fprintf(stderr,i < 10 ? "\n%d ":"\n%d", i);
+		for (j = 0; j < g.n_sommets; j++)
+			fprintf(stderr,i < 10 ? "  %d":" %d", g.m_adj[i][j]);
+	}
 }
 
