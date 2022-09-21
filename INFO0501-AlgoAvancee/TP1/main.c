@@ -1,41 +1,47 @@
 
 #include "liste.h"
+#include "graphe.h"
 
 int main() {
-    printf("\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
+	fprintf(stderr,"\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
 
-    /**
-     * Tests de la liste chaînée
-    **/
-    int x;
-    Liste l = initListe();
-    CELLULE c;
-    char prompt = 'Y';
-    while (prompt == 'Y' || prompt == 'y') {
-        printf("\nEntrez un entier : ");
-        scanf("%d", &x);
-        insertListe(&l, newCellule(x));
-        printListe(l);
-        printf("\nVoulez-vous continuer d'entrer des valeurs ? (Y/N) ");
-        scanf("%s", &prompt);
-    }
-    prompt = 'Y';
-    while (prompt == 'Y' || prompt == 'y') {
-        printf("\nQuel entier voulez-vous supprimer : ");
-        scanf("%d", &x);
-        c = searchInListe(l, x);
-        deleteFromListe(&l, &c);
-        printListe(l);
-        printf("\nVoulez-vous continuer de supprimer des valeurs ? (Y/N) ");
-        scanf("%s", &prompt);
-    }
-    destroyListe(&l);
+	/**
+	 * Tests de la liste chaînée
+	** /
+	int x;
+	Liste l = initListe();
+	CELLULE c;
+	char prompt = 'Y';
+	while (prompt == 'Y' || prompt == 'y') {
+		fprintf(stderr,"\nEntrez un entier : ");
+		scanf("%d", &x);
+		insertListe(&l, newCellule(x));
+		printListe(l);
+		fprintf(stderr,"\nVoulez-vous continuer d'entrer des valeurs ? (Y/N) ");
+		scanf("%s", &prompt);
+	}
+	prompt = 'Y';
+	while (prompt == 'Y' || prompt == 'y') {
+		fprintf(stderr,"\nQuel entier voulez-vous supprimer : ");
+		scanf("%d", &x);
+		c = searchInListe(l, x);
+		deleteFromListe(&l, &c);
+		printListe(l);
+		fprintf(stderr,"\nVoulez-vous continuer de supprimer des valeurs ? (Y/N) ");
+		scanf("%s", &prompt);
+	}
+	destroyListe(&l);
+	**/
 
+	/**
+	 * Tests du graphe
+	**/
+	fprintf(stderr,"\n------Test du graphe------");
+	Graphe g;
+	initGraphe(&g, "graphe1.txt");
+	printGraphe(g);
 
-
-
-
-    printf("\n\nFin du main()\n");
-    return 0;
+	fprintf(stderr,"\n\nFin du main()\n");	
+	return 0;
 }
 

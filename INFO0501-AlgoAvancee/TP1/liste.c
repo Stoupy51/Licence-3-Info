@@ -19,7 +19,7 @@ void insertListe(Liste *l, CELLULE c) {
 
 void printListe(Liste l) {
 	if (l.size == 0)
-		fprintf(stderr,"Liste vide");
+		fprintf(stderr,"[]");
 	else {
 		CELLULE c = l.head;
 		fprintf(stderr,"[%d",c->value);
