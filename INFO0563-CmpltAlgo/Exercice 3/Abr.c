@@ -161,9 +161,9 @@ void repeat_char(int count, char* c) {
 /**
  * Affiche l'arbre du mieux qu'il peut
 **/
-void printAbr(ABR a) {
-	int h = getHeight(a);
-	int s = getTotalNodes(a);
+void printAbr(ABR *a) {
+	int h = getHeight(*a);
+	int s = getTotalNodes(*a);
 	int i, j;
 
 	// Création des tableaux	
@@ -177,46 +177,38 @@ void printAbr(ABR a) {
 			heights[i][j] = -1;
 	}
 
-	/*/ Remplissage des tableaux
-	addValueIntoT(&c, 0, a);
-	int indexes[h];
-	for (i = 0; i < h; i++)
-		indexes[i] = 0;
-	for (i = 0; i < s; i++) {
-		int level = c->list[i]->level;
-		heights[level][indexes[level]] = c->list[i]->value;
-		indexes[level]++;
-	}
-	**/
+	// Remplissage des tableaux
+	addValueIntoT(heights, 0, 0, 0, *a);
 
 	// Affichage des tableaux
 	k = 1;
 	for (i = 1; i < h; i++)
 		k *= 2;
-	
 	fprintf(stderr,"\n");
-	for (i = h-1; i > 0; i--, k /= 2) {
+	int level = 1;
+	int b = 0;
+	for (i = h-1; i >= 0; i--, k /= 2, level*=2, b = 0) {
 		fprintf(stderr,"\n\n");
-		for (j = 0; j < k; j++) {
-			repeat_char(0, " ");
+		for (j = 0; j < k; j++, b = 1) {
+			repeat_char(level + b*(level-1), " ");
+			//fprintf(stderr,"(%d)",b);
 			fprintf(stderr,heights[i][j] == -1 ? " x" : " %d", heights[i][j]);
 		}
 	}
-
 }
 
 /**
  * Sous fonction de @b printAbr qui remplit un tableau en fonction de la hauteur séléctionnée
-** /
-void addValueIntoT(CoupleList* l, int level, ABR a) {
+**/
+void addValueIntoT(int** T, int level, int i, int isG, ABR a) {
 	if (isNull(a))
 		return;
-	Couple* c;
-	c->level = level;
-	c->value = a->value;
-	l->list[l->nextIndex] = c;
-	l->nextIndex++;
-	addValueIntoT(&(*l), level+1, a->g);
-	addValueIntoT(&(*l), level+1, a->d);
+	fprintf(stderr,"[%d]",a->value);
+	if (T[level][i] == -1)
+		T[level][i] = a->value;
+	addValueIntoT(T, level+1, (i+1)*2/3, 1, a->g);
+	
+	addValueIntoT(T, level+1, (i+1)*3/2+2, 0, a->d);
+	addValueIntoT(T, level+1, (i+1)*3/2, 0, a->d);
 }
-**/
+

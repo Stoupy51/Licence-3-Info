@@ -31,7 +31,7 @@ void infixe(ABR* a);
 void balanceV2(ABR* a);
 
 void repeat_char(int count, char* c);
-void printAbr(ABR a);
+void printAbr(ABR* a);
 
 
 
