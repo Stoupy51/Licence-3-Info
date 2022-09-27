@@ -16,11 +16,13 @@ struct abr {
 ABR initAbr();
 int isNull(ABR a);
 int isLeaf(ABR a);
+int max(int a, int b);
 int getTotalNodes(ABR a);
 int getHeight(ABR a);
 ABR create(int v);
-void add(ABR* a, int v);
-void remove(ABR* a, int v);
+void addValue(ABR* a, int v);
+void addValuesList(ABR* a, int* v, int size);
+void removeValue(ABR* a, int v);
 ABR minPtr(ABR a);
 ABR maxPtr(ABR a);
 void balance(ABR* a);
@@ -28,15 +30,7 @@ void coquilleParfaite(ABR* a, int i, int n);
 void infixe(ABR* a);
 void balanceV2(ABR* a);
 
-typedef struct couple {
-	int value,
-		level
-} Couple;
-typedef struct coupleList {
-	int size;
-	int nextIndex;
-	Couple** list;
-} CoupleList;
+void repeat_char(int count, char* c);
 void printAbr(ABR a);
 
 

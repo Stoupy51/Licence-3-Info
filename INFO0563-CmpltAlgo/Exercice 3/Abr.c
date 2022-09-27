@@ -4,6 +4,7 @@
 ABR initAbr() { return (ABR)NULL; }
 int isNull(ABR a) { return a == (ABR)NULL; }
 int isLeaf(ABR a) { return !isNull(a) && isNull(a->g) && isNull(a->d); }
+int max(int a, int b) { return a < b ? b : a; }
 
 /**
  * @return le nombre de sommets total dans l'arbre a
@@ -37,42 +38,54 @@ ABR create(int v) {
  * @b Ajoute la valeur dans le fils de gauche si la valeur est inférieure à celle de l'arbre
  * @b Ajoute la valeur dans le fils de droit si la valeur est supérieure à celle de l'arbre
 **/
-void add(ABR *a, int v) {
+void addValue(ABR *a, int v) {
+	if (isNull(*a))
+		(*a) = create(v);
 	if ((*a)->value == v) {
 		(*a)->occurences++;
 		return;
 	}
 	if (v < (*a)->value)
-		add(&(*a)->g, v);
+		addValue(&(*a)->g, v);
 	else
-		add(&(*a)->d, v);
+		addValue(&(*a)->d, v);
 }
+
+/**
+ * @b Ajoute une liste de valeur dans l'arbre
+**/
+void addValuesList(ABR* a, int* v, int size) {
+	int i;
+	for (i = 0; i < size; i++)
+		addValue(a, v[i]);
+}
+
 
 /**
  * Supprime une valeur de l'arbre selon plusieurs cas
  * @b Diminue l'occurence @if celle-ci est supérieure à 1
  * @b Supprime la valeur de l'arbre par un réagencement @else
 **/
-void remove(ABR *a, int v) {
+void removeValue(ABR *a, int v) {
 	if ((*a)->value = v) {
 		if (!(*a)->occurences--) {
 			if (isLeaf(*a)) {
 				free(*a);
-				(*a) = init();
+				(*a) = initAbr();
 				return;
 			}
 			ABR m = isNull((*a)->g) ? minPtr((*a)->d) : maxPtr((*a)->g);
 			int tmp = (*a)->value;
 			(*a)->value = m->value;
 			m->value = tmp;
-			remove(&m, m->value);
+			removeValue(&m, m->value);
 		}
 		return;
 	}
 	if (v < (*a)->value)
-		remove(&(*a)->g, v);
+		removeValue(&(*a)->g, v);
 	else
-		remove(&(*a)->d, v);
+		removeValue(&(*a)->d, v);
 }
 
 /**
@@ -113,6 +126,23 @@ void balance(ABR* a) {
 			G->d->d = (*a);
 			(*a) = old;
 		}
+		return;
+	}
+	if (hg < hd) {
+		ABR D = (*a)->d;
+		ABR old = D->g;
+		if (!isNull(D->d)) {
+			D->g = (*a);
+			(*a)->d = old;
+			(*a) = D;
+		}
+		else {
+			D->g = D->g->d;
+			(*a)->d = D->g->g;
+			D->g->d = D;
+			D->g->g = (*a);
+			(*a) = old;
+		}
 	}
 }
 
@@ -122,6 +152,11 @@ void infixe(ABR *a);
 
 void balanceV2(ABR *a);
 
+
+void repeat_char(int count, char* c) {
+	while (--count > 0)
+		fprintf(stderr,"%s",c);
+}
 
 /**
  * Affiche l'arbre du mieux qu'il peut
@@ -133,14 +168,16 @@ void printAbr(ABR a) {
 
 	// Création des tableaux	
 	int** heights = (int**)malloc(sizeof(int*) * h);
-	for (i = 0; i < h; i++)
-		heights[i] = (int*)malloc(sizeof(int) * i * i + 1);
+	heights[0] = (int*)malloc(sizeof(int) * 1);
+	heights[0][0] = -1;
+	int k = 2;
+	for (i = 1; i < h; i++, k *= 2) {
+		heights[i] = (int*)malloc(sizeof(int) * k);
+		for (j = 0; j < k; j++)
+			heights[i][j] = -1;
+	}
 
-	// Remplissage des tableaux
-	CoupleList* c;
-	c->list = (Couple*)malloc(sizeof(Couple) * s);
-	c->nextIndex = 0;
-	c->size = s;
+	/*/ Remplissage des tableaux
 	addValueIntoT(&c, 0, a);
 	int indexes[h];
 	for (i = 0; i < h; i++)
@@ -150,12 +187,27 @@ void printAbr(ABR a) {
 		heights[level][indexes[level]] = c->list[i]->value;
 		indexes[level]++;
 	}
+	**/
+
+	// Affichage des tableaux
+	k = 1;
+	for (i = 1; i < h; i++)
+		k *= 2;
+	
+	fprintf(stderr,"\n");
+	for (i = h-1; i > 0; i--, k /= 2) {
+		fprintf(stderr,"\n\n");
+		for (j = 0; j < k; j++) {
+			repeat_char(0, " ");
+			fprintf(stderr,heights[i][j] == -1 ? " x" : " %d", heights[i][j]);
+		}
+	}
 
 }
 
 /**
  * Sous fonction de @b printAbr qui remplit un tableau en fonction de la hauteur séléctionnée
-**/
+** /
 void addValueIntoT(CoupleList* l, int level, ABR a) {
 	if (isNull(a))
 		return;
@@ -167,4 +219,4 @@ void addValueIntoT(CoupleList* l, int level, ABR a) {
 	addValueIntoT(&(*l), level+1, a->g);
 	addValueIntoT(&(*l), level+1, a->d);
 }
-
+**/
