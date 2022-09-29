@@ -2,19 +2,22 @@
 #ifndef __queue_h__
 #define __queue_h__
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "sommet.h"
 
 typedef struct queue {
-	int* list;
+	Sommet* data;
 	int head,
-		next,
+		tail,
 		size;
-} Queue, *QUEUE;
+} Queue;
 
-void initQueue(QUEUE q);
-void emfiler(QUEUE q, int v);
-int defiler(QUEUE q);
+Queue initQueue(int size);
+void destroyQueue(Queue q);
+int isQueueEmpty(Queue q);
+int isQueueFull(Queue q);
+void enfilerQueue(Queue q, Sommet s);
+Sommet defilerQueue(Queue q);
+void printQueue(Queue q);
 
 #endif
 

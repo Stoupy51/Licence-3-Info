@@ -5,7 +5,7 @@
 int main() {
 	fprintf(stderr,"\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
 
-#define TP 1
+#define TP 2
 #if TP == 1
 	/**
 	 * Tests de la liste chaînée
@@ -53,7 +53,15 @@ int main() {
 	printGraphe(g);
 	destroyGraphe(&g);
 #endif
+
 #if TP == 2
+	fprintf(stderr,"\n------Tests de queue------\n");
+	Queue q = initQueue(5);
+	printQueue(q);
+	enfilerQueue(q, initSommet(1));
+	enfilerQueue(q, initSommet(3));
+	enfilerQueue(q, initSommet(5));
+	printQueue(q);
 
 #endif
 

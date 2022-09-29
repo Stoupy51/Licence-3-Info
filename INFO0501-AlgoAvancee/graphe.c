@@ -13,16 +13,23 @@ void initGraphe(Graphe* g, char* fileName) {
 		fscanf(file,"%d", &g->value);
 		fscanf(file,"%s", ch_temp);
 		fscanf(file,"%s", ch_temp);
+
+		// Allocations mémoire pour la matrice et la liste d'adjacences, ainsi que la liste des sommets
 		g->m_stockage = (int*)malloc(sizeof(int)*g->n_sommets*g->n_sommets);
 		g->m_adj = (int**)malloc(sizeof(int*)*g->n_sommets);
 		g->l_adj = (Liste*)malloc(sizeof(Liste)*g->n_sommets);
+		g->l_sommets = (Sommet*)malloc(sizeof(Sommet)*g->n_sommets);
+
+		// Initialisation de la matrice des adjacences, de la liste des adjacences, et la liste des sommets
 		int i, j;
 		for (i = 0; i < g->n_sommets; i++) {
 			g->m_adj[i] = &g->m_stockage[i*g->n_sommets];
 			for (j = 0; j < g->n_sommets; j++)
 				g->m_stockage[i*j] = 0;
 			g->l_adj[i] = initListe();
+			g->l_sommets[i] = initSommet(i);
 		}
+
 		// Si la liste n'est pas orientée
 		if (!g->oriente) {
 			while (ch_temp[0] != 'F') {
@@ -35,6 +42,7 @@ void initGraphe(Graphe* g, char* fileName) {
 				g->m_adj[i][j] = g->m_adj[j][i] = 1;
 			}
 		}
+		// Si elle est orientée
 		else {
 			while (ch_temp[0] != 'F') {
 				i = atoi(ch_temp);
@@ -47,7 +55,7 @@ void initGraphe(Graphe* g, char* fileName) {
 		}
 	}
 	else {
-		fprintf(stderr,"\n@@@ Fichier introuvable @@@\n");
+		fprintf(stderr,"\n!!!!! Fichier introuvable !!!!!\n");
 	}
 }
 
