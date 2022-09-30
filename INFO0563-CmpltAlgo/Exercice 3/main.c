@@ -15,6 +15,8 @@ int main() {
 	printAbr(a);
 	removeValue(&a, 8);
 	printAbr(a);
+	removeValue(&a, 32);
+	printAbr(a);
 
 	fprintf(stderr,"\n\n--------Test Equilibrage--------\n");
 	int values2[] = {15, 60, 12, 23, 58, 8, 20, 28, 47, 53, 49, 55};
