@@ -141,13 +141,12 @@ void balance(ABR* a) {
 			(*a) = G;
 		}
 		else {
-			G->d = G->d->g;
-			(*a)->g = G->d->d;
-			G->d->g = G;
-			G->d->d = (*a);
+			G->d = old->g;
+			(*a)->g = old->d;
+			old->g = G;
+			old->d = (*a);
 			(*a) = old;
 		}
-		return;
 	}
 	if (hg < hd) {
 		ABR D = (*a)->d;
@@ -158,13 +157,14 @@ void balance(ABR* a) {
 			(*a) = D;
 		}
 		else {
-			D->g = D->g->d;
-			(*a)->d = D->g->g;
-			D->g->d = D;
-			D->g->g = (*a);
+			D->g = old->d;
+			(*a)->d = old->g;
+			old->d = D;
+			old->g = (*a);
 			(*a) = old;
 		}
 	}
+	balance(&(*a));
 }
 
 /**
@@ -271,6 +271,7 @@ void printAbr(ABR a) {
 			);
 		}
 	}
+	fprintf(stderr,"\n");
 }
 
 /**

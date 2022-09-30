@@ -17,7 +17,7 @@ int main() {
 	printAbr(a);
 
 	fprintf(stderr,"\n\n--------Test Equilibrage--------\n");
-	int values2[] = {15, 45, 12, 23, 58, 8, 20, 28, 47, 53, 49, 55};
+	int values2[] = {15, 60, 12, 23, 58, 8, 20, 28, 47, 53, 49, 55};
 	int size2 = sizeof(values2) / sizeof(int);
 	ABR b = create(40);
 	addValuesList(&b, values2, size2);
