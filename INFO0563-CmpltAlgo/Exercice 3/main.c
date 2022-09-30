@@ -12,9 +12,23 @@ int main() {
 	int size = sizeof(values) / sizeof(int);
 	ABR a = create(32);
 	addValuesList(&a, values, size);
-	printAbr(&a);
+	printAbr(a);
 	removeValue(&a, 8);
-	printAbr(&a);
+	printAbr(a);
+
+	fprintf(stderr,"\n\n--------Test Equilibrage--------\n");
+	int values2[] = {15, 45, 12, 23, 58, 8, 20, 28, 47, 53, 49, 55};
+	int size2 = sizeof(values2) / sizeof(int);
+	ABR b = create(40);
+	addValuesList(&b, values2, size2);
+	printAbr(b);
+	balance(&b);
+	printAbr(b);
+
+	fprintf(stderr,"\n\n--------Test Equilibrage parfait--------\n");
+	int values3[] = {15, 45, 12, 23, 58, 8, 20, 28, 47, 5, 10, 32, 53, 29, 49, 55};
+	int size3 = sizeof(values3) / sizeof(int);
+	ABR c = create(40);
 
 
 	fprintf(stderr,"\n\nFin de la fonction main()\n");

@@ -32,6 +32,19 @@ ABR create(int v) {
 }
 
 /**
+ * @return un arbre sans fils avec comme valeur v et infixe i
+**/
+ABR createWithI(int i, int v) {
+	ABR a = (ABR)malloc(sizeof(Abr));
+	a->value = v;
+	a->occurences = 1;
+	a->I = i;
+	a->g = a->d = initAbr();
+	return a;
+}
+
+
+/**
  * Ajoute une valeur dans l'arbre selon plusieurs cas
  * @b Augmente l'occurence si la valeur est déjà présente
  * @b Si l'arbre est vide, un arbre est crée avec la valeur
@@ -154,9 +167,17 @@ void balance(ABR* a) {
 	}
 }
 
-void coquilleParfaite(ABR *a, int i, int n);
+/**
+ * Construit l'arbre binaire parfait à n sommets au niveau du sommet d'indice i
+**/
+void coquilleParfaite(ABR *a, int i, int n) {
+	if (i <= n) {
+		(*a) = createWithI(i, 1);
+		coquilleParfaite(&(*a)->g, 2*i, n);
+		coquilleParfaite(&(*a)->d, 2*i+1, n);
+	}
+}
 
-//HA = (ABR*)malloc(sizeof(ABR) * getTotalNodes(a));
 int IFX;
 void infixe(ABR* a, ABR* HA) {
 	if (!isNull(*a)) {
@@ -167,6 +188,44 @@ void infixe(ABR* a, ABR* HA) {
 	}
 }
 
+/**
+ *  Balance parfaitement l'arbre afin d'avoir un abre binaire parfait
+**/
+void perfectBalance(ABR* a) {
+	// Création de la liste des pointeurs sur les élements de l'arbre
+	// Ainsi que celui de la coquille parfaite
+	int n_sommets = getTotalNodes(*a);
+	ABR* lpA = (ABR*)malloc(sizeof(ABR) * n_sommets);
+	ABR* lpP = (ABR*)malloc(sizeof(ABR) * n_sommets);
+	
+	ABR cp;
+	coquilleParfaite(&cp, 1, n_sommets);
+	IFX = 0;
+	infixe(&(*a), lpA);
+	IFX = 0;
+	infixe(&cp, lpP);
+	int i;
+	for (i = 0; i < n_sommets; i++) {
+		lpP[i]->value = lpA[i]->value;
+		lpP[i]->occurences = lpA[i]->occurences;
+	}
+}
+
+/**
+ * Détruit un arbre en libérant la mémoire
+**/
+void destroyAbr(ABR* a) {
+	if (isNull(*a))
+		return;
+	destroyAbr(&(*a)->g);
+	destroyAbr(&(*a)->d);
+	free(*a);
+	(*a) = initAbr();
+}
+
+/**
+ * Repète une chaîne de caractère @param count fois
+**/
 void repeat_char(int count, char* c) {
 	while (--count > 0)
 		fprintf(stderr,"%s",c);
@@ -175,9 +234,9 @@ void repeat_char(int count, char* c) {
 /**
  * Affiche l'arbre du mieux qu'il peut
 **/
-void printAbr(ABR *a) {
-	int h = getHeight(*a);
-	int s = getTotalNodes(*a);
+void printAbr(ABR a) {
+	int h = getHeight(a);
+	int s = getTotalNodes(a);
 	int i, j;
 
 	// Création des tableaux	
@@ -192,7 +251,7 @@ void printAbr(ABR *a) {
 	}
 
 	// Remplissage des tableaux
-	addValueIntoT(heights, 0, 0, 1, *a);
+	addValueIntoT(heights, 0, 0, 1, a);
 
 	// Affichage des tableaux
 	fprintf(stderr,"\n\nArbre :");
@@ -207,7 +266,7 @@ void printAbr(ABR *a) {
 			repeat_char(level + b*(level-1), " ");
 			fprintf(
 				stderr,
-				heights[i][j] == -1 ? (j%2 == 0 ? " _" : " _ ") : (heights[i][j] > -10 && heights[i][j] < 10 ? " %d": " %d"),
+				heights[i][j] == -1 ? " _" : (heights[i][j] > -10 && heights[i][j] < 10 ? " %d": " %d"),
 				heights[i][j]
 			);
 		}
@@ -215,7 +274,7 @@ void printAbr(ABR *a) {
 }
 
 /**
- * Sous fonction de @b printAbr qui remplit un tableau en fonction de la hauteur séléctionnée
+ * Sous fonction de @b printAbr() qui remplit un tableau en fonction de la hauteur séléctionnée
 **/
 void addValueIntoT(int** T, int level, int i, int isG, ABR a) {
 	if (isNull(a))

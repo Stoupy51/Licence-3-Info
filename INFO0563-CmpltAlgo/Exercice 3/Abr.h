@@ -29,10 +29,12 @@ ABR* maxPtr(ABR* a);
 void balance(ABR* a);
 void coquilleParfaite(ABR* a, int i, int n);
 void infixe(ABR* a, ABR* HA);
+void perfectBalance(ABR* a);
+void destroyAbr(ABR* a);
 
 void repeat_char(int count, char* c);
 void addValueIntoT(int** T, int level, int i, int isG, ABR a);
-void printAbr(ABR* a);
+void printAbr(ABR a);
 
 
 
