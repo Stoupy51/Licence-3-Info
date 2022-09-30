@@ -39,8 +39,10 @@ ABR create(int v) {
  * @b Ajoute la valeur dans le fils de droit si la valeur est supérieure à celle de l'arbre
 **/
 void addValue(ABR *a, int v) {
-	if (isNull(*a))
+	if (isNull(*a)) {
 		(*a) = create(v);
+		return;
+	}
 	if ((*a)->value == v) {
 		(*a)->occurences++;
 		return;
@@ -67,18 +69,29 @@ void addValuesList(ABR* a, int* v, int size) {
  * @b Supprime la valeur de l'arbre par un réagencement @else
 **/
 void removeValue(ABR *a, int v) {
-	if ((*a)->value = v) {
-		if (!(*a)->occurences--) {
+	if (isNull(*a)) {
+		fprintf(stderr, "\nLa valeur %d n'est pas présente dans l'arbre", v);
+		return;
+	}
+	if ((*a)->value == v) {
+		if (!(--(*a)->occurences)) {
+			fprintf(stderr, "\nSuppression de la valeur %d", (*a)->value);
 			if (isLeaf(*a)) {
+				fprintf(stderr, "\nSuppression de la feuille %d", (*a)->value);
 				free(*a);
 				(*a) = initAbr();
+				// TODO: PROBLEME ICI
 				return;
 			}
 			ABR m = isNull((*a)->g) ? minPtr((*a)->d) : maxPtr((*a)->g);
 			int tmp = (*a)->value;
 			(*a)->value = m->value;
+			(*a)->occurences = m->occurences;
 			m->value = tmp;
-			removeValue(&m, m->value);
+			m->occurences = 1;
+			fprintf(stderr, "\nRemplacement de la valeur %d par la valeur %d", tmp, (*a)->value);
+			fprintf(stderr, "\n(*a)->occ = %d, m->occ = %d", (*a)->occurences, m->occurences);
+			removeValue(&m, v);
 		}
 		return;
 	}
@@ -178,7 +191,7 @@ void printAbr(ABR *a) {
 	}
 
 	// Remplissage des tableaux
-	addValueIntoT(heights, 0, 0, 0, *a);
+	addValueIntoT(heights, 0, 0, 1, *a);
 
 	// Affichage des tableaux
 	k = 1;
@@ -192,7 +205,11 @@ void printAbr(ABR *a) {
 		for (j = 0; j < k; j++, b = 1) {
 			repeat_char(level + b*(level-1), " ");
 			//fprintf(stderr,"(%d)",b);
-			fprintf(stderr,heights[i][j] == -1 ? " x" : " %d", heights[i][j]);
+			fprintf(
+				stderr,
+				heights[i][j] == -1 ? " x" : (heights[i][j] > -10 && heights[i][j] < 10 ? " %d": " %d"),
+				heights[i][j]
+			);
 		}
 	}
 }
@@ -203,12 +220,9 @@ void printAbr(ABR *a) {
 void addValueIntoT(int** T, int level, int i, int isG, ABR a) {
 	if (isNull(a))
 		return;
-	fprintf(stderr,"[%d]",a->value);
 	if (T[level][i] == -1)
 		T[level][i] = a->value;
-	addValueIntoT(T, level+1, (i+1)*2/3, 1, a->g);
-	
-	addValueIntoT(T, level+1, (i+1)*3/2+2, 0, a->d);
-	addValueIntoT(T, level+1, (i+1)*3/2, 0, a->d);
+	addValueIntoT(T, level+1, i*2, 0, a->g);
+	addValueIntoT(T, level+1, i*2+1, 0, a->d);
 }
 
