@@ -32,19 +32,6 @@ ABR create(int v) {
 }
 
 /**
- * @return un arbre sans fils avec comme valeur v et infixe i
-**/
-ABR createWithI(int i, int v) {
-	ABR a = (ABR)malloc(sizeof(Abr));
-	a->value = v;
-	a->occurences = 1;
-	a->I = i;
-	a->g = a->d = initAbr();
-	return a;
-}
-
-
-/**
  * Ajoute une valeur dans l'arbre selon plusieurs cas
  * @b Augmente l'occurence si la valeur est déjà présente
  * @b Si l'arbre est vide, un arbre est crée avec la valeur
@@ -172,7 +159,7 @@ void balance(ABR* a) {
 **/
 void coquilleParfaite(ABR *a, int i, int n) {
 	if (i <= n) {
-		(*a) = createWithI(i, 1);
+		(*a) = create(1);
 		coquilleParfaite(&(*a)->g, 2*i, n);
 		coquilleParfaite(&(*a)->d, 2*i+1, n);
 	}
@@ -198,17 +185,20 @@ void perfectBalance(ABR* a) {
 	ABR* lpA = (ABR*)malloc(sizeof(ABR) * n_sommets);
 	ABR* lpP = (ABR*)malloc(sizeof(ABR) * n_sommets);
 	
-	ABR cp;
-	coquilleParfaite(&cp, 1, n_sommets);
+	ABR* cp;
+	coquilleParfaite(&(*cp), 1, n_sommets);
 	IFX = 0;
 	infixe(&(*a), lpA);
 	IFX = 0;
-	infixe(&cp, lpP);
+	infixe(&(*cp), lpP);
 	int i;
 	for (i = 0; i < n_sommets; i++) {
 		lpP[i]->value = lpA[i]->value;
 		lpP[i]->occurences = lpA[i]->occurences;
 	}
+	ABR old = *a;
+	(*a) = (*cp);
+	destroyAbr(&old);
 }
 
 /**
