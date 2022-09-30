@@ -75,23 +75,18 @@ void removeValue(ABR *a, int v) {
 	}
 	if ((*a)->value == v) {
 		if (!(--(*a)->occurences)) {
-			fprintf(stderr, "\nSuppression de la valeur %d", (*a)->value);
 			if (isLeaf(*a)) {
-				fprintf(stderr, "\nSuppression de la feuille %d", (*a)->value);
 				free(*a);
 				(*a) = initAbr();
-				// TODO: PROBLEME ICI
 				return;
 			}
-			ABR m = isNull((*a)->g) ? minPtr((*a)->d) : maxPtr((*a)->g);
+			ABR* m = isNull((*a)->g) ? minPtr(&(*a)->d) : maxPtr(&(*a)->g);
 			int tmp = (*a)->value;
-			(*a)->value = m->value;
-			(*a)->occurences = m->occurences;
-			m->value = tmp;
-			m->occurences = 1;
-			fprintf(stderr, "\nRemplacement de la valeur %d par la valeur %d", tmp, (*a)->value);
-			fprintf(stderr, "\n(*a)->occ = %d, m->occ = %d", (*a)->occurences, m->occurences);
-			removeValue(&m, v);
+			(*a)->value = (*m)->value;
+			(*a)->occurences = (*m)->occurences;
+			(*m)->value = tmp;
+			(*m)->occurences = 1;
+			removeValue(&(*m), v);
 		}
 		return;
 	}
@@ -104,15 +99,15 @@ void removeValue(ABR *a, int v) {
 /**
  * @return un pointeur sur l'arbre le plus petit à partir de l'arbre a
 **/
-ABR minPtr(ABR a) {
-	return isNull(a) ? a : (isNull(a->g) ? &(*a) : minPtr(a->g));
+ABR* minPtr(ABR* a) {
+	return isNull(*a) ? a : (isNull((*a)->g) ? &(*a) : minPtr(&(*a)->g));
 }
 
 /**
  * @return un pointeur sur l'arbre le plus grand à partir de l'arbre a
 **/
-ABR maxPtr(ABR a) {
-	return isNull(a) ? a : (isNull(a->d) ? &(*a) : maxPtr(a->d));
+ABR* maxPtr(ABR* a) {
+	return isNull(*a) ? a : (isNull((*a)->d) ? &(*a) : maxPtr(&(*a)->d));
 }
 
 /**
@@ -161,10 +156,16 @@ void balance(ABR* a) {
 
 void coquilleParfaite(ABR *a, int i, int n);
 
-void infixe(ABR *a);
-
-void balanceV2(ABR *a);
-
+//HA = (ABR*)malloc(sizeof(ABR) * getTotalNodes(a));
+int IFX;
+void infixe(ABR* a, ABR* HA) {
+	if (!isNull(*a)) {
+		infixe(&(*a)->g, HA);
+		HA[IFX] = *a;
+		(*a)->I = ++IFX;
+		infixe(&(*a)->d, HA);
+	}
+}
 
 void repeat_char(int count, char* c) {
 	while (--count > 0)
@@ -194,20 +195,19 @@ void printAbr(ABR *a) {
 	addValueIntoT(heights, 0, 0, 1, *a);
 
 	// Affichage des tableaux
+	fprintf(stderr,"\n\nArbre :");
 	k = 1;
 	for (i = 1; i < h; i++)
 		k *= 2;
-	fprintf(stderr,"\n");
 	int level = 1;
 	int b = 0;
 	for (i = h-1; i >= 0; i--, k /= 2, level*=2, b = 0) {
 		fprintf(stderr,"\n\n");
 		for (j = 0; j < k; j++, b = 1) {
 			repeat_char(level + b*(level-1), " ");
-			//fprintf(stderr,"(%d)",b);
 			fprintf(
 				stderr,
-				heights[i][j] == -1 ? " x" : (heights[i][j] > -10 && heights[i][j] < 10 ? " %d": " %d"),
+				heights[i][j] == -1 ? (j%2 == 0 ? " _" : " _ ") : (heights[i][j] > -10 && heights[i][j] < 10 ? " %d": " %d"),
 				heights[i][j]
 			);
 		}

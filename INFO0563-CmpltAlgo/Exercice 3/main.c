@@ -8,9 +8,9 @@ int main() {
 	fprintf(stderr,"Debut de la fonction main()");
 
 	fprintf(stderr,"\n\n--------Test Arbre--------\n");
-	int values[] = {15, 45, 12, 23, 58, 8, 20, 28, 47, 5, 10, 32, 53, 29, 49, 55};
+	int values[] = {20, 49, 12, 28, 45, 55, 8, 15 , 23, 29, 40, 47, 53, 58, 5, 10};
 	int size = sizeof(values) / sizeof(int);
-	ABR a = create(40);
+	ABR a = create(32);
 	addValuesList(&a, values, size);
 	printAbr(&a);
 	removeValue(&a, 8);
