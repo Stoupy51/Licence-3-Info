@@ -14,7 +14,7 @@ class Etudiant extends Usager {
         return $data;
     }
 
-	public static function fromJSON(string $json) : Usager {
+	public static function fromJSON(string $json) : Etudiant {
         $data = json_decode($json, true);
         return new Etudiant($data["nom"], $data["prenom"], $data["numero"], $data["etablissement"], $data["diplome"]);
     }

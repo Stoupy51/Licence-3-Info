@@ -1,0 +1,6 @@
+<?php include "autoload.php";
+
+
+;
+
+echo json_encode($commande);
