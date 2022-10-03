@@ -26,9 +26,5 @@ class Usager implements JsonSerializable {
         $data = json_decode($json, true);
         return new Usager($data["nom"], $data["prenom"], $data["numero"], $data["etablissement"]);      
     }
-
-    /**public function __toString() : string {
-        return $nom . " " . $prenom . " - " . $id . " - " . $etablissement;
-    }**/
 };
 
