@@ -22,16 +22,13 @@ echo <<<HTML
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>TP Web Server</title>
 </head>
 <body>
-	<h1>Test</h1>
-	<form action="index.php" method="post">
-		<input type="text" name="nom" placeholder="Nom">
-		<input type="text" name="prenom" placeholder="Prénom">
-		<input type="text" name="numero" placeholder="Numéro">
-		<input type="text" name="etablissement" placeholder="Etablissement">
-		<input type="text" name="classe" placeholder="Classe">
+	<h1>Commande d'énergie</h1>
+	<form action="commande.php" method="post">
+		<label for="energyType">Type d'énergie</label>
+		<input type="text" name="energyType" placeholder="(électricité, pétrole, hydrogène)"><br>
 		<input type="submit" value="Envoyer">
 	</form>
 </body>
