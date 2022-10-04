@@ -11,19 +11,35 @@ class Commande implements JsonSerializable {
     private float $maxPrice;
 	private float $maxBudget;
 
-    public function __construct(int $id, int $energyType, float $quantity, float $minQuantity) {
-		;
+    public function __construct(int $id, int $energyType, float $quantity, float $minQuantity, int $extractMode, bool $extractModeStrict, string $energyFromCountry, float $maxPrice, float $maxBudget) {
+		$this->id = $id;
+		$this->energyType = $energyType;
+		$this->quantity = $quantity;
+		$this->minQuantity = $minQuantity;
+		$this->extractMode = $extractMode;
+		$this->extractModeStrict = $extractModeStrict;
+		$this->energyFromCountry = $energyFromCountry;
+		$this->maxPrice = $maxPrice;
+		$this->maxBudget = $maxBudget;
 	}
 
     public function jsonSerialize(): array {
-        return [
-            "nom" => $this->nom,
-        ];
+		return [
+			'id' => $this->id,
+			'energyType' => $this->energyType,
+			'quantity' => $this->quantity,
+			'minQuantity' => $this->minQuantity,
+			'extractMode' => $this->extractMode,
+			'extractModeStrict' => $this->extractModeStrict,
+			'energyFromCountry' => $this->energyFromCountry,
+			'maxPrice' => $this->maxPrice,
+			'maxBudget' => $this->maxBudget
+		];
     }
 
     public static function fromJSON(string $json) : Commande {
         $data = json_decode($json, true);
-        return new Commande();      
+        return new Commande($data['id'], $data['energyType'], $data['quantity'], $data['minQuantity'], $data['extractMode'], $data['extractModeStrict'], $data['energyFromCountry'], $data['maxPrice'], $data['maxBudget']);
     }
 };
 
