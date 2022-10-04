@@ -1,18 +1,19 @@
 <?php
 
 class Commande implements JsonSerializable {
+	private int $id;
     private int $energyType;
-    private float $wantedQuantity;
+    private float $quantity;
     private float $minQuantity;
-    private int $id;
-    private string $etablissement;
+    private int $extractMode;
+	private bool $extractModeStrict;
+	private string $energyFromCountry;
+    private float $maxPrice;
+	private float $maxBudget;
 
-    public function __construct() {
-        $this->nom = $nom;
-        $this->prenom = $prenom;
-        $this->id = $id;
-        $this->etablissement = $etablissement;
-    }
+    public function __construct(int $id, int $energyType, float $quantity, float $minQuantity) {
+		;
+	}
 
     public function jsonSerialize(): array {
         return [
