@@ -58,10 +58,28 @@ int main() {
 	fprintf(stderr,"\n------Tests de queue------\n");
 	Queue q = initQueue(5);
 	printQueue(q);
-	enfilerQueue(q, initSommet(1));
-	enfilerQueue(q, initSommet(3));
-	enfilerQueue(q, initSommet(5));
+	enfilerQueue(&q, 1);
+	enfilerQueue(&q, 3);
+	enfilerQueue(&q, 5);
 	printQueue(q);
+
+	fprintf(stderr,"\n------Parcours Largeur------\n");
+	Graphe g;
+	initGraphe(&g, "graphe2.txt");
+	int i;
+	parcoursLargeur(&g, 0);
+	for (i = 0; i < g.n_sommets; i++)
+		afficherChemin(g, 0, i);
+	
+	fprintf(stderr,"\n------Parcours Profondeur Recursif------\n");
+	parcoursProfondeurRecursif(&g);
+	afficherParcoursProfondeur(g);
+
+	fprintf(stderr,"\n\n------Parcours Profondeur Iteratif------\n");
+	parcoursProfondeurIteratif(&g);
+	afficherParcoursProfondeur(g);
+
+
 
 #endif
 

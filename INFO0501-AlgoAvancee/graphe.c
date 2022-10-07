@@ -100,4 +100,122 @@ void destroyGraphe(Graphe* g) {
 	g->n_sommets = g->oriente = g->value = 0;
 }
 
+void parcoursLargeur(Graphe* g, int r) {
+	int v = 0;
+	for (; v < g->n_sommets; v++) {
+		g->l_sommets[v].color = WHITE;
+		g->l_sommets[v].distance = MAX_INT;
+		g->l_sommets[v].pere = -1;
+	}
+	g->l_sommets[r].color = GRAY;
+	g->l_sommets[r].distance = 0;
+	Queue q = initQueue(g->n_sommets);
+	enfilerQueue(&q, r);
+	int u;
+	while (!isQueueEmpty(q)) {
+		u = defilerQueue(&q);
+		for (v = g->n_sommets - 1; v >= 0; v--) {
+			if (g->m_adj[u][v] && g->l_sommets[v].color == WHITE) {
+				//fprintf(stderr,"\n (u,v) = (%d,%d)",u,v);
+				g->l_sommets[v].color = GRAY;
+				g->l_sommets[v].distance = g->l_sommets[u].distance + 1;
+				g->l_sommets[v].pere = u;
+				enfilerQueue(&q, v);
+			}
+		}
+		g->l_sommets[u].color = BLACK;
+	}
+}
+
+void afficherChemin(Graphe g, int r, int v) {
+	if (v == r)
+		fprintf(stderr, "\n%d", v);
+	else {
+		if (g.l_sommets[v].pere == -1)
+			fprintf(stderr, "\nIl n'existe pas de chemin de %d à %d", r, v);
+		else {
+			afficherChemin(g, r, g.l_sommets[v].pere);
+			fprintf(stderr, " <-- %d", v);
+		}
+	}
+}
+
+void parcoursProfondeurRecursif(Graphe* g) {
+	int u = 0;
+	for (; u < g->n_sommets; u++) {
+		g->l_sommets[u].color = WHITE;
+		g->l_sommets[u].pere = -1;
+	}
+	int date = 0;
+	int maxDate = 2*g->n_sommets;
+	for (u = 0; u < g->n_sommets; u++) {
+		if (g->l_sommets[u].color == WHITE)
+			visiterVoisin(g, u, &date);
+		if (date == maxDate)
+			return;
+	}
+}
+
+void visiterVoisin(Graphe* g, int u, int* date) {
+	fprintf(stderr, "\nVisiterVoisin(%d)",u);
+	(*date)++;
+	g->l_sommets[u].d = (*date);
+	g->l_sommets[u].color = GRAY;
+	int v = g->n_sommets - 1;
+	for (; v >= 0; v--)
+		if (g->m_adj[u][v] && g->l_sommets[v].color == WHITE) {
+			g->l_sommets[v].pere = u;
+			visiterVoisin(g, v, date);
+		}
+	(*date)++;
+	g->l_sommets[u].f = (*date);
+	g->l_sommets[u].color = BLACK;
+}
+
+void afficherParcoursProfondeur(Graphe g) {
+	int u = 0;
+	for (; u < g.n_sommets; u++) {
+		fprintf(stderr,
+			"\nSommet : %d, Date debut : %d, Date fin : %d, Pere : %d",
+			u,
+			g.l_sommets[u].d,
+			g.l_sommets[u].f,
+			g.l_sommets[u].pere
+		);
+	}
+}
+
+void parcoursProfondeurIteratif(Graphe* g) {
+	//Invalide pour le moment
+
+	/**
+	int v = 0;
+	for (; v < g->n_sommets; v++) {
+		g->l_sommets[v].color = WHITE;
+		g->l_sommets[v].distance = MAX_INT;
+		g->l_sommets[v].pere = g->l_sommets[v].f = -1;
+	}
+	g->l_sommets[0].color = GRAY;
+	g->l_sommets[0].distance = 0;
+	g->l_sommets[0].d = 0;
+	Pile p = initPile(g->n_sommets);
+	empilerPile(&p, 0);
+	int u;
+	int date = 0;
+	while (!isPileEmpty(p)) {
+		u = depilerPile(&p);
+		for (v = g->n_sommets - 1; v >= 0; v--) {
+			if (g->m_adj[u][v] && g->l_sommets[v].color == WHITE) {
+				g->l_sommets[v].color = GRAY;
+				g->l_sommets[v].distance = g->l_sommets[u].distance + 1;
+				g->l_sommets[v].pere = u;
+				g->l_sommets[v].d = date++;
+				g->l_sommets[v].f = -1;
+				empilerPile(&p, v);
+			}
+		}
+		g->l_sommets[u].color = BLACK;
+	}
+	**/
+}
 

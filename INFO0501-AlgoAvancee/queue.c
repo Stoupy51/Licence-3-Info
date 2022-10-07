@@ -5,7 +5,8 @@ Queue initQueue(int size) {
 	Queue q;
 	q.size = size + 1;
 	q.head = q.tail = 0;
-	q.data = (Sommet*)malloc(sizeof(Sommet) * size);
+	q.data = (int*)malloc(sizeof(int) * q.size);
+	return q;
 }
 
 void destroyQueue(Queue q) {
@@ -21,22 +22,22 @@ int isQueueFull(Queue q) {
 	return (!q.tail && q.head == q.size - 1) || (q.head + 1) % q.size == q.tail;
 }
 
-void enfilerQueue(Queue q, Sommet s) {
-	if (isQueueFull(q)) {
+void enfilerQueue(Queue* q, int s) {
+	if (isQueueFull(*q)) {
 		fprintf(stderr,"\nErreur : La queue est pleine");
 		return;
 	}
-	q.data[q.head] = s;
-	q.head = (q.head + 1) % q.size;
+	q->data[q->head] = s;
+	q->head = (q->head + 1) % q->size;
 }
 
-Sommet defilerQueue(Queue q) {
-	if (isQueueEmpty(q)) {
+int defilerQueue(Queue* q) {
+	if (isQueueEmpty(*q)) {
 		fprintf(stderr,"\nErreur : La queue est vide");
-		return initSommet(-1);
+		return -1;
 	}
-	Sommet s = q.data[q.tail];
-	q.tail = (q.tail + 1) % q.size;
+	int s = q->data[q->tail];
+	q->tail = (q->tail + 1) % q->size;
 	return s;
 }
 
@@ -46,11 +47,12 @@ void printQueue(Queue q) {
 		fprintf(stderr,"Vide");
 		return;
 	}
-	fprintf(stderr,"\n[");
-	int i = 0;
+	fprintf(stderr,"[");
+	fprintf(stderr,"%d", q.data[0]);
+	int i = 1;
 	for (; i < q.size; i++)
-		fprintf(stderr,"%d ", q.data[i].id);
-	fprintf(stderr,"]");
+		fprintf(stderr,", %d", q.data[i]);
+	fprintf(stderr,"]\n");
 }
 
 
