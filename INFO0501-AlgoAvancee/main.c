@@ -81,7 +81,13 @@ int main() {
 #endif
 
 #if TP == 3
-	fprintf(stderr,"\n------Tests de Tas------\n");
+	fprintf(stderr,"\n------Tests de Tableau D'arêtes------\n");
+	Graphe g;
+	initGrapheAvecPoids(&g, "graphe5.txt");
+	Aretes* a = getAretes(g);
+	printAretes(a);
+	sortAretesInsertion(a);
+	printAretes(a);
 
 #endif
 

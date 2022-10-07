@@ -291,7 +291,7 @@ Arete* getAretes(Graphe g) {
 			if (g.m_adj[i][j])
 				k++;
 	Arete* aretes = (Arete*)malloc(sizeof(Arete) * k);
-	k = 0;
+	k = 1;
 	for (i = 0; i < g.n_sommets; i++) {
 		for (j = 0; j < g.n_sommets; j++) {
 			if (g.m_adj[i][j]) {
@@ -300,6 +300,29 @@ Arete* getAretes(Graphe g) {
 			}
 		}
 	}
+	aretes[0] = newArete(0, 0, k);
 	return aretes;
 }
 
+void printAretes(Arete* aretes) {
+	int i = 2;
+	fprintf(stderr, "\n[%d - %d : %d", aretes[1].u, aretes[1].v, aretes[1].poids);
+	for (; i < aretes[0].poids; i++)
+		fprintf(stderr, ", %d - %d : %d", aretes[i].u, aretes[i].v, aretes[i].poids);
+	fprintf(stderr, "]");
+}
+
+
+void sortAretesInsertion(Arete* aretes, int n) {
+	int i, j;
+	Arete tmp;
+	for (j = 2; j < aretes[0].poids; j++) {
+		tmp = aretes[j];
+		i = j - 1;
+		while (i > 0 && aretes[j].poids > tmp.poids) {
+			aretes[i + 1] = aretes[i];
+			i--;
+		}
+		aretes[i + 1] = tmp;
+	}
+}

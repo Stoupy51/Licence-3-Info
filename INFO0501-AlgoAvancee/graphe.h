@@ -35,6 +35,8 @@ void afficherParcoursProfondeur(Graphe g);
 void parcoursProfondeurIteratif(Graphe* g);
 
 Arete* getAretes(Graphe g);
+void printAretes(Arete* aretes);
+void sortAretesInsertion(Arete* aretes);
 
 
 #endif
