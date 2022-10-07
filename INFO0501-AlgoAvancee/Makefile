@@ -1,11 +1,11 @@
 
-main.exe: main.o graphe.o liste.o queue.o pile.o cellule.o sommet.o
+main.exe: main.o graphe.o liste.o queue.o pile.o cellule.o sommet.o arete.o
 	gcc -o $@ $^
 
-main.o: main.c graphe.o liste.o queue.o pile.o cellule.o sommet.o
+main.o: main.c graphe.o liste.o queue.o pile.o cellule.o sommet.o arete.o
 	gcc -c $<
 
-graphe.o: graphe.c graphe.h liste.o queue.o pile.o cellule.o sommet.o
+graphe.o: graphe.c graphe.h liste.o queue.o pile.o cellule.o sommet.o arete.o
 	gcc -c $<
 
 liste.o: liste.c liste.h cellule.o
@@ -21,6 +21,9 @@ cellule.o: cellule.c cellule.h
 	gcc -c $<
 
 sommet.o: sommet.c sommet.h
+	gcc -c $<
+
+arete.o: arete.c arete.h
 	gcc -c $<
 
 clean:

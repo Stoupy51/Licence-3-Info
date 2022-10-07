@@ -34,8 +34,7 @@ void initGraphe(Graphe* g, char* fileName) {
 		if (!g->oriente) {
 			while (ch_temp[0] != 'F') {
 				i = atoi(ch_temp);
-				fscanf(file,"%s", ch_temp);
-				j = atoi(ch_temp);
+				fscanf(file,"%d", j);
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCellule(j));
 				insertListe(&g->l_adj[j], newCellule(i));
@@ -46,11 +45,74 @@ void initGraphe(Graphe* g, char* fileName) {
 		else {
 			while (ch_temp[0] != 'F') {
 				i = atoi(ch_temp);
-				fscanf(file,"%s", ch_temp);
-				j = atoi(ch_temp);
+				fscanf(file,"%d", j);
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCellule(j));
 				g->m_adj[i][j] = 1;
+			}
+		}
+	}
+	else {
+		fprintf(stderr,"\n!!!!! Fichier introuvable !!!!!\n");
+	}
+}
+
+void initGrapheAvecPoids(Graphe* g, char* fileName) {
+	FILE* file;
+	char ch_temp[20];
+	if ((file = fopen(fileName, "r"))) {
+		fscanf(file,"%s", ch_temp);
+		fscanf(file,"%d", &g->n_sommets);
+		fscanf(file,"%s", ch_temp);
+		fscanf(file,"%d", &g->oriente);
+		fscanf(file,"%s", ch_temp);
+		fscanf(file,"%d", &g->value);
+		fscanf(file,"%s", ch_temp);
+		fscanf(file,"%s", ch_temp);
+
+		// Allocations mémoire pour la matrice et la liste d'adjacences, ainsi que la liste des sommets
+		g->m_stockage = (int*)malloc(sizeof(int)*g->n_sommets*g->n_sommets);
+		g->m_adj = (int**)malloc(sizeof(int*)*g->n_sommets);
+		g->m_stockagePoids = (int*)malloc(sizeof(int)*g->n_sommets*g->n_sommets);
+		g->m_poids = (int**)malloc(sizeof(int*)*g->n_sommets);
+		g->l_adj = (Liste*)malloc(sizeof(Liste)*g->n_sommets);
+		g->l_sommets = (Sommet*)malloc(sizeof(Sommet)*g->n_sommets);
+
+		// Initialisation de la matrice des adjacences, de la liste des adjacences, et la liste des sommets
+		int i, j, p;
+		for (i = 0; i < g->n_sommets; i++) {
+			g->m_adj[i] = &g->m_stockage[i*g->n_sommets];
+			g->m_poids[i] = &g->m_stockagePoids[i*g->n_sommets];
+			for (j = 0; j < g->n_sommets; j++) {
+				g->m_stockage[i*j] = 0;
+				g->m_stockagePoids[i*j] = 0;
+			}
+			g->l_adj[i] = initListe();
+			g->l_sommets[i] = initSommet(i);
+		}
+
+		// Si la liste n'est pas orientée
+		if (!g->oriente) {
+			while (ch_temp[0] != 'F') {
+				i = atoi(ch_temp);
+				fscanf(file,"%d", j);
+				fscanf(file,"%d", p);
+				fscanf(file,"%s", ch_temp);
+				insertListe(&g->l_adj[i], newCelluleAvecPoids(j, p));
+				insertListe(&g->l_adj[j], newCelluleAvecPoids(i, p));
+				g->m_adj[i][j] = g->m_adj[j][i] = 1;
+				g->m_poids[i][j] = g->m_poids[j][i] = p;
+			}
+		}
+		// Si elle est orientée
+		else {
+			while (ch_temp[0] != 'F') {
+				i = atoi(ch_temp);
+				fscanf(file,"%d", j);
+				fscanf(file,"%d", p);
+				fscanf(file,"%s", ch_temp);
+				insertListe(&g->l_adj[i], newCelluleAvecPoids(j, p));
+				g->m_poids[i][j] = p;
 			}
 		}
 	}
@@ -97,6 +159,8 @@ void destroyGraphe(Graphe* g) {
 	free(g->l_adj);
 	free(g->m_stockage);
 	free(g->m_adj);
+	free(g->m_stockagePoids);
+	free(g->m_poids);
 	g->n_sommets = g->oriente = g->value = 0;
 }
 
@@ -217,5 +281,25 @@ void parcoursProfondeurIteratif(Graphe* g) {
 		g->l_sommets[u].color = BLACK;
 	}
 	**/
+}
+
+Arete* getAretes(Graphe g) {
+	int i, j;
+	int k = 1;
+	for (i = 0; i < g.n_sommets; i++)
+		for (j = 0; j < g.n_sommets; j++)
+			if (g.m_adj[i][j])
+				k++;
+	Arete* aretes = (Arete*)malloc(sizeof(Arete) * k);
+	k = 0;
+	for (i = 0; i < g.n_sommets; i++) {
+		for (j = 0; j < g.n_sommets; j++) {
+			if (g.m_adj[i][j]) {
+				aretes[k] = newArete(i, j, g.m_poids[i][j]);
+				k++;
+			}
+		}
+	}
+	return aretes;
 }
 

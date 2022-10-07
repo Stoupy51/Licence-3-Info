@@ -5,7 +5,7 @@
 int main() {
 	fprintf(stderr,"\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
 
-#define TP 2
+#define TP 3
 #if TP == 1
 	/**
 	 * Tests de la liste chaînée
@@ -78,8 +78,10 @@ int main() {
 	fprintf(stderr,"\n\n------Parcours Profondeur Iteratif------\n");
 	parcoursProfondeurIteratif(&g);
 	afficherParcoursProfondeur(g);
+#endif
 
-
+#if TP == 3
+	fprintf(stderr,"\n------Tests de Tas------\n");
 
 #endif
 

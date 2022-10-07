@@ -5,6 +5,7 @@
 #include "liste.h"
 #include "queue.h"
 #include "pile.h"
+#include "arete.h"
 
 typedef struct graphe_t {
 	int n_sommets,
@@ -14,9 +15,13 @@ typedef struct graphe_t {
 	Sommet* l_sommets;
 	int* m_stockage;
 	int** m_adj;
+	// Poids pour les arêtes
+	int* m_stockagePoids;
+	int** m_poids;
 } Graphe;
 
 void initGraphe(Graphe* g, char* fileName);
+void initGrapheAvecPoids(Graphe* g, char* fileName);
 void printGraphe(Graphe g);
 void destroyGraphe(Graphe* g);
 
@@ -28,6 +33,8 @@ void visiterVoisin(Graphe* g, int u, int* date);
 void afficherParcoursProfondeur(Graphe g);
 
 void parcoursProfondeurIteratif(Graphe* g);
+
+Arete* getAretes(Graphe g);
 
 
 #endif

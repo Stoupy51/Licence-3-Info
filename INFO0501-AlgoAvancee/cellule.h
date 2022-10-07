@@ -9,10 +9,12 @@ typedef struct cellule Cellule, *CELLULE;
 struct cellule {
 	CELLULE prev, next;
 	int value;
+	int poids;
 };
 
 CELLULE initCellule();
-CELLULE newCellule(int x);
+CELLULE newCellule(int v);
+CELLULE newCelluleAvecPoids(int v, int p);
 
 #endif
 
