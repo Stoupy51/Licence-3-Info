@@ -62,7 +62,7 @@ $debug
 			<option value="BE">Belgique</option>
 		</select><br>
 		<label for="maxPrice">Prix maximum</label>
-		<input type="number" name="maxPrice"><label id="maxPriceLabel">€/kWh</label><br>
+		<input type="number" step="0.0001" name="maxPrice"><label id="maxPriceLabel">€/kWh</label><br>
 		<label for="maxBudget">Budget maximum</label>
 		<input type="number" name="maxBudget"><label>€</label><br>
 		<input type="submit" value="Envoyer">

@@ -1,0 +1,27 @@
+
+Si le client choisit :
+- Type d'énergie : Électricité
+- Quantité : 2573 kWh
+- Quantité minimale : 1200 kWh
+- Mode d'extraction : Nucléaire
+- Mode d'extraction : strict
+- Énergie provenant du pays : France
+- Prix maximum : 0,1546 €
+- Budget maximum : 400 €
+
+
+On obtiendra la sortie JSON :
+{
+  "id": 0,
+  "energyType": 0,
+  "quantity": 2573,
+  "minQuantity": 1200,
+  "extractMode": 3,
+  "extractModeStrict": true,
+  "energyFromCountry": "FR",
+  "maxPrice": 0.1546,
+  "maxBudget": 400,
+  "date": 1665232943
+}
+
+
