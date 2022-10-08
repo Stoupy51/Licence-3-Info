@@ -4,50 +4,54 @@
 Tas initTas(int size) {
 	Tas t;
 	t.size = size;
-	t.data = (int*)malloc(sizeof(int) * size);
+	t.data = (Arete*)malloc(sizeof(Arete) * size);
 	return t;
 }
 
-int parentTas(Tas t, int i) {
-	return (i - 1) / 2;
+int parentTas(int i) {
+	return i / 2;
 }
 
-int gaucheTas(Tas t, int i) {
+int gaucheTas(int i) {
+	return 2 * i;
+}
+
+int droiteTas(int i) {
 	return 2 * i + 1;
 }
 
-int droiteTas(Tas t, int i) {
-	return 2 * i + 2;
-}
-
 void entasserMax(Tas t, int i) {
-	int g = gaucheTas(t, i);
-	int d = droiteTas(t, i);
+	int g = gaucheTas(i);
+	int d = droiteTas(i);
 	int max = i;
-	if (g < t.size && t.data[g] > t.data[i])
+	if (g <= t.size && t.data[g].poids > t.data[i].poids)
 		max = g;
-	if (d < t.size && t.data[d] > t.data[max])
+	if (d <= t.size && t.data[d].poids > t.data[max].poids)
 		max = d;
 	if (max != i) {
-		int tmp = t.data[i];
+		Arete tmp = t.data[i];
 		t.data[i] = t.data[max];
 		t.data[max] = tmp;
 		entasserMax(t, max);
 	}
 }
 
-Tas construireTasMax(int* data, int size) {
-	Tas t = initTas(size);
+Tas construireTasMax(Arete* data) {
+	Tas t = initTas(data[0].poids);
 	int i;
-	for (i = 0; i < size; i++)
+	for (i = 0; i <= t.size; i++)
 		t.data[i] = data[i];
-	for (i = size / 2 - 1; i >= 0; i--)
+	
+	printPoidsAretes(t.data);
+	for (i = (t.size / 2 + 1); i > 0; i--)
 		entasserMax(t, i);
+	printPoidsAretes(t.data);
 	return t;
 }
 
 void destroyTas(Tas t) {
 	free(t.data);
+	t.size = 0;
 }
 
 

@@ -2,20 +2,19 @@
 #ifndef __tas_h__
 #define __tas_h__
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "arete.h"
 
 typedef struct tas {
-	int* data;
+	Arete* data;
 	int size;
 } Tas;
 
 Tas initTas(int size);
-int parentTas(Tas t, int i);
-int gaucheTas(Tas t, int i);
-int droiteTas(Tas t, int i);
+int parentTas(int i);
+int gaucheTas(int i);
+int droiteTas(int i);
 void entasserMax(Tas t, int i);
-Tas construireTasMax(int* data, int size);
+Tas construireTasMax(Arete* data);
 void destroyTas(Tas t);
 
 #endif

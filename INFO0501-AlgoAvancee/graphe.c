@@ -34,7 +34,7 @@ void initGraphe(Graphe* g, char* fileName) {
 		if (!g->oriente) {
 			while (ch_temp[0] != 'F') {
 				i = atoi(ch_temp);
-				fscanf(file,"%d", j);
+				fscanf(file,"%d", &j);
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCellule(j));
 				insertListe(&g->l_adj[j], newCellule(i));
@@ -45,7 +45,7 @@ void initGraphe(Graphe* g, char* fileName) {
 		else {
 			while (ch_temp[0] != 'F') {
 				i = atoi(ch_temp);
-				fscanf(file,"%d", j);
+				fscanf(file,"%d", &j);
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCellule(j));
 				g->m_adj[i][j] = 1;
@@ -95,8 +95,8 @@ void initGrapheAvecPoids(Graphe* g, char* fileName) {
 		if (!g->oriente) {
 			while (ch_temp[0] != 'F') {
 				i = atoi(ch_temp);
-				fscanf(file,"%d", j);
-				fscanf(file,"%d", p);
+				fscanf(file,"%d", &j);
+				fscanf(file,"%d", &p);
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCelluleAvecPoids(j, p));
 				insertListe(&g->l_adj[j], newCelluleAvecPoids(i, p));
@@ -108,8 +108,8 @@ void initGrapheAvecPoids(Graphe* g, char* fileName) {
 		else {
 			while (ch_temp[0] != 'F') {
 				i = atoi(ch_temp);
-				fscanf(file,"%d", j);
-				fscanf(file,"%d", p);
+				fscanf(file,"%d", &j);
+				fscanf(file,"%d", &p);
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCelluleAvecPoids(j, p));
 				g->m_poids[i][j] = p;
@@ -152,16 +152,16 @@ void printGraphe(Graphe g) {
 	fprintf(stderr,"\n");
 }
 
-void destroyGraphe(Graphe* g) {
+void destroyGraphe(Graphe g) {
 	int i;
-	for (i = 0; i < g->n_sommets; i++)
-		destroyListe(&g->l_adj[i]);
-	free(g->l_adj);
-	free(g->m_stockage);
-	free(g->m_adj);
-	free(g->m_stockagePoids);
-	free(g->m_poids);
-	g->n_sommets = g->oriente = g->value = 0;
+	for (i = 0; i < g.n_sommets; i++)
+		destroyListe(&g.l_adj[i]);
+	free(g.l_adj);
+	free(g.m_stockage);
+	free(g.m_adj);
+	free(g.m_stockagePoids);
+	free(g.m_poids);
+	g.n_sommets = g.oriente = g.value = 0;
 }
 
 void parcoursLargeur(Graphe* g, int r) {
@@ -285,12 +285,13 @@ void parcoursProfondeurIteratif(Graphe* g) {
 
 Arete* getAretes(Graphe g) {
 	int i, j;
-	int k = 1;
+	int k = 0;
 	for (i = 0; i < g.n_sommets; i++)
 		for (j = 0; j < g.n_sommets; j++)
 			if (g.m_adj[i][j])
 				k++;
-	Arete* aretes = (Arete*)malloc(sizeof(Arete) * k);
+	Arete* aretes = (Arete*)malloc(sizeof(Arete) * k + 1);
+	aretes[0] = newArete(0, 0, k);
 	k = 1;
 	for (i = 0; i < g.n_sommets; i++) {
 		for (j = 0; j < g.n_sommets; j++) {
@@ -300,29 +301,50 @@ Arete* getAretes(Graphe g) {
 			}
 		}
 	}
-	aretes[0] = newArete(0, 0, k);
 	return aretes;
 }
 
 void printAretes(Arete* aretes) {
+	int i = 1;
+	fprintf(stderr, "\n[\n");
+	for (; i <= aretes[0].poids; i++) {
+		if (i%10 == 0)
+			fprintf(stderr, "\n");
+		fprintf(stderr, " | %d-%d (%d)", aretes[i].u, aretes[i].v, aretes[i].poids);
+	}
+	fprintf(stderr, "\n]\n");
+}
+
+void printPoidsAretes(Arete* aretes) {
 	int i = 2;
-	fprintf(stderr, "\n[%d - %d : %d", aretes[1].u, aretes[1].v, aretes[1].poids);
-	for (; i < aretes[0].poids; i++)
-		fprintf(stderr, ", %d - %d : %d", aretes[i].u, aretes[i].v, aretes[i].poids);
-	fprintf(stderr, "]");
+	fprintf(stderr, "\n[%d",aretes[1].poids);
+	for (; i <= aretes[0].poids; i++) {
+		fprintf(stderr, ", %d", aretes[i].poids);
+	}
+	fprintf(stderr, "]\n");
 }
 
 
-void sortAretesInsertion(Arete* aretes, int n) {
+void sortAretesInsertion(Arete* aretes) {
+	fprintf(stderr, "\nSortAretesInsertion : %d aretes", aretes[0].poids - 1);
 	int i, j;
 	Arete tmp;
-	for (j = 2; j < aretes[0].poids; j++) {
+	for (j = 2; j <= aretes[0].poids; j++) {
 		tmp = aretes[j];
 		i = j - 1;
-		while (i > 0 && aretes[j].poids > tmp.poids) {
+		while (i > 0 && aretes[i].poids > tmp.poids) {
 			aretes[i + 1] = aretes[i];
 			i--;
 		}
 		aretes[i + 1] = tmp;
 	}
 }
+
+void sortAretesTas(Arete* aretes) {
+	Tas t = construireTasMax(aretes);
+	int i;
+	for (i = 1; i <= t.size; i++)
+		aretes[i] = t.data[i];
+	destroyTas(t);
+}
+

@@ -41,7 +41,7 @@ int main() {
 	Graphe g;
 	initGraphe(&g, "graphe1.txt");
 	printGraphe(g);
-	destroyGraphe(&g);
+	destroyGraphe(g);
 	printGraphe(g);
 
 
@@ -51,7 +51,7 @@ int main() {
 	scanf("%s", ch_temp);
 	initGraphe(&g, ch_temp);
 	printGraphe(g);
-	destroyGraphe(&g);
+	destroyGraphe(g);
 #endif
 
 #if TP == 2
@@ -84,10 +84,28 @@ int main() {
 	fprintf(stderr,"\n------Tests de Tableau D'arêtes------\n");
 	Graphe g;
 	initGrapheAvecPoids(&g, "graphe5.txt");
-	Aretes* a = getAretes(g);
-	printAretes(a);
+
+	Arete* a = getAretes(g);
+	printPoidsAretes(a);
 	sortAretesInsertion(a);
-	printAretes(a);
+	printPoidsAretes(a);
+	
+	fprintf(stderr,"\n------Tests du Tas------\n");
+	Arete* b = (Arete*)malloc(sizeof(Arete) * 11);
+	b[0] = newArete(0, 0, 10);
+	b[1] = newArete(0, 0, 4);
+	b[2] = newArete(0, 0, 1);
+	b[3] = newArete(0, 0, 3);
+	b[4] = newArete(0, 0, 2);
+	b[5] = newArete(0, 0, 16);
+	b[6] = newArete(0, 0, 9);
+	b[7] = newArete(0, 0, 10);
+	b[8] = newArete(0, 0, 14);
+	b[9] = newArete(0, 0, 8);
+	b[10] = newArete(0, 0, 7);
+	printPoidsAretes(b);
+	sortAretesTas(b);
+	printPoidsAretes(b);
 
 #endif
 

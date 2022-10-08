@@ -6,6 +6,7 @@
 #include "queue.h"
 #include "pile.h"
 #include "arete.h"
+#include "tas.h"
 
 typedef struct graphe_t {
 	int n_sommets,
@@ -23,7 +24,7 @@ typedef struct graphe_t {
 void initGraphe(Graphe* g, char* fileName);
 void initGrapheAvecPoids(Graphe* g, char* fileName);
 void printGraphe(Graphe g);
-void destroyGraphe(Graphe* g);
+void destroyGraphe(Graphe g);
 
 void parcoursLargeur(Graphe* g, int r);
 void afficherChemin(Graphe g, int r, int v);
@@ -36,7 +37,9 @@ void parcoursProfondeurIteratif(Graphe* g);
 
 Arete* getAretes(Graphe g);
 void printAretes(Arete* aretes);
+void printPoidsAretes(Arete* aretes);
 void sortAretesInsertion(Arete* aretes);
+void sortAretesTas(Arete* aretes);
 
 
 #endif
