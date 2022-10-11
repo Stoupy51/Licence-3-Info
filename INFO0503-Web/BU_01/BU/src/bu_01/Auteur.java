@@ -56,10 +56,13 @@ public class Auteur {
         return nom + ", " + dateFormatee;
     }
 
+    /**
+     * @return l'auteur converti en objet JSON
+     */
     public JSONObject toJSON() {
         JSONObject objet = new JSONObject();
-        objet.put("name", nom);
-        objet.put("date", dateDeNaissance.toZonedDateTime().format(DateTimeFormatter.ofPattern("uuuu/MM/dd")));
+        objet.put("nom", nom);
+        objet.put("dateDeNaissance", dateDeNaissance.toZonedDateTime().format(DateTimeFormatter.ofPattern("uuuu/MM/dd")));
         return objet;
     }
 }

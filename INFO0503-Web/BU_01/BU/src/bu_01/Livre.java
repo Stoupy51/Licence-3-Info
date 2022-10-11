@@ -1,5 +1,7 @@
 package bu_01;
 
+import org.json.JSONObject;
+
 /**
  * Classe représentant un livre.
  * @author Cyril Rabat et Jean-Charles BOISSON (2022-2023 small update)
@@ -46,5 +48,15 @@ public class Livre {
     public String toString() {
         return titre + " (" + auteur + ")";
     }
-    
+
+    /**
+     * @return le livre converti en objet JSON
+     */
+    public JSONObject toJSON() {
+        JSONObject objet = new JSONObject();
+        objet.put("titre", titre);
+        objet.put("auteur", auteur.toJSON());
+        return objet;
+    }
 }
+

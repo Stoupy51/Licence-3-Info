@@ -1,5 +1,8 @@
 package bu_01;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * Classe représentant une BU.
  * @author Cyril Rabat et Jean-Charles BOISSON (2021-2023 small updates)
@@ -79,5 +82,18 @@ public class BU {
 
         return contenu_BU;
     }
-        
+    
+    /**
+     * @return la BU convertie en objet JSON
+     */
+    public JSONObject toJSON() {
+        JSONObject objet = new JSONObject();
+        JSONArray livresArray = new JSONArray();
+        for (int i = 0; i < compteur; i++) {
+            livresArray.put(getLivre(i).toJSON());
+        }
+        objet.put("livres", livresArray);
+        return objet;
+    }
 }
+
