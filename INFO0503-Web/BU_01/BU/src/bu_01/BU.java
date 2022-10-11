@@ -22,7 +22,7 @@ public class BU {
     public BU() {
         livres = new java.util.HashMap<Integer,Livre>();
     }
-    
+        
     /**
      * Ajoute un livre à la BU et retourne son identifiant.
      * @param livre le livre à ajouter
@@ -89,11 +89,25 @@ public class BU {
     public JSONObject toJSON() {
         JSONObject objet = new JSONObject();
         JSONArray livresArray = new JSONArray();
-        for (int i = 0; i < compteur; i++) {
+        for (int i = compteur - livres.size(); i < compteur; i++) {
             livresArray.put(getLivre(i).toJSON());
         }
         objet.put("livres", livresArray);
         return objet;
     }
+
+    /**
+     * Crée une BU à partir d'un JSONObject
+     * @param json
+     */
+    public static BU fromJSON(JSONObject json) {
+        BU bu = new BU();
+        JSONArray livresArray = json.optJSONArray("livres");
+        for (int i = 0; i < livresArray.length(); i++) {
+            bu.ajouterLivre(Livre.fromJSON(livresArray.getJSONObject(i)));
+        }
+        return bu;
+    }
+
 }
 

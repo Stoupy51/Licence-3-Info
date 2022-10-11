@@ -58,5 +58,17 @@ public class Livre {
         objet.put("auteur", auteur.toJSON());
         return objet;
     }
+
+    /**
+     * Crée un Livre à partir d'un JSONObject
+     * @param json
+     */
+    public static Livre fromJSON(JSONObject json) {
+        return new Livre(
+            json.getString("titre"),
+            Auteur.fromJSON(json.getJSONObject("auteur"))
+        );
+    }
+
 }
 

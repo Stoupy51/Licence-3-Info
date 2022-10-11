@@ -1,5 +1,6 @@
 package bu_01;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.json.JSONObject;
@@ -62,8 +63,21 @@ public class Auteur {
     public JSONObject toJSON() {
         JSONObject objet = new JSONObject();
         objet.put("nom", nom);
-        objet.put("dateDeNaissance", dateDeNaissance.toZonedDateTime().format(DateTimeFormatter.ofPattern("uuuu/MM/dd")));
+        objet.put("annee",  dateDeNaissance.get(Calendar.YEAR));
+        objet.put("mois",   dateDeNaissance.get(Calendar.MONTH));
+        objet.put("jour",   dateDeNaissance.get(Calendar.DAY_OF_MONTH));
         return objet;
+    }
+
+    /**
+     * Crée un auteur à partir d'un JSONObject
+     * @param json
+     */
+    public static Auteur fromJSON(JSONObject json) {
+        return new Auteur(
+            json.getString("nom"),
+            new GregorianCalendar(json.getInt("annee"), json.getInt("mois"), json.getInt("jour"))
+        );
     }
 }
 

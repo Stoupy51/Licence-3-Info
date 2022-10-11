@@ -31,8 +31,10 @@ public class Test_BU_1 {
         bu.ajouterLivre(new Livre("Le seigneur des anneaux", jrrT));
         bu.ajouterLivre(new Livre("Eragon", new Auteur("Christopher Paolini", new GregorianCalendar(1983,11,17))));
         bu.ajouterLivre(new Livre("Le Silmarillion", jrrT));
-
         System.out.println("\n"+bu.toJSON()+"\n");
+
+        BU bu2 = BU.fromJSON(bu.toJSON());
+        System.out.println("\n"+bu2.toJSON()+"\n\n"+bu+bu2+"\n");
     }
 }
 
