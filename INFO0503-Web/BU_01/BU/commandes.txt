@@ -1,0 +1,8 @@
+Pour compiler :
+javac -d cls/ -sourcepath src/ src/bu_01/Test_BU_1.java
+
+Pour executer :
+java -cp cls/ bu_01.Test_BU_1
+
+Pour générer la documentation (avec l'auteur, la version, les attributs privés et le lien vers la documentation de JAVA 18)
+javadoc -private -author -version -link https://docs.oracle.com/en/java/javase/18/docs/api/ -d doc -sourcepath src/ -subpackages bu_01
