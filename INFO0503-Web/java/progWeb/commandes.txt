@@ -1,0 +1,12 @@
+Pour compiler :
+javac -d bin/ -cp lib/json-20220924.jar -sourcepath src/ src/prog_web/main_prog.java
+
+Pour executer (Tout sauf Windobe) :
+java -cp bin/:lib/json-20220924.jar prog_web.main_prog
+
+Pour executer (Windobe) :
+java -cp "bin;lib\json-20220924.jar" prog_web.main_prog
+
+Pour générer la documentation (avec l'auteur, la version, les attributs privés et le lien vers la documentation de JAVA 18)
+javadoc -private -author -version -link https://docs.oracle.com/en/java/javase/18/docs/api/ -d doc -sourcepath src/ -subpackages prog_web
+
