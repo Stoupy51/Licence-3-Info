@@ -1,6 +1,9 @@
 package bu_01;
 
 import java.util.GregorianCalendar;
+
+import org.json.JSONObject;
+
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -37,7 +40,7 @@ public class Auteur {
      * Retourne la date de naissance.
      * @return la date de naissance
      */
-    public GregorianCalendar dateDeNaissance() {
+    public GregorianCalendar getDateDeNaissance() {
         return dateDeNaissance;
     }
     
@@ -47,11 +50,17 @@ public class Auteur {
      */
     @Override
     public String toString() {
-	// Adaptation de la sortie selon le format jour/mois/année
-	// voir aussi : https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html
-	String dateFormatee = dateDeNaissance.toZonedDateTime().format(DateTimeFormatter.ofPattern("d MMM uuuu"));
-
+        // Adaptation de la sortie selon le format jour/mois/année
+        // voir aussi : https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html
+        String dateFormatee = dateDeNaissance.toZonedDateTime().format(DateTimeFormatter.ofPattern("d MMM uuuu"));
         return nom + ", " + dateFormatee;
     }
 
+    public JSONObject toJSON() {
+        JSONObject objet = new JSONObject();
+        objet.put("name", nom);
+        objet.put("date", dateDeNaissance.toZonedDateTime().format(DateTimeFormatter.ofPattern("uuuu/MM/dd")));
+        return objet;
+    }
 }
+
