@@ -326,7 +326,7 @@ void printPoidsAretes(Arete* aretes) {
 
 
 void sortAretesInsertion(Arete* aretes) {
-	fprintf(stderr, "\nSortAretesInsertion : %d aretes", aretes[0].poids - 1);
+	fprintf(stderr, "\nSortAretesInsertion : %d aretes", aretes[0].poids);
 	int i, j;
 	Arete tmp;
 	for (j = 2; j <= aretes[0].poids; j++) {
@@ -346,5 +346,54 @@ void sortAretesTas(Arete* aretes) {
 	for (i = 1; i <= t.size; i++)
 		aretes[i] = t.data[i];
 	destroyTas(t);
+}
+
+
+Arete* acpm_kruskal_tableau(Graphe g) {
+	Arete* A = getAretes(g);
+	sortAretesInsertion(A);
+	// Tableau des composantes connexes
+	int* cc = (int*)malloc(sizeof(int) * g.n_sommets);
+	int i, j, k, l, icc;
+	for (i = 0; i < g.n_sommets; i++)
+		cc[i] = i;
+	
+	// Ensembles d'aretes
+	k = 1;
+	for (i = 0; i < g.n_sommets; i++)
+		for (j = 0; j < g.n_sommets; j++)
+			if (g.m_adj[i][j])
+				k++;
+	Arete* E = (Arete*)malloc(sizeof(Arete) * k);
+
+	// Pour toutes les aretes prise par ordre croissant,
+	int u, v;
+	j = 0;
+	for (i = 1; i < k; i++) {
+		u = A[i].u;
+		v = A[i].v;
+		// Si les deux sommets ne sont pas en composante connexes :
+		if (cc[u] != cc[v]) {
+			// Enregistrer l'arête de la connexion
+			j++;
+			E[j] = A[i];
+
+			// Les connecter
+			icc = cc[v];
+			for (l = 0; l < g.n_sommets; l++)
+				if (cc[l] == icc)
+					cc[l] = cc[u];
+		}
+	}
+	E[0].poids = j;
+	return E;
+}
+
+void afficher_acpm(Arete* E) {
+	printAretes(E);
+	int i, j = 0;
+	for (i = 1; i <= E[0].poids; i++)
+		j += E[i].poids;
+	fprintf(stderr, "Arbre couvrant de poids %d !\n", j);
 }
 

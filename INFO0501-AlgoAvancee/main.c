@@ -5,7 +5,7 @@
 int main() {
 	fprintf(stderr,"\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
 
-#define TP 3
+#define TP 4
 #if TP == 1
 	/**
 	 * Tests de la liste chaînée
@@ -106,6 +106,16 @@ int main() {
 	printPoidsAretes(b);
 	sortAretesTas(b);
 	printPoidsAretes(b);
+
+#endif
+
+#if TP == 4
+	fprintf(stderr,"\n------Algorithme de Kruskal------\n");
+	Graphe g;
+	initGrapheAvecPoids(&g, "graphe5.txt");
+
+	Arete* E = acpm_kruskal_tableau(g);
+	afficher_acpm(E);
 
 #endif
 

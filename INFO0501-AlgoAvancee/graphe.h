@@ -41,6 +41,9 @@ void printPoidsAretes(Arete* aretes);
 void sortAretesInsertion(Arete* aretes);
 void sortAretesTas(Arete* aretes);
 
+Arete* acpm_kruskal_tableau(Graphe g);
+void afficher_acpm(Arete* E);
+
 
 #endif
 
