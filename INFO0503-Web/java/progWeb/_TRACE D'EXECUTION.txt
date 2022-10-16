@@ -1,0 +1,34 @@
+
+0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943
+
+
+energyType: 0
+quantity: 2573.0
+minQuantity: 1200.0
+extractMode: 3
+extractModeStrict: true
+energyFromCountry: FR
+maxPrice: 0.1546
+maxBudget: 400.0
+date: 1665232943
+
+JSON:
+{
+	"energyType": 0,
+	"date": 1665232943,
+	"code": "0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943",
+	"quantity": 2573,
+	"minQuantity": 1200,
+	"extractMode": 3,
+	"maxBudget": 400,
+	"energyFromCountry": "FR",
+	"extractModeStrict": "true",
+	"maxPrice": 0.1546
+}
+
+0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943
+
+
+Avant le tri : 0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943, 0-2700.0-1200.0-3-true-FR-0.1546-400.0-1665232943, 0-2300.0-1200.0-3-true-FR-0.1546-400.0-1665232943
+Après le tri : 0-2300.0-1200.0-3-true-FR-0.1546-400.0-1665232943, 0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943, 0-2700.0-1200.0-3-true-FR-0.1546-400.0-1665232943
+
