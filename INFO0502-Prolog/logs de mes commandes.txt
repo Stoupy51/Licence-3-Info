@@ -1,0 +1,41 @@
+
+1) Qui est chevalier ? Même question pour les chevaliers Mirage.
+chevalier(X).
+chevalier_mirage(X).
+
+
+2) Donnez la liste des fatima ?
+findall(X,fatima(X),ListeFatima).
+
+
+3) Quelles sont les chevalier qui sont des femmes ?
+chevalier(X),femelle(X).
+
+
+4) Afficher les paires de personnages qui sont partenaires.
+partenaires(X,Y).
+
+
+5) Quelles sont les planètes mortes du système Norh ?
+planete_morte(X,north).
+
+
+6) Indiquez les effectifs de la planète Juno ?
+print(Y),effectifs(X,Y),mh_principal(juno,X,B,C).
+
+
+7) Quels sont les Mortar Head construits en un seul exemplaire ?
+mh_produits(X,1).
+
+
+8) Qui a un partenaire qui est une fatima non humanoïde ?
+print(X),partenaires(X,Y),etlamr(Y).
+
+
+9) Affichez les chevaliers qui n'ont pas de partenaire connu.
+chevalier(X),\+partenaires(X,Y).
+
+10) Quels sont les chevaliers mirages qui ont un rôle important (roi, reine, ...) ?
+chevalier_mirage(X),(empereur(X);reine(X);roi(X);princesse(X);prince(X)).
+
+
