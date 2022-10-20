@@ -42,10 +42,10 @@ Tas construireTasMax(Arete* data) {
 	for (i = 0; i <= t.size; i++)
 		t.data[i] = data[i];
 	
-	printPoidsAretes(t.data);
+	//printPoidsAretes(t.data);
 	for (i = (t.size / 2 + 1); i > 0; i--)
 		entasserMax(t, i);
-	printPoidsAretes(t.data);
+	//printPoidsAretes(t.data);
 	return t;
 }
 

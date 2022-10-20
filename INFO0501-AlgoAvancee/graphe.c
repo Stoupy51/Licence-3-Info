@@ -91,6 +91,7 @@ void initGrapheAvecPoids(Graphe* g, char* fileName) {
 			g->l_sommets[i] = initSommet(i);
 		}
 
+		g->n_aretes = 0;
 		// Si la liste n'est pas orientée
 		if (!g->oriente) {
 			while (ch_temp[0] != 'F') {
@@ -102,6 +103,7 @@ void initGrapheAvecPoids(Graphe* g, char* fileName) {
 				insertListe(&g->l_adj[j], newCelluleAvecPoids(i, p));
 				g->m_adj[i][j] = g->m_adj[j][i] = 1;
 				g->m_poids[i][j] = g->m_poids[j][i] = p;
+				g->n_aretes += 2;
 			}
 		}
 		// Si elle est orientée
@@ -113,6 +115,7 @@ void initGrapheAvecPoids(Graphe* g, char* fileName) {
 				fscanf(file,"%s", ch_temp);
 				insertListe(&g->l_adj[i], newCelluleAvecPoids(j, p));
 				g->m_poids[i][j] = p;
+				g->n_aretes++;
 			}
 		}
 	}
@@ -359,12 +362,7 @@ Arete* acpm_kruskal_tableau(Graphe g) {
 		cc[i] = i;
 	
 	// Ensembles d'aretes
-	k = 1;
-	for (i = 0; i < g.n_sommets; i++)
-		for (j = 0; j < g.n_sommets; j++)
-			if (g.m_adj[i][j])
-				k++;
-	Arete* E = (Arete*)malloc(sizeof(Arete) * k);
+	Arete* E = (Arete*)malloc(sizeof(Arete) * g.n_sommets + 1);
 
 	// Pour toutes les aretes prise par ordre croissant,
 	int u, v;
@@ -386,6 +384,51 @@ Arete* acpm_kruskal_tableau(Graphe g) {
 		}
 	}
 	E[0].poids = j;
+	return E;
+}
+
+Arete* acpm_prim_tableau(Graphe g, int r) {
+	Arete* E = (Arete*)malloc(sizeof(Arete) * g.n_sommets + 1);
+	int* distances = (int*)malloc(sizeof(int) * g.n_sommets);
+	int* peres = (int*)malloc(sizeof(int) * g.n_sommets);
+	char* couverts = (char*)malloc(sizeof(char) * g.n_sommets);
+
+	int i;
+	for (i = 0; i < g.n_sommets; i++) {
+		distances[i] = MAX_INT;
+		peres[i] = -1;
+		couverts[i] = 1;
+	}
+
+	int u, j, min, k;
+	Cellule* v;
+	distances[r] = i = k = 0;
+	for (; i < g.n_sommets; i++) {
+		// u = minDistance(distances, couverts);
+		min = MAX_INT;
+		for (j = 0; j < g.n_sommets; j++) {
+			if (couverts[j] && distances[j] < min) {
+				u = j;
+				min = distances[u];
+			}
+		}
+
+		couverts[u] = 0;
+		for (v = g.l_adj[u].head; v != (Cellule*)NULL; v = v->next) {
+			if (couverts[v->value] && distances[v->value] > g.m_poids[u][v->value]) {
+				peres[v->value] = u;
+				distances[v->value] = g.m_poids[u][v->value];
+
+				// On retient les arêtes pour l'affichage
+				j = v->value + 1;
+				E[j].u = u;
+				E[j].v = v->value;
+				E[j].poids = g.m_poids[u][v->value];
+			}
+		}
+	}
+
+	E[0].poids = g.n_sommets;
 	return E;
 }
 

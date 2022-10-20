@@ -1,11 +1,10 @@
 
-#include "liste.h"
 #include "graphe.h"
 
 int main() {
 	fprintf(stderr,"\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
 
-#define TP 4
+#define TP 5
 #if TP == 1
 	/**
 	 * Tests de la liste chaînée
@@ -61,7 +60,7 @@ int main() {
 	enfilerQueue(&q, 1);
 	enfilerQueue(&q, 3);
 	enfilerQueue(&q, 5);
-	printQueue(q);
+	printQueue(q);https://cours.univ-reims.fr/pluginfile.php/131579/mod_resource/content/5/Tp5_Info0501.pdf
 
 	fprintf(stderr,"\n------Parcours Largeur------\n");
 	Graphe g;
@@ -116,6 +115,29 @@ int main() {
 
 	Arete* E = acpm_kruskal_tableau(g);
 	afficher_acpm(E);
+
+#endif
+
+#if TP == 5
+	fprintf(stderr,"\n------Algorithme de Prim------\n");
+	Graphe g;
+	initGrapheAvecPoids(&g, "graphe5.txt");
+
+	Arete* E = acpm_prim_tableau(g, 0);
+	afficher_acpm(E);
+
+	fprintf(stderr,"\n------Tests de la File de Priorites------\n");
+	int t[10] = {10, 4, 1, 3, 2, 16, 9, 6, 14, 8};
+	int* test = (int*)malloc(sizeof(int)*10);
+	int i;
+	for (i = 0; i < 10; i++)
+		test[i] = t[i];
+	FPM file = construireFPM(t, 10);
+	triParFPM(file);
+	fprintf(stderr,"\n[%d,%d,%d,%d,%d,%d,%d,%d,%d,%d]",t[0],t[1],t[2],t[3],t[4],t[5],t[6],t[7],t[8],t[9]);
+	int* d = file.data;
+	fprintf(stderr,"\n[%d,%d,%d,%d,%d,%d,%d,%d,%d,%d]",d[0],d[1],d[2],d[3],d[4],d[5],d[6],d[7],d[8],d[9]);
+	
 
 #endif
 

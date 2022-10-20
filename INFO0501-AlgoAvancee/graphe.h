@@ -7,11 +7,13 @@
 #include "pile.h"
 #include "arete.h"
 #include "tas.h"
+#include "file_priorites_min.h"
 
 typedef struct graphe_t {
 	int n_sommets,
 		oriente,
-		value;
+		value,
+		n_aretes;
 	Liste* l_adj;
 	Sommet* l_sommets;
 	int* m_stockage;
@@ -42,6 +44,7 @@ void sortAretesInsertion(Arete* aretes);
 void sortAretesTas(Arete* aretes);
 
 Arete* acpm_kruskal_tableau(Graphe g);
+Arete* acpm_prim_tableau(Graphe g, int r);
 void afficher_acpm(Arete* E);
 
 

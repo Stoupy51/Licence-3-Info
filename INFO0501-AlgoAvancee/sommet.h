@@ -8,7 +8,7 @@
 #define WHITE 0
 #define GRAY 1
 #define BLACK 2
-#define MAX_INT 2147483648
+#define MAX_INT 2147483647
 
 typedef struct sommet Sommet;
 struct sommet {
