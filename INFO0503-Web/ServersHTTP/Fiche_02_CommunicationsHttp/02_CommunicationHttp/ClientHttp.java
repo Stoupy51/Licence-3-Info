@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,6 +50,9 @@ public class ClientHttp {
         
         clavier.close();
 
+        //listeDonnees = "nom=Terrieur&prenom=Alain";
+        //System.out.println(listeDonnees);
+
         // Mise en forme de l'URL
         URL url = null;
         try { 
@@ -96,5 +100,5 @@ public class ClientHttp {
         System.out.println("Réponse du serveur : ");
         System.out.println(donnees);
     }
-   
 }
+

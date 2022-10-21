@@ -1,6 +1,6 @@
+
 import java.io.IOException;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpContext;
 import java.net.InetSocketAddress;
 
 /**
@@ -20,11 +20,11 @@ public class ServeurHttp {
             System.exit(0);
         }
 
-        serveur.createContext("/index", new AccueilHandler());
+        serveur.createContext("/", new AccueilHandler());
         serveur.setExecutor(null);
         serveur.start();
 
         System.out.println("Serveur démarré. Pressez CRTL+C pour arrêter.");
     }
-
 }
+
