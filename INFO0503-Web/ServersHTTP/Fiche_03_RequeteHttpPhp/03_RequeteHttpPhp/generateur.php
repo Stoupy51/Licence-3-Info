@@ -1,4 +1,6 @@
+
 <?php
+
 header("Content-type: application/json");
 
 if(isset($_POST['login']) && isset($_POST['motDePasse'])) {
@@ -11,3 +13,4 @@ else
     $tableau = [ "code" => "erreur", "message" => "données manquantes." ];
 
 echo json_encode($tableau);
+
