@@ -1,0 +1,11 @@
+
+Données pouvant être envoyées par le client :
+
+- type=commande&data={"energyType": 0,"date": 1665232943,"code": "0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943","quantity": 2573,"minQuantity": 1200,"extractMode": 3,"maxBudget": 400,"energyFromCountry": "FR","extractModeStrict": "true","maxPrice": 0.1546}
+
+- type=commande&data=0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943
+
+
+Données renvoyée par le serveur :
+Code de suivi au format JSON
+

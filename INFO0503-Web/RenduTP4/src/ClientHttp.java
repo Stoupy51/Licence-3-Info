@@ -15,15 +15,19 @@ import java.net.MalformedURLException;
 public class ClientHttp {
 
     public static void main(String[] args) {
-        String listeDonnees = "";
+        String data = "", listeDonnees = "";
 
-        listeDonnees = "nom=Terrieur&prenom=Alain";
+		// Données à envoyer (à commenter pour désactiver)
+		data = "{\"energyType\": 0,\"date\": 1665232943,\"code\": \"0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943\",\"quantity\": 2573,\"minQuantity\": 1200,\"extractMode\": 3,\"maxBudget\": 400,\"energyFromCountry\": \"FR\",\"extractModeStrict\": \"true\",\"maxPrice\": 0.1546}";
+		data = "0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943";
+
+        listeDonnees = "type=commande&data="+data;
         System.out.println(listeDonnees);
 
         // Mise en forme de l'URL
         URL url = null;
         try {
-            url = new URL("http://localhost:8080/index");
+            url = new URL("http://localhost:8080/send");
         } catch (MalformedURLException e) {
             System.err.println("URL incorrect : " + e);
             System.exit(0);

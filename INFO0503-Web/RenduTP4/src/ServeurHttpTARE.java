@@ -19,8 +19,9 @@ public class ServeurHttpTARE {
             System.err.println("Erreur lors de la création du serveur " + e);
             System.exit(0);
         }
-
+		
         serveur.createContext("/", new AccueilHandler());
+        serveur.createContext("/send", new SendHandler());
         serveur.setExecutor(null);
         serveur.start();
 
