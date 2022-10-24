@@ -45,3 +45,54 @@ entasser-max(t,i)
 	si max != i
 		echanger t[i] et t[max]
 		entasser-max(t,max)
+
+
+
+
+
+
+
+
+
+
+#Part 2 : Table d'adressage direct
+
+rechercher-adressage-direct(t,k):
+	return t[k]
+
+insérer-adressage-direct(t, x):
+	t[x.clé] = x
+
+supprimer-adressage-direct(t, x):
+	t[x.clé] = NIL
+
+
+insérer-hachage-chainée(t, x):
+	insérer x en tête de la liste t[h(x.cle)]
+
+rechercher-hachage-chainée(t, k):
+	rechercher un élément de clé k dans la liste t[h(k)]
+
+supprimer-hachage-chainée(t, x):
+	supprimer x de la liste t[h(x.cle)]
+
+
+afficher-arbre-recursif(x):
+	si x != NIL
+		afficher x.clé
+		afficher-arbre-recursif(x.gauche)
+		afficher-arbre-recursif(x.droite)
+
+afficher-arbre-iteratif(x):
+	si x != NIL
+		p = pile vide
+		empiler(p, x)
+		tant que p n'est pas vide:
+			y = depiler(p)
+			afficher x.clé
+			si x.droite != NIL
+				empiler(p, x.droite)
+			si x.gauche != NIL
+				empiler(p, x.gauche)
+
+
