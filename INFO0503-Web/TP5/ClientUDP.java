@@ -17,10 +17,12 @@ public class ClientUDP {
     public static int portEcoute = 2025;
     
     public static void main(String[] args) {
-        DatagramSocket socket = null;
+        int aw = 1;
+        while (true) {
         // Création de la socket
+        DatagramSocket socket = null;
         try {
-            socket = new DatagramSocket();
+            socket = new DatagramSocket(portEcoute+1);
         } catch(SocketException e) {
             System.err.println("Erreur lors de la création de la socket : " + e);
             System.exit(0);
@@ -30,7 +32,7 @@ public class ClientUDP {
         DatagramPacket msg = null;
         try {
             InetAddress adresse = InetAddress.getByName(null);
-            String message = "Bonjour";
+            String message = "Bonjour"+(aw++);
             byte[] tampon = message.getBytes();
             msg = new DatagramPacket(tampon, tampon.length, adresse, portEcoute);
             
@@ -46,9 +48,23 @@ public class ClientUDP {
             System.err.println("Erreur lors de l'envoi du message : " + e);
             System.exit(0);
         }
-
+        
+        // Création du message
+        byte[] tampon = new byte[1024];
+        msg = new DatagramPacket(tampon, tampon.length);
+        
+        // Lecture du message du client
+        try {
+            socket.receive(msg);
+            String texte = new String(msg.getData(), 0, msg.getLength());
+            System.out.println("Lu: " + texte);
+        } catch(IOException e) {
+            System.err.println("Erreur lors de la réception du message : " + e);
+            System.exit(0);
+        }
+        
         // Fermeture de la socket
         socket.close();
-    }
-
+    }}
 }
+

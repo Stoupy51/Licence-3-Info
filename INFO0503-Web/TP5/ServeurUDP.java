@@ -17,6 +17,8 @@ public class ServeurUDP {
     public static int portEcoute = 2025;
 
     public static void main(String[] args) {
+        while (true) {
+
         // Création de la socket
         DatagramSocket socket = null;
         try {        
@@ -31,17 +33,38 @@ public class ServeurUDP {
         DatagramPacket msg = new DatagramPacket(tampon, tampon.length);
 
         // Lecture du message du client
+        String texte = "";
         try {
             socket.receive(msg);
-            String texte = new String(msg.getData(), 0, msg.getLength());
+            texte = new String(msg.getData(), 0, msg.getLength());
             System.out.println("Lu: " + texte);
         } catch(IOException e) {
             System.err.println("Erreur lors de la réception du message : " + e);
             System.exit(0);
         }
 
+        // Création du message
+        try {
+            InetAddress adresse = InetAddress.getByName(null);
+            String message = "Bonjour Client "+msg.getAddress().getHostAddress()+" ayant répondu \""+texte+"\"";
+            tampon = message.getBytes();
+            msg = new DatagramPacket(tampon, tampon.length, adresse, portEcoute+1);
+            
+        } catch(UnknownHostException e) {
+            System.err.println("Erreur lors de la création du message : " + e);
+            System.exit(0);
+        }
+
+        // Envoi du message
+        try {
+            socket.send(msg);
+        } catch(IOException e) {
+            System.err.println("Erreur lors de l'envoi du message : " + e);
+            System.exit(0);
+        }
+
         // Fermeture de la socket
         socket.close();
-    }
-
+    }}
 }
+
