@@ -1,3 +1,4 @@
+
 import java.io.Serializable;
 
 /**
@@ -67,5 +68,5 @@ public class Personne implements Serializable {
     public String toString() {
         return prenom + " " + nom;
     }
-
 }
+
