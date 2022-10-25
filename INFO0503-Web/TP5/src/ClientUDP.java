@@ -9,6 +9,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 /**
  * Classe correspondant à un client UDP.
@@ -21,8 +22,6 @@ public class ClientUDP {
     public static int portEcoute = 2025;
     
     public static void main(String[] args) {
-        int compteur = 1;
-
         while (true) {
             // Création de la socket
             DatagramSocket socket = null;
@@ -37,7 +36,11 @@ public class ClientUDP {
             DatagramPacket msg = null;
             try {
                 InetAddress adresse = InetAddress.getByName(null);
-                RequeteCompteur requete = new RequeteCompteur("Moi", compteur++);
+                Scanner scan = new Scanner(System.in);
+                System.out.print("Entrez un nombre : ");
+                int num = scan.nextInt();
+                scan.close();
+                RequeteCompteur requete = new RequeteCompteur("Moi", num);
                 var baos = new ByteArrayOutputStream();
                 try {
                     ObjectOutputStream oos = new ObjectOutputStream(baos);
