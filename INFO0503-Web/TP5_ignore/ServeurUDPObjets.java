@@ -1,3 +1,4 @@
+package _ignore;
 
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
