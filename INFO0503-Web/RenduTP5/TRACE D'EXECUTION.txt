@@ -1,0 +1,35 @@
+
+Actions :
+- Lancement du ServeurGrosUDP
+- Lancement du ClientTareUDP
+- Lancement du ClientPoneUDP
+
+
+Logs :
+
+<ServeurGrosUDP>
+	Listening request...
+
+<ClientTareUDP>
+Envoie de la requête
+
+<ServeurGrosUDP>
+	Envoyé à 127.0.0.1:2026 : Le TARE TARE 1 envoie la requête : Requête de test
+
+<ClientTareUDP>
+	Lu: Le TARE TARE 1 envoie la requête : Requête de test
+
+
+
+<ServeurGrosUDP>
+	Listening request...
+
+<ClientPoneUDP>
+Envoie de la requête
+
+<ServeurGrosUDP>
+	Envoyé à 127.0.0.1:2026 : Le PONE PONE 1 envoie la requête : Requête de test
+
+<ClientPoneUDP>
+	Lu: Le PONE PONE 1 envoie la requête : Requête de testPone
+
