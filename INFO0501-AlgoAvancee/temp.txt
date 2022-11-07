@@ -96,3 +96,34 @@ afficher-arbre-iteratif(x):
 				empiler(p, x.gauche)
 
 
+
+// Gestion des sommets dans le calcul des plus courts chemins
+
+source-unique-initialisation(G, s):			O(S)
+	Pour chaque sommet v appartenant à G.S
+		v.d = MAX_INT
+		v.pere = NIL
+	s.d = 0
+
+
+relacher(u, v, w):					O(1)
+	Si v.d > (u.d + w(u,v)):
+		v.d = u.d + w(u,v)
+		v.pere = u
+
+
+Bellman-Ford(G, w, s):
+	source-unique-initialisation(G, s)
+	Pour i = 1 à (G.S - 1)
+		Pour chaque arc (u,v) appartenant à G.A
+			relacher(u,v,w)
+	Pour chaque arc (u,v) appartenant à G.A
+		Si v.d > u.d + w(u,v)
+			return Faux
+	return Vrai
+
+
+
+
+
+
