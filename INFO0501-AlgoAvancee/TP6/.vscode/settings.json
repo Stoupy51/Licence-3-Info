@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"cellule.h": "c",
+		"liste.h": "c"
+	}
+}

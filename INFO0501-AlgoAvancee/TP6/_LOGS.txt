@@ -1,0 +1,30 @@
+
+### Liste chainée ###
+
+Fichier : texte1.txt
+Taille de : 12 mots[Quebec., aperitif, aussi, mais, Quebec, du, animal, d'un, nom, le, est, Caribou]
+Temps d'exécution : 0.200ms
+
+Fichier : texte2.txt
+Taille de : 362 mots
+Temps d'exécution : 2.100ms
+
+Fichier : dico_france-quebec.txt
+Taille de : 777 mots
+Temps d'exécution : 9.900ms
+
+Fichier : histoire_quebec.txt
+Taille de : 12904 mots
+Temps d'exécution : 2.204 secondes
+
+Fichier : dico_ae.txt
+Taille de : 51115 mots
+Temps d'exécution : 33.160 secondes
+
+Fichier : dico.txt
+Taille de : 101684 mots
+Temps d'exécution : 218.483 secondes
+
+#####################################
+
+
