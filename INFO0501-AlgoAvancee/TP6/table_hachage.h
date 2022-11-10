@@ -9,11 +9,12 @@ typedef struct table_hachage {
 	int size;
 } TableHachage;
 
+unsigned long long stringToLongLong(char* c);
+
 TableHachage initTableHachage(int size);
 void printTableHachage(TableHachage l);
 void destroyTableHachage(TableHachage *l);
-
-unsigned long long stringToLongLong(char* c);
+int hachage(unsigned long long k, int size);
 
 
 /**

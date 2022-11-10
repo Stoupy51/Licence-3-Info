@@ -24,9 +24,8 @@ int main() {
 				fscanf(file, "%s", buffer);
 
 				// Liste Chainée
-				if (searchInListe(words, buffer) == NULL) {
+				if (searchInListe(words, buffer) == NULL)
 					insertListe(&words, newCellule(buffer));
-				}
 			}
 		}
 
@@ -37,14 +36,8 @@ int main() {
 
 		// Temps d'exécution
     	unsigned long t = (clock() -  begin) * 10000 / CLOCKS_PER_SEC;
-		if (t > 10000) {
-			float s = t * 0.0001;
-			fprintf(stderr, "\nTemps d'execution : %.3f secondes", s);
-		}
-		else {
-			float ms = t * 0.1;
-			fprintf(stderr, "\nTemps d'execution : %.3fms", ms);
-		}
+		float s = t * 0.0001;
+		fprintf(stderr, "\nTemps d'execution : %.3f secondes", s);
 	}
 
 	fprintf(stderr,"\n\nstringToLongLong(\"Abc\") == %ld", stringToLongLong("Abc"));
