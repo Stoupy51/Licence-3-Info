@@ -19,6 +19,8 @@ TableHachage initTableHachage(int size) {
 	TableHachage table;
 	table.listes = (Liste*)malloc(sizeof(Liste) * size);
 	table.size = size;
+	for (size--; size >= 0; size--)
+		table.listes[size] = initListe();
 	return table;
 }
 
@@ -49,6 +51,22 @@ int hachage(unsigned long long k, int size) {
 	return k % size;
 }
 
+void insertTableHachage(TableHachage *t, Cellule* c) {
+	insertListe(&t->listes[ hachage(stringToLongLong(c->word),t->size) ], c);
+}
 
+Cellule* searchInTableHachage(TableHachage t, char* word) {
+	return searchInListe(t.listes[ hachage(stringToLongLong(word), t.size) ], word);
+}
 
+void deleteFromTableHachage(TableHachage *t, Cellule* c) {
+	deleteFromListe(&t->listes[ hachage(stringToLongLong(c->word), t->size) ], c);
+}
+
+int wordsInTableHachage(TableHachage t) {
+	int i, count = 0;
+	for (i = 0; i < t.size; i++)
+		count += t.listes[i].size;
+	return count;
+}
 

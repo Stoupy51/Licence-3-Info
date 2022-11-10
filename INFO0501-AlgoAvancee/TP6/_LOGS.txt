@@ -1,30 +1,30 @@
 
-### Liste chainée ###
+Début du main()
 
 Fichier : texte1.txt
-Taille de : 12 mots[Quebec., aperitif, aussi, mais, Quebec, du, animal, d'un, nom, le, est, Caribou]
-Temps d'exécution : 0.200ms
+Temps d'execution de la ListeChainee : 0.001 secondes
+Temps d'execution de la TableHachage : 0.000 secondes
 
 Fichier : texte2.txt
-Taille de : 362 mots
-Temps d'exécution : 2.100ms
+Temps d'execution de la ListeChainee : 0.001 secondes
+Temps d'execution de la TableHachage : 0.000 secondes
 
 Fichier : dico_france-quebec.txt
-Taille de : 777 mots
-Temps d'exécution : 9.900ms
+Temps d'execution de la ListeChainee : 0.002 secondes
+Temps d'execution de la TableHachage : 0.001 secondes
 
 Fichier : histoire_quebec.txt
-Taille de : 12904 mots
-Temps d'exécution : 2.204 secondes
+Temps d'execution de la ListeChainee : 1.804 secondes
 
 Fichier : dico_ae.txt
-Taille de : 51115 mots
-Temps d'exécution : 33.160 secondes
+Temps d'execution de la ListeChainee : 25.781 secondes
+Temps d'execution de la TableHachage : 4.687 secondes
 
 Fichier : dico.txt
-Taille de : 101684 mots
-Temps d'exécution : 218.483 secondes
+Temps d'execution de la ListeChainee : 140.081 secondes
+Temps d'execution de la TableHachage : 26.932 secondes
 
-#####################################
+stringToLongLong("Abc") == 1077603
 
+Fin du main()
 

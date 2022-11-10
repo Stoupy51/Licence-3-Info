@@ -16,14 +16,17 @@ void printTableHachage(TableHachage l);
 void destroyTableHachage(TableHachage *l);
 int hachage(unsigned long long k, int size);
 
+void insertTableHachage(TableHachage *t, Cellule* c);
+Cellule* searchInTableHachage(TableHachage t, char* word);
+void deleteFromTableHachage(TableHachage *t, Cellule* c);
+
+int wordsInTableHachage(TableHachage t);
 
 /**
- * void insertTableHachage(TableHachage *t, Cellule* c);
- * 
 insérer-hachage-chainée(t, x):
 	insérer x en tête de la liste t[h(x.cle)]
 
-rechercher-hachage-chainée(t, k):
+rechercher-hachage-chainée(t, x):
 	rechercher un élément de clé k dans la liste t[h(k)]
 
 supprimer-hachage-chainée(t, x):
