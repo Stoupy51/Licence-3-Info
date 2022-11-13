@@ -1,0 +1,15 @@
+
+- Côté serveur :
+En attente d'une connexion...
+Connexion d'un client : Socket[addr=/127.0.0.1,port=53896,localport=5101]
+
+Lu et envoie de : Marché de Gros propose 5 MWH venant de PONE 1
+
+
+
+
+- Côté client :
+Envoi : Marché de Gros propose 5 MWH venant de PONE 1
+Lu: Requête lue par le serveur, avec contenu : Marché de Gros propose 5 MWH venant de PONE 1
+
+

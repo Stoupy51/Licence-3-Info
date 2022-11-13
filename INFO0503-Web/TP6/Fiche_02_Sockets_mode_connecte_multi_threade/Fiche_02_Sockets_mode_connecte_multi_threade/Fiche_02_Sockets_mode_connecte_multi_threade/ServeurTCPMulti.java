@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import src.ThreadConnexionAMI;
+
 /**
  * Classe correspondant à un serveur TCP multithreadé.
  * Le client envoie la chaine 'Bonjour' et lit une réponse de la part du serveur.
@@ -29,7 +31,7 @@ public class ServeurTCPMulti {
             Socket socketClient;
             while(true) {
             socketClient = socketServeur.accept();
-            ThreadConnexion t = new ThreadConnexion(socketClient);
+            ThreadConnexionAMI t = new ThreadConnexionAMI(socketClient);
             t.start();
             }
         } catch(IOException e) {
