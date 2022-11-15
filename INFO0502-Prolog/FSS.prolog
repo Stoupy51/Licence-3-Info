@@ -342,22 +342,3 @@ effectifs(republique_tran,1050).
 effectifs(monarchie_umoss,1200).
 effectifs(akd,2200).
 
-
-% Mes predicats :
-
-chevalier_mirage_feminin(X):-
-    chevalier_mirage(X),
-    femelle(X).
-
-role_important(X):-
-    empereur(X);
-    roi(X);
-    reine(X);
-    prince(X);
-    princesse(X).
-
-
-
-
-
-

@@ -9,19 +9,20 @@ findall(X,fatima(X),ListeFatima).
 
 
 3) Quelles sont les chevalier qui sont des femmes ?
-chevalier(X),femelle(X).
+femelle(X),chevalier(X).
+// femelle en premier car moins de femelles que de chevaliers
 
 
 4) Afficher les paires de personnages qui sont partenaires.
 partenaires(X,Y).
 
 
-5) Quelles sont les planètes mortes du système Norh ?
+5) Quelles sont les planètes mortes du système North ?
 planete_morte(X,north).
 
 
 6) Indiquez les effectifs de la planète Juno ?
-print(Y),effectifs(X,Y),mh_principal(juno,X,B,C).
+mh_principal(juno,X,_,_),effectifs(X,Y).
 
 
 7) Quels sont les Mortar Head construits en un seul exemplaire ?
@@ -29,7 +30,7 @@ mh_produits(X,1).
 
 
 8) Qui a un partenaire qui est une fatima non humanoïde ?
-print(X),partenaires(X,Y),etlamr(Y).
+partenaires(X,Y),\+fatima(X).
 
 
 9) Affichez les chevaliers qui n'ont pas de partenaire connu.
