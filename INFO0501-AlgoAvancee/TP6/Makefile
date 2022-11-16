@@ -1,5 +1,5 @@
 
-main.exe: main.o table_hachage.o liste.o cellule.o noeud.o includes.o
+main.uwu: main.o table_hachage.o liste.o cellule.o noeud.o includes.o
 	gcc -o $@ $^
 
 main.o: main.c table_hachage.o liste.o cellule.o noeud.o includes.o
@@ -14,10 +14,10 @@ liste.o: liste.c liste.h cellule.o includes.o
 cellule.o: cellule.c cellule.h includes.o
 	gcc -c $<
 
-noeud.o: cellule.c cellule.h includes.o
+noeud.o: noeud.c noeud.h includes.o
 	gcc -c $<
 
-includes.o: includes.h
+includes.o: includes.c includes.h
 	gcc -c $<
 
 
@@ -26,7 +26,7 @@ clean:
 	rm -f *.o
 
 delete: clean
-	rm -f main.exe
+	rm -f main.uwu
 
 restart: delete main.uwu
 

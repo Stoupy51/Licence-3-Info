@@ -79,7 +79,7 @@ int main() {
 #endif
 	}
 
-	fprintf(stderr,"\n\nstringToLongLong(\"Abc\") == %ld", stringToLongLong("Abc"));
+	fprintf(stderr,"\n\nstringToLongLong(\"Abc\") == %lld", stringToLongLong("Abc"));
 
 	fprintf(stderr,"\n\nFin du main()\n");	
 	return 0;
