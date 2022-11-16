@@ -14,6 +14,7 @@ struct noeud {
 
 Noeud* initNoeud(char* w);
 void freeNoeud(Noeud* n);
+void freeNoeudProfond(Noeud* n);
 
 #endif
 

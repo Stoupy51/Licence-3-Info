@@ -14,3 +14,12 @@ void freeNoeud(Noeud* n) {
 	free(n);
 }
 
+void freeNoeudProfond(Noeud* n) {
+	if (n == NULL)
+		return;
+	freeNoeudProfond(n->gauche);
+	freeNoeudProfond(n->droite);
+	free(n->word);
+	free(n);
+}
+

@@ -15,7 +15,7 @@ int main() {
 	unsigned long t;
 	float s;
 
-#define DoListe 0
+#define DoListe 1
 #define DoTableHachage 1
 
 	for (i = 0; i < 6; i++) {
