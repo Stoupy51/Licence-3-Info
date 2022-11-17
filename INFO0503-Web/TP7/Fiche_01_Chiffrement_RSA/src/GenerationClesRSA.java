@@ -1,11 +1,7 @@
 
 import java.security.KeyPairGenerator;
 import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 
 /**
  * Classe permettant de générer une paire de clés privée/publique et de les
