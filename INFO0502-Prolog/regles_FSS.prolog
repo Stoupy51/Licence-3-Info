@@ -89,6 +89,45 @@ nb_ch_mir() :-
 
 
 % 5) Trouver comment faire la somme des effectifs d'une planète donnée.
-//TODO
+effectifs_planete(X,N) :-
+    effectifs(A,N),
+    mh_principal(X,A,_,_).
+
+sum_of_planet(X) :-
+    (planete_habitee(X,_);planete_morte(X,_)),
+    findall(Y,effectifs_planete(X,Y),L),
+    sum_list(L,N),
+    format("Effectifs de la planète ~a : ~a",[X,N]), nl.
+
+
+% fsspedia
+fsspedia(X) :- male(X), format("~a est un male",[X]), nl.
+fsspedia(X) :- femelle(X), format("~a est une femelle",[X]), nl.
+fsspedia(X) :- empereur(X), format("~a est un empereur",[X]), nl.
+fsspedia(X) :- reine(X), format("~a est une reine",[X]), nl.
+fsspedia(X) :- roi(X), format("~a est un roi",[X]), nl.
+fsspedia(X) :- princesse(X), format("~a est une princesse",[X]), nl.
+fsspedia(X) :- prince(X), format("~a est un prince",[X]), nl.
+fsspedia(X) :- mh_meister(X), format("~a est un mh_meister",[X]), nl.
+fsspedia(X) :- fatima_might(X), format("~a est une fatima_might",[X]), nl.
+fsspedia(X) :- mh_might(X), format("~a est un mh_might",[X]), nl.
+fsspedia(X) :- est_en_vrai(X,Y), format("~a est en vrai ~a",[X,Y]), nl.
+fsspedia(X) :- fatima(X), format("~a est une fatima",[X]), nl.
+fsspedia(X) :- etlamr(X), format("~a est une etlamr",[X]), nl.
+fsspedia(X) :- chevalier(X), format("~a est un chevalier",[X]), nl.
+fsspedia(X) :- chevalier_mirage(X), format("~a est un chevalier_mirage",[X]), nl.
+fsspedia(X) :- aile_droite(Y,X), format("~a est dans l''aile droite ~a",[X,Y]), nl.
+fsspedia(X) :- aile_gauche(Y,X), format("~a est dans l''aile gauche ~a",[X,Y]), nl.
+fsspedia(X) :- partenaires(X,Y), format("~a est la partenaire de ~a",[X,Y]), nl.
+% reste flemme
+
+
+% Appels récursifs
+sds(X,Y) :- soleil(X,Y), X \== Y.
+sds(X,Y) :- sds(X,Z), soleil(Z,Y), Z \== Y.
+sds2(X,Y) :- soleil(X,Y), X \== Y.
+sds2(X,Y) :- soleil(Z,Y), Z \== Y, sds2(X,Z).
+% Première version non valide car l'appel récursif se fait avant la condition d'arrêt.
+
 
 
