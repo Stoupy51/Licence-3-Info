@@ -123,7 +123,16 @@ Bellman-Ford(G, w, s):
 	return Vrai
 
 
-
+Ford-Fulkenson(G, s, t)
+	Pour chaque arc (u,v) appartenant à G.A
+		(u,v).f = 0
+	Tant qu'il existe un chemin p de s à t dans le reseau residuel Gf
+		cf(p) = min(cf(u,v) : (u,v) est dans p)
+		Pour chaque arc (u,v) de p
+			Si (u,v) appartient à G.A
+				(u,v).f += cf(p)
+			Sinon
+				(v,u).f = (u,v).f - cf(p)
 
 
 
