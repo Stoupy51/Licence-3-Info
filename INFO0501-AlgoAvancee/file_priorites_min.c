@@ -52,7 +52,7 @@ void triParFPM(FPM t) {
 	t.data[0] = t.data[t.size-1];
 	t.data[t.size-1] = i;
 
-	int i, tmp;
+	int tmp;
 	for (i = 0; i < t.size / 2; i++)
 		entasserMinFPM(t, i);
 }

@@ -47,6 +47,11 @@ Arete* acpm_kruskal_tableau(Graphe g);
 Arete* acpm_prim_tableau(Graphe g, int r);
 void afficher_acpm(Arete* E);
 
+// TP 7
+void sourceUniqueInit(Graphe* g, int s);
+void relacher(Graphe* g, int u, int v);
+int bellmanFord(Graphe* g, int s);
+int dijkstra(Graphe* g, int s);
 
 #endif
 

@@ -2,10 +2,7 @@
 #ifndef __cellule_h__
 #define __cellule_h__
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#define WORDLENGTH 27
+#include "includes.h"
 
 typedef struct cellule Cellule;
 struct cellule {

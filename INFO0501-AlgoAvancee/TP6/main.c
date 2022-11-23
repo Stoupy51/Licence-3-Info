@@ -15,7 +15,7 @@ int main() {
 	unsigned long t;
 	float s;
 
-#define DoListe 0
+#define DoListe 1
 #define DoTableHachage 1
 
 	for (i = 0; i < 6; i++) {
@@ -79,7 +79,7 @@ int main() {
 #endif
 	}
 
-	fprintf(stderr,"\n\nstringToLongLong(\"Abc\") == %ld", stringToLongLong("Abc"));
+	fprintf(stderr,"\n\nstringToLongLong(\"Abc\") == %lld", stringToLongLong("Abc"));
 
 	fprintf(stderr,"\n\nFin du main()\n");	
 	return 0;

@@ -4,7 +4,7 @@
 int main() {
 	fprintf(stderr,"\n\n\n\n\n\n\n\n\n\n\n\n\nDébut du main()\n");
 
-#define TP 5
+#define TP 7
 #if TP == 1
 	/**
 	 * Tests de la liste chaînée
@@ -141,7 +141,34 @@ int main() {
 
 #endif
 
-	fprintf(stderr,"\nFin du main()\n");	
+#if TP == 7
+	fprintf(stderr,"\n------Algorithme de Bellman-Ford------\n");
+	Graphe g, g2;
+	int i, j;
+
+	initGrapheAvecPoids(&g, "graphe6.txt");
+	initGrapheAvecPoids(&g2, "graphe5.txt");
+
+	bellmanFord(&g, 0);
+	dijkstra(&g2, 0);
+	for (i = 0; i < g.n_sommets; i++)
+		afficherChemin(g, 0, i);
+
+	fprintf(stderr,"\n\n\n------Algorithme de Dijkstra------\n");
+	for (i = 0; i < g2.n_sommets; i++)
+		afficherChemin(g2, 0, i);
+
+	fprintf(stderr,"\n\n\n------Algorithme de Tout sommet à Tout sommet------\n");
+	for (i = 0; i < g2.n_sommets; i++) {
+		dijkstra(&g2, i);
+		for (j = 0; j < g2.n_sommets; j++)
+			afficherChemin(g2, i, j);
+	}
+
+
+#endif
+
+	fprintf(stderr,"\n\nFin du main()\n");	
 	return 0;
 }
 
