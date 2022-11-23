@@ -318,6 +318,7 @@ soleil(north,north).
 soleil(slowsa,north).
 soleil(stant,stant).
 soleil(nein,stant).
+soleil(ya,nein).
 
 asteroide(ddaka,stant).
 asteroide(fuka,stant).
