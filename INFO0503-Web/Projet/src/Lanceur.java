@@ -1,55 +1,51 @@
 
 package src;
 
-/**
- * Lanceur de test pour démarrer une communication TCP (basé sur la fiche 1 du
- * TP sur la communication TCP).
- * 
- * @author Jean-Charles BOISSON 11/2022
- * 
- * @version 1.0
- * 
- */
-public class Lanceur {
+import java.util.Scanner;
 
-	/**
-	 * Constructeur par défaut (pour éviter un warning lors de la génération de la
-	 * documentation)
-	 */
+import src.ami.ServeurTCPAMI;
+
+public class Lanceur {
 	Lanceur() {}
 
-	/**
-	 * Code de test : on prépare les Thread et on les lance (serveur puis client).
-	 * 
-	 * @param args Les arguments de la ligne de commande notamment pour fournir le
-	 *             chemin vers le fichier de configuration json.
-	 */
 	public static void main(String[] args) {
+		System.err.println("\n\n\n\n\n\n\n\n\n\n\n" + ConsoleColors.GREEN_BRIGHT + "Lancement du projet...\n" + ConsoleColors.RESET);
 
-		if (args.length == 0) {
-			System.out.println("Merci de donner un fichier de configuration json");
-			System.exit(0);
-		}
-
-		Configuration config = new Configuration(args[0]);
-
+		// Fichier de configuration
+		String fileString = args.length == 0 ? "config.json" : args[0];
+		Configuration config = new Configuration(fileString, !Configuration.fichierExiste(fileString));
 		String adresseServeurTCP = config.getString("adresseServeurTCP");
 		int portServeurTCP = config.getInt("portServeurTCP");
 
-		java.util.ArrayList<Thread> mesServices = new java.util.ArrayList<Thread>();
 
-		// On doit donner une référence d'objet implémentant l'interface Runnable pour
-		// créer un Thread
-		mesServices.add(new Thread(new ServeurTCP(portServeurTCP)));
-		mesServices.add(new Thread(new ClientTCP(adresseServeurTCP, portServeurTCP)));
 
-		java.util.Iterator<Thread> it = mesServices.iterator();
-		// Cela fonctionne ici car le serveur est démarré avant le client
-		// Il faudrait mieux appeler spécifiquement chaque Thread (notamment dans le
-		// projet)
-		while (it.hasNext()) {
-			Thread thread = it.next();
-			thread.start();
+		// Lancement du Serveur TCP AMI
+		ServeurTCPAMI serveurTCPAMI = new ServeurTCPAMI(portServeurTCP);
+		Thread threadAMI = new Thread(serveurTCPAMI);
+		threadAMI.start();
+
+		/**
+		 * Actions :
+		 * 0 - Fermeture de tout
+		 * 1 - Client TCP envoie une requête à l'AMI
+		 * 2 - ?
+		 * 3 - ?
+		 * 4 - ?
+		 * 5 - ?
+		 * 6 - ?
+		 */
+		while (true) {
+			System.err.println(ConsoleColors.GREEN_BRIGHT + "Entrez une action entre 1 et 6 : " + ConsoleColors.RESET);
+			Scanner in = new Scanner(System.in);
+			String action = in.nextLine();
+			switch (action) {
+				case "0":
+					System.exit(0);
+				case "1":
+					Thread t = new Thread(new ClientTCP(adresseServeurTCP, portServeurTCP));
+					t.start();
+			}
+			in.close();
 		}
 	}
 }

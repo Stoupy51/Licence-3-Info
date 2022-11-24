@@ -73,7 +73,13 @@ public class Messenger {
 	 * @param message Le message à afficher sur la sortie standard
 	 */
 	public void afficheMessage(String message) {
-		System.out.println(prefix + message);
+		System.err.println(ConsoleColors.RESET + prefix + message);
+	}
+	public void afficheErreur(String message) {
+		System.err.println(ConsoleColors.RED_BRIGHT + prefix + message + ConsoleColors.RESET);
+	}
+	public void afficheWarning(String message) {
+		System.err.println(ConsoleColors.ORANGE + prefix + message + ConsoleColors.RESET);
 	}
 
 	/**
@@ -91,5 +97,9 @@ public class Messenger {
 		configuration += "\tPréfix résultant = " + this.prefix + "\n";
 
 		return configuration;
+	}
+
+	public String getPrefix() {
+		return this.prefix;
 	}
 }

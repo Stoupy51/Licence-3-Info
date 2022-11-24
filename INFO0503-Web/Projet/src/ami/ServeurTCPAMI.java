@@ -1,5 +1,5 @@
 
-package src;
+package src.ami;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,22 +9,37 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 
+import src.GestionClesRSA;
+import src.Messenger;
+import src.ConsoleColors;
+
 /**
  * Classe correspondant à un serveur TCP multithreadé.
  * Serveur pour l'AMI (Autorité des Marchés Internationaux)
  */
-public class ServeurTCPAMI {
-	public static final int portEcoute = 5101;
+public class ServeurTCPAMI implements Runnable {
+	/** Port du serveur TCP (non modifiable) */
+	private final int portServeurTCP;
+	/** Outil de gestion des messages (non modifiable) */
+	private final Messenger gestionMessage;
 
-	public static void main(String[] args) {
+	/**
+	 * Constructeur du ServeurTCP (utilisable dans un Thread)
+	 */
+	public ServeurTCPAMI(int portServeurTCP) {
+		this.portServeurTCP = portServeurTCP;
+		this.gestionMessage = new Messenger("ServeurTCPAMI");
 		checkKeys();
+	}
 
+	@Override
+	public void run() {
 		// Création de la socket serveur
 		ServerSocket socketServeur = null;
 		try {
-			socketServeur = new ServerSocket(portEcoute);
+			socketServeur = new ServerSocket(portServeurTCP);
 		} catch (IOException e) {
-			System.err.println("Création de la socket impossible : " + e);
+			gestionMessage.afficheErreur("Création de la socket impossible : " + e);
 			System.exit(0);
 		}
 
@@ -32,22 +47,22 @@ public class ServeurTCPAMI {
 		try {
 			Socket socketClient;
 			while (true) {
-				System.out.println("En attente d'une connexion...");
+				gestionMessage.afficheWarning("En attente d'une connexion...");
 				socketClient = socketServeur.accept();
-				System.out.println("Connexion d'un client : " + socketClient);
-				ThreadConnexionAMI t = new ThreadConnexionAMI(socketClient);
+				gestionMessage.afficheWarning("Connexion d'un client : " + socketClient);
+				ThreadConnexionAMI t = new ThreadConnexionAMI(socketClient, gestionMessage);
 				t.start();
 			}
-		} catch (IOException e) {
-			System.err.println("Erreur lors de l'attente d'une connexion : " + e);
+		} catch (Exception e) {
+			gestionMessage.afficheErreur("Erreur lors de l'attente d'une connexion : " + e);
 			System.exit(0);
 		}
 
 		// Fermeture de la socket
 		try {
 			socketServeur.close();
-		} catch (IOException e) {
-			System.err.println("Erreur lors de la fermeture de la socket : " + e);
+		} catch (Exception e) {
+			gestionMessage.afficheErreur("Erreur lors de la fermeture de la socket : " + e);
 			System.exit(0);
 		}
 	}
@@ -55,7 +70,8 @@ public class ServeurTCPAMI {
 	// Partie Signatures
 	public static final String privateKeyFile = "privateKey.bin";
 	public static final String publicKeyFile = "publicKey.bin";
-	private static void checkKeys() {
+
+	private void checkKeys() {
 		if (!(new File(privateKeyFile).isFile()) || !(new File(publicKeyFile).isFile())) {
 			// Création d'un générateur RSA
 			KeyPairGenerator generateurCles = null;
@@ -63,7 +79,7 @@ public class ServeurTCPAMI {
 				generateurCles = KeyPairGenerator.getInstance("RSA");
 				generateurCles.initialize(2048);
 			} catch (NoSuchAlgorithmException e) {
-				System.err.println("Erreur lors de l'initialisation du générateur de clés : " + e);
+				gestionMessage.afficheErreur("Erreur lors de l'initialisation du générateur de clés : " + e);
 				return;
 			}
 			// Génération de la paire de clés
@@ -72,14 +88,15 @@ public class ServeurTCPAMI {
 			GestionClesRSA.sauvegardeClePrivee(paireCles.getPrivate(), privateKeyFile);
 			// Sauvegarde de la clé publique
 			GestionClesRSA.sauvegardeClePublique(paireCles.getPublic(), publicKeyFile);
-			System.out.println("Clés sauvegardées.");
+			gestionMessage.afficheMessage(ConsoleColors.GREEN + "Clées sauvegardées.");
 		}
 	}
 
+	/**
 	public String createSignatureCRADO() {
 		String r = "";
 
 		return r;
 	}
-
+	*/
 }

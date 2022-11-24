@@ -4,12 +4,16 @@ package src;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
 
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import src.ami.RequeteToAMI;
 
 /**
  * Classe correspondant à un client TCP <em>Runnable</em>.
@@ -50,15 +54,14 @@ public class ClientTCP implements Runnable {
 	 * Procédure qui sera mise en oeuvre via le start du Thread
 	 */
 	public void run() {
-
 		Socket socket = null;
 		try {
 			socket = new Socket(adresseServeurTCP, portServeurTCP);
 		} catch (UnknownHostException e) {
-			System.err.println("Erreur sur l'hôte : " + e);
+			gestionMessage.afficheErreur("Erreur sur l'hôte : " + e);
 			System.exit(0);
 		} catch (IOException e) {
-			System.err.println("Création de la socket impossible : " + e);
+			gestionMessage.afficheErreur("Création de la socket impossible : " + e);
 			System.exit(0);
 		}
 
@@ -67,41 +70,44 @@ public class ClientTCP implements Runnable {
 		try {
 			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-		} catch (IOException e) {
-			System.err.println("Association des flux impossible : " + e);
+		} catch (Exception e) {
+			gestionMessage.afficheErreur("Association des flux impossible : " + e);
 			System.exit(0);
 		}
 
-		String message = "Bonjour";
-		gestionMessage.afficheMessage("Envoi  " + message);
-		output.println(message);
+		// Envoi d'une requête
+		RequeteToAMI req = new RequeteToAMI(1,"Marché de Gros", "test requête");
+		try {
+			// Send req in TCP
+			OutputStream os = socket.getOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(os);
+			oos.writeObject(req);
+			oos.flush();
+		} catch (Exception e) {
+			gestionMessage.afficheErreur("Erreur lors de la sérialisation : " + e);
+			System.exit(0);
+		}
+		gestionMessage.afficheErreur("Test erreur");
+		gestionMessage.afficheMessage("Envoi  " + req);
+		output.println(req);
 
+		String message = "";
 		try {
 			message = input.readLine();
-		} catch (IOException e) {
-			System.err.println("Erreur lors de la lecture : " + e);
+		} catch (Exception e) {
+			gestionMessage.afficheErreur("Erreur lors de la lecture : " + e);
 			System.exit(0);
 		}
-		gestionMessage.afficheMessage("Lu     " + message);
+		gestionMessage.afficheMessage("Lu    " + message);
 
-		message = "Au revoir";
-		gestionMessage.afficheMessage("Envoi  " + message);
-		output.println(message);
-
+		// Fermeture de la connexion
 		try {
-			message = input.readLine();
-		} catch (IOException e) {
-			System.err.println("Erreur lors de la lecture : " + e);
-			System.exit(0);
-		}
-		gestionMessage.afficheMessage("Lu     " + message);
-
-		try {
+			gestionMessage.afficheWarning("Fermeture de la connexion avec le serveur : " + socket);
 			input.close();
 			output.close();
 			socket.close();
-		} catch (IOException e) {
-			System.err.println("Erreur lors de la fermeture des flux et de la socket : " + e);
+		} catch (Exception e) {
+			gestionMessage.afficheErreur("Erreur lors de la fermeture des flux et de la socket : " + e);
 			System.exit(0);
 		}
 	}
