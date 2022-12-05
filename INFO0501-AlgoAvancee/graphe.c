@@ -440,3 +440,76 @@ void afficher_acpm(Arete* E) {
 	fprintf(stderr, "Arbre couvrant de poids %d !\n", j);
 }
 
+// TP 7
+
+void sourceUniqueInit(Graphe* g, int s) {
+	int i = 0;
+	for (; i < g->n_sommets; i++) {
+		g->l_sommets[i].distance = MAX_INT;
+		g->l_sommets[i].pere = -1;
+	}
+	g->l_sommets[s].distance = 0;
+}
+
+void relacher(Graphe* g, int u, int v) {
+	long u_w = g->l_sommets[u].distance + g->m_poids[u][v];
+	if (g->l_sommets[v].distance > u_w) {
+		g->l_sommets[v].distance = u_w;
+		g->l_sommets[v].pere = u;
+	}
+}
+
+/**
+Bellman-Ford(G, w, s):
+	source-unique-initialisation(G, s)
+	Pour i = 1 à (G.S - 1)
+		Pour chaque arc (u,v) appartenant à G.A
+			relacher(u,v,w)
+	Pour chaque arc (u,v) appartenant à G.A
+		Si v.d > u.d + w(u,v)
+			return Faux
+	return Vrai
+*/
+int bellmanFord(Graphe* g, int s) {
+	sourceUniqueInit(g, s);
+	int i = 0;
+	int u;
+	Cellule* c;
+	for (; i < g->n_sommets; i++)
+		for (u = 0; u < g->n_sommets; u++)
+			for (c = g->l_adj[u].head; c != NULL; c = c->next)
+				relacher(g, u, c->value);
+	for (u = 0; u < g->n_sommets; u++)
+		for (c = g->l_adj[u].head; c != NULL; c = c->next)
+			if (g->l_sommets[c->value].distance > g->l_sommets[u].distance + g->m_poids[u][c->value])
+				return 0;
+	return 1;
+}
+
+int dijkstra(Graphe* g, int s) {
+	sourceUniqueInit(g, s);
+	int i, j, u, min;
+	Cellule* v;
+	char* couverts = (char*)malloc(sizeof(char) * g->n_sommets);
+	for (i = 0; i < g->n_sommets; i++)
+		couverts[i] = 0;
+
+	for (i = 0; i < g->n_sommets; i++) {
+		// u = minDistanceRestante
+		// Mieux : file de priorité
+		min = MAX_INT;
+		for (j = 0; j < g->n_sommets; j++) {
+			if (!couverts[j] && g->l_sommets[j].distance < min) {
+				u = j;
+				min = g->l_sommets[u].distance;
+			}
+		}
+		couverts[u] = 1;
+
+		// Relâcher chaque adjacent
+		for (v = g->l_adj[u].head; v != NULL; v = v->next)
+			relacher(g, u, v->value);
+	}
+	return 1;
+}
+

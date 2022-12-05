@@ -1,5 +1,5 @@
 
-main.exe: main.o graphe.o liste.o queue.o tas.o pile.o cellule.o sommet.o arete.o file_priorites_min.o
+main.uwu: main.o graphe.o liste.o queue.o tas.o pile.o cellule.o sommet.o arete.o file_priorites_min.o
 	gcc -o $@ $^
 
 main.o: main.c graphe.o liste.o queue.o tas.o pile.o cellule.o sommet.o arete.o file_priorites_min.o
@@ -36,8 +36,8 @@ clean:
 	rm -f *.o
 
 delete: clean
-	rm -f main.exe
+	rm -f main.uwu
 
-restart: delete main.exe
+restart: delete main.uwu
 
 

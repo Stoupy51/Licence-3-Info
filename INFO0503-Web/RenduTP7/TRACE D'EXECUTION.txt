@@ -1,0 +1,13 @@
+
+Lancement du programme...
+
+[ ServeurTCPAMI ] : En attente d'une connexion...
+[ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=60761,localport=5001]
+
+[ ClientTCP     ] : Connexion établie avec le serveur : Socket[addr=localhost/127.0.0.1,port=5001,localport=60761]
+[ ClientTCP     ] : Envoi  CodeDeSuivi{code=0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943, energyType=0, quantity=2573.0, minQuantity=1200.0, extractMode=3, extractModeStrict=true, energyFromCountry=FR, maxPrice=0.1546, maxBudget=400.0, date=1665232943}
+[ ClientTCP     ] : Fermeture de la connexion avec le serveur : Socket[addr=localhost/127.0.0.1,port=5001,localport=60761]
+
+[ ServeurTCPAMI ] : Lu    CodeDeSuivi{code=0-2573.0-1200.0-3-true-FR-0.1546-400.0-1665232943, energyType=0, quantity=2573.0, minQuantity=1200.0, extractMode=3, extractModeStrict=true, energyFromCountry=FR, maxPrice=0.1546, maxBudget=400.0, date=1665232943}
+[ ServeurTCPAMI ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=60761,localport=5001]
+
