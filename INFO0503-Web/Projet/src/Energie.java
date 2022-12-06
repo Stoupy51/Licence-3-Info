@@ -10,22 +10,21 @@ import org.json.JSONObject;
  * @author Alexandre Collignon
  */
 public class Energie implements Serializable {
-	private int type;
-    private float quantity;
+	private CodeDeSuivi codeDeSuivi;
 	private String signature;
 
-	public Energie(int type, float quantity, String signature) {
-		this.type = type;
-		this.quantity = quantity;
+	/** 
+	 * Création de l'énergie à partir d'un CodeDeSuivi
+	 */
+	public Energie(CodeDeSuivi codeDeSuivi, String signature) {
+		this.codeDeSuivi = codeDeSuivi;
 		this.signature = signature;
 	}
 
 	// Getters & Setters
-	public int getType() { return type; }
-	public float getQuantity() { return quantity; }
+	public CodeDeSuivi getCodeDeSuivi() { return codeDeSuivi; }
 	public String getSignature() { return signature; }
-	public void setType(int type) { this.type = type; }
-	public void setQuantity(float quantity) { this.quantity = quantity; }
+	public void setCodeDeSuivi(CodeDeSuivi codeDeSuivi) { this.codeDeSuivi = codeDeSuivi; }
 	public void setSignature(String signature) { this.signature = signature; }
 
 	/**
@@ -33,8 +32,7 @@ public class Energie implements Serializable {
      */
     public JSONObject toJSON() {
         JSONObject objet = new JSONObject();
-        objet.put("type", type);
-        objet.put("quantity", quantity);
+		objet.put("codeDeSuivi", codeDeSuivi.toJSON());
         objet.put("signature", signature);
         return objet;
     }
@@ -45,8 +43,7 @@ public class Energie implements Serializable {
      */
     public static Energie fromJSON(JSONObject json) {
         return new Energie(
-			json.getInt("type"),
-			json.getFloat("quantity"),
+			CodeDeSuivi.fromJSON(json.getJSONObject("codeDeSuivi")),
 			json.getString("signature")
 		);
     }
