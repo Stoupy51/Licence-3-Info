@@ -67,8 +67,8 @@ public class Messenger {
 	}
 
 	/**
-	 * Permet d'afficher un message préfixé (selon la configuration choisie à la
-	 * construction).
+	 * Permet d'afficher un message préfixé
+	 * (selon la configuration choisie à la construction).
 	 * 
 	 * @param message Le message à afficher sur la sortie standard
 	 */
@@ -83,19 +83,17 @@ public class Messenger {
 	}
 
 	/**
-	 * Redéfinition du toString d'Object pour indiquer la configuration actuelle
+	 * Redéfinition du toString pour indiquer la configuration actuelle
 	 * 
 	 * @return La configuration actuelle du Messenger
 	 */
 	@Override
 	public String toString() {
-
 		String configuration = "\nConfiguration actuelle :\n";
 		configuration += "\tIdentité         = " + this.id + "\n";
 		configuration += "\tDélimiteur avant = " + this.delimAV + "\n";
 		configuration += "\tDélimiteur après = " + this.delimAP + "\n";
 		configuration += "\tPréfix résultant = " + this.prefix + "\n";
-
 		return configuration;
 	}
 

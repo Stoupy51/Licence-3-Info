@@ -1,100 +1,96 @@
 
-package src.ami;
+package src.gros;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
+import java.io.ObjectInputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
-import src.GestionClesRSA;
+import org.json.JSONObject;
+
 import src.Messenger;
-import src.ConsoleColors;
 
 /**
  * Classe correspondant à un serveur UDP multithreadé.
  * Serveur pour le Marché de Gros
  */
 public class ServeurUDPGros implements Runnable {
-	private final int portServeurTCP;
+	private final int portServeurUDP;
 	private final Messenger gestionMessage;
 
 	/**
 	 * Constructeur du ServeurTCP (utilisable dans un Thread)
 	 */
-	public ServeurUDPGros(int portServeurTCP) {
-		this.portServeurTCP = portServeurTCP;
+	public ServeurUDPGros(int portServeurUDP) {
+		this.portServeurUDP = portServeurUDP;
 		this.gestionMessage = new Messenger("ServeurUDPGros");
-		checkKeys();
 	}
 
 	@Override
 	public void run() {
-		// Création de la socket serveur
-		ServerSocket socketServeur = null;
-		try {
-			socketServeur = new ServerSocket(portServeurTCP);
-		} catch (IOException e) {
-			gestionMessage.afficheErreur("Création de la socket impossible : " + e);
-			System.exit(0);
-		}
-
-		// Attente des connexions des clients
-		try {
-			Socket socketClient;
+		/**
+		 * Double 'while true' pour pouvoir relancer
+		 * la lecture des requêtes en cas d'erreur
+		 */
+		gestionMessage.afficheWarning("Serveur UDP Gros démarré.");
+		while (true) {
 			while (true) {
-				gestionMessage.afficheWarning("En attente d'une connexion...");
-				socketClient = socketServeur.accept();
-				gestionMessage.afficheWarning("Connexion d'un client : " + socketClient);
-				ThreadConnexionGROS t = new ThreadConnexionGROS(socketClient, gestionMessage);
-				t.start();
+				// Création de la socket
+				DatagramSocket socket = null;
+				try {
+					socket = new DatagramSocket(portServeurUDP);
+				} catch (SocketException e) {
+					gestionMessage.afficheErreur("Erreur lors de la création de la socket : " + e);
+					gestionMessage.afficheErreur("Extinction du serveur");
+					return;
+				}
+
+				// Lecture du message du client
+				JSONObject reponse = new JSONObject();
+				reponse.put("code", "KO");
+				DatagramPacket msg = null;
+				try {
+					// Création du message
+					byte[] tampon = new byte[1024];
+					msg = new DatagramPacket(tampon, tampon.length);
+					socket.receive(msg);
+					JSONObject requete = new JSONObject(new String(msg.getData(), 0, msg.getLength()));
+
+					switch (requete.getString("type")) {
+					case "TARE":
+						gestionMessage.afficheMessage("Requête reçue d'un TARE :\n" + requete);
+						// Si y'a de l'énergie, alors renvoyer YES BITCH
+						reponse.put("code", "OK");
+						break;
+
+					case "PONE":
+						reponse.put("code", "OK");
+						break;
+					}
+
+				} catch (IOException e) {
+					gestionMessage.afficheErreur("Erreur lors de la réception du message : " + e);
+					socket.close();
+					break;
+				}
+
+				// Envoie de la réponse au client : Création et envoi du segment UDP
+				try {
+					byte[] tampon = reponse.toString().getBytes();
+					DatagramPacket packet = new DatagramPacket(tampon, tampon.length, msg.getAddress(), msg.getPort());
+					socket.send(packet);
+				} catch (IOException e) {
+					gestionMessage.afficheErreur("Erreur lors de l'envoi du message : " + e);
+					socket.close();
+					break;
+				}
+				socket.close();
 			}
-		} catch (Exception e) {
-			gestionMessage.afficheErreur("Erreur lors de l'attente d'une connexion : " + e);
-			System.exit(0);
-		}
-
-		// Fermeture de la socket
-		try {
-			socketServeur.close();
-		} catch (Exception e) {
-			gestionMessage.afficheErreur("Erreur lors de la fermeture de la socket : " + e);
-			System.exit(0);
 		}
 	}
-
-	// Partie Signatures
-	public static final String privateKeyFile = "privateKey.bin";
-	public static final String publicKeyFile = "publicKey.bin";
-
-	private void checkKeys() {
-		if (!(new File(privateKeyFile).isFile()) || !(new File(publicKeyFile).isFile())) {
-			// Création d'un générateur RSA
-			KeyPairGenerator generateurCles = null;
-			try {
-				generateurCles = KeyPairGenerator.getInstance("RSA");
-				generateurCles.initialize(2048);
-			} catch (NoSuchAlgorithmException e) {
-				gestionMessage.afficheErreur("Erreur lors de l'initialisation du générateur de clés : " + e);
-				return;
-			}
-			// Génération de la paire de clés
-			KeyPair paireCles = generateurCles.generateKeyPair();
-			// Sauvegarde de la clé privée
-			GestionClesRSA.sauvegardeClePrivee(paireCles.getPrivate(), privateKeyFile);
-			// Sauvegarde de la clé publique
-			GestionClesRSA.sauvegardeClePublique(paireCles.getPublic(), publicKeyFile);
-			gestionMessage.afficheMessage(ConsoleColors.GREEN + "Clées sauvegardées.");
-		}
-	}
-
-	/**
-	public String createSignatureCRADO() {
-		String r = "";
-
-		return r;
-	}
-	*/
 }
+

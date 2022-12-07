@@ -1,5 +1,5 @@
 
-package src;
+package src.gros;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -43,7 +43,7 @@ public class ClientTCPGros {
 			System.exit(0);
 		}
 
-		// Envoi de 'Bonjour'
+		/*/ Envoi de 'Bonjour'
 		String name = "PONE 1";
 		RequeteAMIGros req = new RequeteAMIGros("Marché de Gros", "5 MWH venant de " + name);
 		try {
@@ -58,6 +58,7 @@ public class ClientTCPGros {
 		}
 		System.out.println("Envoi : " + req);
 		output.println(req);
+		*/
 
 		// Lecture de la réponse du serveur
 		String message = "";

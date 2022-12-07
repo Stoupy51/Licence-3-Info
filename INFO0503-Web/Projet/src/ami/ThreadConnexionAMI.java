@@ -2,14 +2,14 @@
 package src.ami;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import org.json.JSONObject;
 
 import src.Messenger;
 
@@ -32,17 +32,22 @@ public class ThreadConnexionAMI extends Thread {
 			output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream())), true);
 		} catch (IOException e) {
 			this.gestionMessage.afficheErreur("Association des flux impossible : " + e);
-			System.exit(0);
+			gestionMessage.afficheErreur("Extinction du serveur");
+			return;
 		}
 	}
 
 	@Override
 	public void run() {
 		try {
-			// Lecture de la requête
-			InputStream is = socketClient.getInputStream();
-			ObjectInputStream ois = new ObjectInputStream(is);
-			RequeteToAMI req = (RequeteToAMI) ois.readObject();
+			// Lecture de la requête en String
+			String req = input.readLine();
+			JSONObject json = new JSONObject(req);
+			String type = json.getString("type");
+			switch (type) {
+				case "hmm":
+					break;
+			}
 
 			// Envoie en réponse le contenu toString de la requête
 			gestionMessage.afficheMessage("Lu    " + req);
@@ -55,10 +60,8 @@ public class ThreadConnexionAMI extends Thread {
 		// Ensemble des catches
 		catch (IOException e) {
 			gestionMessage.afficheErreur("Erreur lors de la lecture de la requête : " + e);
-			System.exit(0);
-		} catch (ClassNotFoundException e) {
-			gestionMessage.afficheErreur("Erreur lors du cast de la requête : " + e);
-			System.exit(0);
+			gestionMessage.afficheErreur("Extinction du serveur");
+			return;
 		}
 
 		// Fermeture des flux et des sockets
@@ -69,7 +72,8 @@ public class ThreadConnexionAMI extends Thread {
 			socketClient.close();
 		} catch (IOException e) {
 			gestionMessage.afficheErreur("Erreur lors de la fermeture des flux et des sockets : " + e);
-			System.exit(0);
+			gestionMessage.afficheErreur("Extinction du serveur");
+			return;
 		}
 	}
 }

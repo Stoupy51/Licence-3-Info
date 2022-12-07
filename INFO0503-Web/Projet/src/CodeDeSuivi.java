@@ -38,7 +38,7 @@ public class CodeDeSuivi implements Comparable<CodeDeSuivi>, Serializable {
 			this.maxBudget = Float.parseFloat(parts[7]);
 			this.date = Integer.parseInt(parts[8]);
 		} catch (Exception e) {
-			System.out.println("\nErreur lors de la création du code de suivi : CODE INVALIDE\n");
+			System.out.println("\nErreur lors de la création du code de suivi 'CODE INVALIDE' : " + code);
 		}
 	}
 
