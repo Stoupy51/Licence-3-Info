@@ -73,7 +73,7 @@ class RevendeurHandler implements HttpHandler {
 
 				// Envoie de la commande en UDP au Marché de Gros et renvoie au revendeur
 				String r = ClientTareUDP.requete(gestionMessage, json, adresseServeurUDPTare, portServeurUDPGros);
-				gestionMessage.afficheMessage("Réponse du marché de gros : " + r);
+				gestionMessage.afficheWarning("Réponse du marché de gros, renvoie au revendeur : " + r);
 				JSONObject jsonReponse = new JSONObject(r);
 				reponse = jsonReponse.toString();
 

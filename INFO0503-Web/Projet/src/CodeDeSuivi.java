@@ -18,6 +18,7 @@ public class CodeDeSuivi implements Comparable<CodeDeSuivi>, Serializable {
 	private float maxPrice;
 	private float maxBudget;
 	private int date;
+	private String fournisseur;
 
 	/**
 	 * Crée un Code de suivi en utilisant le code fourni en paramètre
@@ -37,6 +38,7 @@ public class CodeDeSuivi implements Comparable<CodeDeSuivi>, Serializable {
 			this.maxPrice = Float.parseFloat(parts[6]);
 			this.maxBudget = Float.parseFloat(parts[7]);
 			this.date = Integer.parseInt(parts[8]);
+			this.fournisseur = parts[9];
 		} catch (Exception e) {
 			System.out.println("\nErreur lors de la création du code de suivi 'CODE INVALIDE' : " + code);
 		}
@@ -88,6 +90,10 @@ public class CodeDeSuivi implements Comparable<CodeDeSuivi>, Serializable {
 		return date;
 	}
 
+	public String getFournisseur() {
+		return fournisseur;
+	}
+
 	/**
 	 * @return une chaine de caractères au format "code-code-...-code"
 	 */
@@ -103,7 +109,8 @@ public class CodeDeSuivi implements Comparable<CodeDeSuivi>, Serializable {
 				+ "energyFromCountry=" + energyFromCountry + ", "
 				+ "maxPrice=" + maxPrice + ", "
 				+ "maxBudget=" + maxBudget + ", "
-				+ "date=" + date
+				+ "date=" + date + ", "
+				+ "fournisseur=" + fournisseur
 				+ '}';
 	}
 
@@ -122,6 +129,7 @@ public class CodeDeSuivi implements Comparable<CodeDeSuivi>, Serializable {
 		objet.put("maxPrice", maxPrice);
 		objet.put("maxBudget", maxBudget);
 		objet.put("date", date);
+		objet.put("fournisseur", fournisseur);
 		return objet;
 	}
 
@@ -140,6 +148,7 @@ public class CodeDeSuivi implements Comparable<CodeDeSuivi>, Serializable {
 		code += "-" + Float.toString(json.getFloat("maxPrice"));
 		code += "-" + Float.toString(json.getFloat("maxBudget"));
 		code += "-" + Integer.toString(json.getInt("date"));
+		code += "-" + json.getString("fournisseur");
 		return new CodeDeSuivi(code);
 	}
 

@@ -9,7 +9,7 @@ import org.json.JSONObject;
  * 
  * @author Alexandre Collignon
  */
-public class Energie implements Serializable {
+public class Energie implements Serializable, Comparable<Energie> {
 	private CodeDeSuivi codeDeSuivi;
 	private String signature;
 
@@ -47,5 +47,32 @@ public class Energie implements Serializable {
 			json.getString("signature")
 		);
     }
+
+	/**
+	 * Compare l'énergie avec une autre énergie.
+	 * - EnergyType
+	 * - EnergyFromCountry
+	 * - Quantity
+	 * - MaxPrice
+	 * - MaxBudget
+	 * 
+	 * @param commande
+	 * @return 1 si l'énergie respectre la commande
+	 */
+	@Override
+	public int compareTo(Energie commande) {
+		CodeDeSuivi cds = commande.getCodeDeSuivi();
+		if (
+			codeDeSuivi.getEnergyType() == cds.getEnergyType() &&
+			codeDeSuivi.getEnergyFromCountry().equals(cds.getEnergyFromCountry()) &&
+
+			codeDeSuivi.getQuantity() > cds.getMinQuantity() &&
+			codeDeSuivi.getMaxPrice() <= cds.getMaxPrice() &&
+			codeDeSuivi.getQuantity() * codeDeSuivi.getMaxPrice() <= cds.getMaxBudget()
+		) {
+			return 1;
+		}
+		return 0;
+	}
 }
 

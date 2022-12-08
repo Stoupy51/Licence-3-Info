@@ -36,10 +36,44 @@ if (
 	if(($jsonTexte = @file_get_contents($URL, false, $contexte)) !== false) {
 		// Analyse du JSON reçu
 		$tableau = json_decode($jsonTexte, true);
-		if($tableau['code'] == "OK")
-			echo "<p>Commande acceptée</p>";
+		if($tableau["code"] == "OK") {
+			$rep = <<<HTML
+
+		<h1>Commande acceptée</h1>
+		<h2>Energie reçue : </h2>
+		<table>
+			<tr>
+				<th>| Signature |</th>
+				<th>| Quantité |</th>
+				<th>| Quantité minimale |</th>
+				<th>| Mode d'extraction |</th>
+				<th>| Mode d'extraction strict |</th>
+				<th>| Prix maximum |</th>
+				<th>| Budget maximum |</th>
+				<th>| Fournisseur |</th>
+				<th>| Pays d'origine |</th>
+				<th>| Date |</th>
+			</tr>
+			<tr>
+				<td>{$tableau["energy"]["signature"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["quantity"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["minQuantity"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["extractMode"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["extractModeStrict"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["maxPrice"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["maxBudget"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["fournisseur"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["energyFromCountry"]}</td>
+				<td>{$tableau["energy"]["codeDeSuivi"]["date"]}</td>
+			</tr>
+		</table><br>
+		<h2>Code de suivi :</h2><p>{$tableau["energy"]["codeDeSuivi"]["code"]}</p>
+
+HTML;
+			echo $rep;
+		}
 		else
-			echo "<p>Commande refusée : ". $tableau['message']."</p>";
+			echo "<h1>Commande refusée : " . $tableau["message"] . "</h1>";
 	}
 	else
 		echo "<p>Une erreur est survenue lors de la récupération des données.</p>";

@@ -36,7 +36,8 @@ class Commande implements JsonSerializable {
 			'energyFromCountry' => $this->energyFromCountry,
 			'maxPrice' => $this->maxPrice,
 			'maxBudget' => $this->maxBudget,
-			'date' => $this->date
+			'date' => $this->date,
+			'fournisseur' => "null"
 		];
     }
 

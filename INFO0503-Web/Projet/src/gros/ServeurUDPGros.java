@@ -1,17 +1,17 @@
 
 package src.gros;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import src.CodeDeSuivi;
+import src.Energie;
+import src.JSONFile;
 import src.Messenger;
 
 /**
@@ -21,6 +21,8 @@ import src.Messenger;
 public class ServeurUDPGros implements Runnable {
 	private final int portServeurUDP;
 	private final Messenger gestionMessage;
+	private JSONFile energiesFile;
+	private JSONObject energiesObject;
 
 	/**
 	 * Constructeur du ServeurTCP (utilisable dans un Thread)
@@ -28,6 +30,72 @@ public class ServeurUDPGros implements Runnable {
 	public ServeurUDPGros(int portServeurUDP) {
 		this.portServeurUDP = portServeurUDP;
 		this.gestionMessage = new Messenger("ServeurUDPGros");
+
+		// Charge le fichier JSON
+		String fileString = "energies.json";
+		energiesFile = new JSONFile(fileString, !JSONFile.fichierExiste(fileString));
+		energiesObject = energiesFile.getJSON();
+
+		// Charge les énergies dans le JSONArray
+		try {
+			energiesObject.getJSONArray("energies");
+		} catch (Exception e) {
+			energiesObject.put("energies", new JSONArray());
+			energiesFile.setJSON(energiesObject);
+			energiesFile.sauvegarder();
+		}
+	}
+
+	private Boolean insertEnergy(JSONObject requete) {
+		// Insertion de l'énergie dans le JSONArray
+		JSONArray energiesArray = energiesObject.getJSONArray("energies");
+		energiesArray.put(requete.getJSONObject("energy"));
+
+		// Sauvegarde du JSONArray dans le fichier JSON
+		energiesObject.put("energies", energiesArray);
+		energiesFile.setJSON(energiesObject);
+		energiesFile.sauvegarder();
+		return true;
+	}
+
+	/**
+	 * Méthode permettant de traiter une requête
+	 * et extraire l'énergie correspondante à la commande
+	 * 
+	 * @param requete la requête à traiter
+	 * @return La réponse à la requête (l'énergie)
+	 */
+	private JSONObject extractEnergy(JSONObject requete) {
+		JSONObject json = new JSONObject();
+
+		// Création de l'énergie demandée pour la comparer avec les énergies du fichier
+		Energie energy, commande = new Energie(
+			CodeDeSuivi.fromJSON(requete.getJSONObject("data")),
+			null
+		);
+
+		JSONArray energiesArray = energiesObject.getJSONArray("energies");
+		int length = energiesArray.length();
+		for (int i = 0; i < length; i++) {
+			energy = Energie.fromJSON(energiesArray.getJSONObject(i));
+
+			// Si l'énergie est supérieure à la requête (respecte la commande), on l'envoie
+			if (energy.compareTo(commande) == 1) {
+				json.put("code", "OK");
+				json.put("energy", energy.toJSON());
+
+				// On supprime l'énergie du fichier
+				energiesArray.remove(i);
+				energiesObject.put("energies", energiesArray);
+				energiesFile.setJSON(energiesObject);
+				energiesFile.sauvegarder();
+				return json;
+			}
+		}
+
+		json.put("code", "KO");
+		json.put("message", "Aucune energie disponible pour le moment.");
+		return json;
 	}
 
 	@Override
@@ -50,32 +118,35 @@ public class ServeurUDPGros implements Runnable {
 				}
 
 				// Lecture du message du client
-				JSONObject reponse = new JSONObject();
-				reponse.put("code", "KO");
+				JSONObject requete = null;
 				DatagramPacket msg = null;
 				try {
-					// Création du message
+
 					byte[] tampon = new byte[1024];
 					msg = new DatagramPacket(tampon, tampon.length);
 					socket.receive(msg);
-					JSONObject requete = new JSONObject(new String(msg.getData(), 0, msg.getLength()));
-
-					switch (requete.getString("type")) {
-					case "TARE":
-						gestionMessage.afficheMessage("Requête reçue d'un TARE :\n" + requete);
-						// Si y'a de l'énergie, alors renvoyer YES BITCH
-						reponse.put("code", "OK");
-						break;
-
-					case "PONE":
-						reponse.put("code", "OK");
-						break;
-					}
+					requete = new JSONObject(new String(msg.getData(), 0, msg.getLength()));
 
 				} catch (IOException e) {
 					gestionMessage.afficheErreur("Erreur lors de la réception du message : " + e);
 					socket.close();
 					break;
+				}
+
+				// Traitement de la requête
+				JSONObject reponse = new JSONObject();
+				reponse.put("code", "KO");
+				switch (requete.getString("type")) {
+					case "TARE":
+						reponse = extractEnergy(requete);
+						gestionMessage.afficheMessage("Requête reçue d'un TARE :\n" + requete + "\n\nRéponse envoyée :" + reponse + "\n");
+						break;
+
+					case "PONE":
+						if (insertEnergy(requete)) {
+							reponse.put("code", "OK");
+						}
+						break;
 				}
 
 				// Envoie de la réponse au client : Création et envoi du segment UDP

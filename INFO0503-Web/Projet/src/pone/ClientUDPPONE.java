@@ -21,6 +21,7 @@ import src.Messenger;
 public class ClientUDPPONE implements Runnable {
 	private final String adresseServeurUDPTare;
 	private final int portServeurUDP;
+	private final String nomDuPONE = "ClientPoneUDP";
 	private final Messenger gestionMessage;
 	private int count;
 
@@ -36,7 +37,7 @@ public class ClientUDPPONE implements Runnable {
 	public ClientUDPPONE(String adresseServeurUDPTare, int portServeurUDP, int count) {
 		this.adresseServeurUDPTare = adresseServeurUDPTare;
 		this.portServeurUDP = portServeurUDP;
-		this.gestionMessage = new Messenger("ClientPoneUDP");
+		this.gestionMessage = new Messenger(nomDuPONE);
 		this.count = count;
 	}
 
@@ -67,17 +68,16 @@ public class ClientUDPPONE implements Runnable {
 
 			// Création d'une énergie au hasard
 			JSONObject obj = new JSONObject();
-			int q = new Random().nextInt(51) + 50;
-			String[] countries = { "FR", "AL", "ES", "IT", "EN_GB", "BE" };
 			obj.put("energyType", new Random().nextInt(3));
-			obj.put("quantity", q + new Random().nextInt(51) + 50);
-			obj.put("minQuantity", q);
+			obj.put("quantity", new Random().nextInt(5001) + 500);
+			obj.put("minQuantity", 0);
 			obj.put("extractMode", new Random().nextInt(5));
-			obj.put("extractModeStrict", "Y");
-			obj.put("energyFromCountry", countries[new Random().nextInt(6)]);
-			obj.put("maxPrice", new Random().nextInt(5));
-			obj.put("maxBudget", new Random().nextInt(5000) + 5);
+			obj.put("extractModeStrict", "N");
+			obj.put("energyFromCountry", "FR");
+			obj.put("maxPrice", new Random().nextInt(100)/100.0 + 0.01);
+			obj.put("maxBudget", 0);
 			obj.put("date", System.currentTimeMillis() / 1000L);
+			obj.put("fournisseur", nomDuPONE);
 			CodeDeSuivi code = CodeDeSuivi.fromJSON(obj);
 			Energie energie = new Energie(code, "signature");
 
@@ -110,8 +110,8 @@ public class ClientUDPPONE implements Runnable {
 				byte[] tampon = new byte[1024];
 				msg = new DatagramPacket(tampon, tampon.length);
 				socket.receive(msg);
-				JSONObject requete = new JSONObject(new String(msg.getData(), 0, msg.getLength()));
-				//gestionMessage.afficheMessage("Réponse reçue du TARE : " + requete);
+				//JSONObject requete = new JSONObject(new String(msg.getData(), 0, msg.getLength()));
+				//gestionMessage.afficheMessage("Réponse reçue du Marché de Gros : " + requete);
 
 			} catch (IOException e) {
 				gestionMessage.afficheErreur("Erreur lors de la réception du message : " + e);

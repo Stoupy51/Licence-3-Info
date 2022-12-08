@@ -4,43 +4,35 @@ package src;
 import org.json.JSONObject;
 
 /**
- * Classe permettant de créer/gérer un fichier de configuration.
- * 
- * @author Cyril Rabat (10/2018) et J.-C. Boisson (11/2022)
- *
- * @version 1.1
+ * Classe permettant de créer/gérer un fichier JSON.
  */
-public class Configuration {
-
-	/** Nom du fichier de configuration */
+public class JSONFile {
 	private final String nomFichier;
-
-	/** La version actuelle de la configuration */
-	private JSONObject config;
+	private JSONObject jsonObject;
 
 	/**
-	 * Ouverture d'un fichier de configuration.
+	 * Ouverture d'un fichier.
 	 * 
-	 * @param nomFichier le nom du fichier de configuration
+	 * @param nomFichier le nom du fichier
 	 */
-	public Configuration(String nomFichier) {
+	public JSONFile(String nomFichier) {
 		this.nomFichier = nomFichier;
 		charger();
 	}
 
 	/**
-	 * Ouverture/création d'un fichier de configuration.
+	 * Ouverture/création d'un fichier.
 	 * 
-	 * @param nomFichier Le nom du fichier de configuration.
-	 * @param creation   Si <em>true</em>, crée un nouveau fichier vide.
+	 * @param nomFichier Le nom du fichier.
+	 * @param creation   Si true, crée un nouveau fichier vide.
 	 */
-	public Configuration(String nomFichier, boolean creation) {
+	public JSONFile(String nomFichier, boolean creation) {
 		if (!creation) {
 			this.nomFichier = nomFichier;
 			charger();
 		} else {
 			this.nomFichier = nomFichier;
-			config = new JSONObject();
+			jsonObject = new JSONObject();
 		}
 	}
 
@@ -55,53 +47,19 @@ public class Configuration {
 	}
 
 	/**
-	 * Retourne la valeur associée à une clef.
-	 * 
-	 * @param clef le nom de la clef
-	 * @return la valeur de la clef (String)
+	 * Getter et Setter du JSON Object
 	 */
-	public String getString(String clef) {
-		return config.getString(clef);
-	}
+	public JSONObject getJSON() { return jsonObject; }
+	public void setJSON(JSONObject json) { jsonObject = json; }
 
 	/**
-	 * Retourne la valeur associée à une clef.
-	 * 
-	 * @param clef le nom de la clef
-	 * @return la valeur de la clef (int)
-	 */
-	public int getInt(String clef) {
-		return config.getInt(clef);
-	}
-
-	/**
-	 * Ajoute une valeur de type entier dans la configuration.
-	 * 
-	 * @param clef   le nom de la clef
-	 * @param valeur la valeur de la clef
-	 */
-	public void ajouterValeur(String clef, int valeur) {
-		config.put(clef, valeur);
-	}
-
-	/**
-	 * Ajoute une valeur de type chaine de caractères dans la configuration.
-	 * 
-	 * @param clef   le nom de la clef
-	 * @param valeur la valeur de la clef
-	 */
-	public void ajouterValeur(String clef, String valeur) {
-		config.put(clef, valeur);
-	}
-
-	/**
-	 * Charge un fichier de configuration en mémoire.
+	 * Charge un fichier en mémoire.
 	 */
 	private void charger() {
 		String json = null;
 		try {
 			json = new String(java.nio.file.Files.readAllBytes(new java.io.File(nomFichier).toPath()));
-			config = new JSONObject(json);
+			jsonObject = new JSONObject(json);
 		} catch (java.io.IOException ioe) {
 			System.err.println("An I/O error occurs reading from the stream");
 			System.err.println(ioe);
@@ -120,12 +78,12 @@ public class Configuration {
 	}
 
 	/**
-	 * Sauvegarde la configuration actuelle dans le fichier indiqué par
+	 * Sauvegardu fichier actuelle dans le fichier indiqué par
 	 * <em>nomFichier</em>.
 	 */
 	public void sauvegarder() {
 		try {
-			java.nio.file.Files.write(new java.io.File(nomFichier).toPath(), config.toString().getBytes());
+			java.nio.file.Files.write(new java.io.File(nomFichier).toPath(), jsonObject.toString(4).getBytes());
 		} catch (IllegalArgumentException iae) {
 			System.err.println("Options contains an invalid combination of options...");
 			System.err.println(iae);

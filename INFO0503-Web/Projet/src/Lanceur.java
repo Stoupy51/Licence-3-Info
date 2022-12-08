@@ -3,6 +3,8 @@ package src;
 
 import java.util.Scanner;
 
+import org.json.JSONObject;
+
 import src.ami.ServeurTCPAMI;
 import src.gros.ServeurUDPGros;
 import src.pone.ClientUDPPONE;
@@ -11,12 +13,11 @@ import src.tare.ServeurHttpTARE;
 public class Lanceur {
 
 	public static void main(String[] args) {
-		System.err.println("\n\n\n\n\n\n\n\n\n\n\n" + ConsoleColors.GREEN_BRIGHT + "Lancement du projet...\n"
-				+ ConsoleColors.RESET);
+		System.err.println("\n\n\n\n\n\n\n\n\n\n\n" + ConsoleColors.GREEN_BRIGHT + "Lancement du projet...\n" + ConsoleColors.RESET);
 
 		// Fichier de configuration
 		String fileString = args.length == 0 ? "config.json" : args[0];
-		Configuration config = new Configuration(fileString, !Configuration.fichierExiste(fileString));
+		JSONObject config = new JSONFile(fileString, !JSONFile.fichierExiste(fileString)).getJSON();
 		String adresseServeurs = config.getString("adresseServeurs");
 		int portServeurTCP = config.getInt("portServeurTCP");
 		int portServeurUDP = config.getInt("portServeurUDP");
@@ -76,6 +77,7 @@ public class Lanceur {
 				Thread threadTARE = new Thread(new ServeurHttpTARE(adresseServeurs, portServeurHTTP, portServeurUDP));
 				threadTARE.start();
 
+				// Lancement du Client UDP PONE
 				Thread pone = new Thread(new ClientUDPPONE(adresseServeurs, portServeurUDP, 100));
 				pone.start();
 
