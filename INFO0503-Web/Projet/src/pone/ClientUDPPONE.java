@@ -110,8 +110,9 @@ public class ClientUDPPONE implements Runnable {
 				byte[] tampon = new byte[1024];
 				msg = new DatagramPacket(tampon, tampon.length);
 				socket.receive(msg);
+				
 				//JSONObject requete = new JSONObject(new String(msg.getData(), 0, msg.getLength()));
-				//gestionMessage.afficheMessage("Réponse reçue du Marché de Gros : " + requete);
+				//gestionMessage.afficheMessage("Réponse reçue du Marché de Gros : " + requete + "\n");
 
 			} catch (IOException e) {
 				gestionMessage.afficheErreur("Erreur lors de la réception du message : " + e);

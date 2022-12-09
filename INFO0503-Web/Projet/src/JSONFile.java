@@ -83,7 +83,7 @@ public class JSONFile {
 	 */
 	public void sauvegarder() {
 		try {
-			java.nio.file.Files.write(new java.io.File(nomFichier).toPath(), jsonObject.toString(4).getBytes());
+			java.nio.file.Files.write(new java.io.File(nomFichier).toPath(), jsonObject.toString(2).getBytes());
 		} catch (IllegalArgumentException iae) {
 			System.err.println("Options contains an invalid combination of options...");
 			System.err.println(iae);

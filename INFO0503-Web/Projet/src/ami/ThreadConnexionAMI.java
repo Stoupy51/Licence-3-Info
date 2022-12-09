@@ -24,15 +24,15 @@ public class ThreadConnexionAMI extends Thread {
 
 	public ThreadConnexionAMI(Socket socketClient, Messenger gestionMessage) {
 		this.socketClient = socketClient;
-		this.gestionMessage = gestionMessage;
+		this.gestionMessage = new Messenger(gestionMessage.getId() + ":" + this.getName());
 
 		// Association d'un flux d'entrée et de sortie
 		try {
 			input = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 			output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream())), true);
 		} catch (IOException e) {
-			this.gestionMessage.afficheErreur("Association des flux impossible : " + e);
-			gestionMessage.afficheErreur("Extinction du serveur");
+			gestionMessage.afficheErreur("Association des flux impossible : " + e);
+			gestionMessage.afficheErreur("Extinction du thread");
 			return;
 		}
 	}
@@ -58,9 +58,9 @@ public class ThreadConnexionAMI extends Thread {
 		}
 
 		// Ensemble des catches
-		catch (IOException e) {
+		catch (Exception e) {
 			gestionMessage.afficheErreur("Erreur lors de la lecture de la requête : " + e);
-			gestionMessage.afficheErreur("Extinction du serveur");
+			gestionMessage.afficheErreur("Extinction du thread");
 			return;
 		}
 
@@ -72,7 +72,7 @@ public class ThreadConnexionAMI extends Thread {
 			socketClient.close();
 		} catch (IOException e) {
 			gestionMessage.afficheErreur("Erreur lors de la fermeture des flux et des sockets : " + e);
-			gestionMessage.afficheErreur("Extinction du serveur");
+			gestionMessage.afficheErreur("Extinction du thread");
 			return;
 		}
 	}

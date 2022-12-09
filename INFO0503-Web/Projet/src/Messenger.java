@@ -1,29 +1,20 @@
 
 package src;
 
-/**
- * Classe pour gérer l'affichage de messages dans System.out avec un préfixe.
- * 
- * @author Jean-Charles BOISSON 11/2022
- * 
- * @version 1.0
- * 
- */
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Messenger {
-
-	/** Identité enregistrée pour l'instance en cours (non modifiable). */
+	private final String fichierLogs = "logs.txt";
+	private final Path filePath = new File(fichierLogs).toPath();
 	private final String id;
-
-	/** Délimiteur mis avant l'identité (non modifiable). */
 	private final char delimAV;
-
-	/** Délimiteur mis après l'identité (non modifiable). */
 	private final char delimAP;
-
-	/**
-	 * Préfixe utilisé selon le <em>pattern</em> "delimAV id delimAP : " (généré à
-	 * la construction et non modifiable).
-	 */
 	private final String prefix;
 
 	/**
@@ -74,12 +65,33 @@ public class Messenger {
 	 */
 	public void afficheMessage(String message) {
 		System.err.println(ConsoleColors.RESET + prefix + message);
+		logsFile(prefix + message + "\n");
 	}
 	public void afficheErreur(String message) {
 		System.err.println(ConsoleColors.RED_BRIGHT + prefix + message + ConsoleColors.RESET);
+		logsFile("ERROR " + prefix + message + "\n");
 	}
 	public void afficheWarning(String message) {
 		System.err.println(ConsoleColors.ORANGE + prefix + message + ConsoleColors.RESET);
+		logsFile("WARN " + prefix + message + "\n");
+	}
+	private void logsFile(String message) {
+		try {
+			if (!new java.io.File(fichierLogs).exists()) {
+				java.nio.file.Files.write(filePath, "".getBytes());
+			}
+			Files.write(
+				filePath,
+				(
+					new SimpleDateFormat("yyyy/MM/dd H:m:s").format(new Date())
+					+ " -> "
+					+ message
+				).getBytes(),
+				StandardOpenOption.APPEND
+			);
+		} catch (IOException e) {
+			System.err.println(e);
+		}
 	}
 
 	/**
@@ -95,6 +107,10 @@ public class Messenger {
 		configuration += "\tDélimiteur après = " + this.delimAP + "\n";
 		configuration += "\tPréfix résultant = " + this.prefix + "\n";
 		return configuration;
+	}
+
+	public String getId() {
+		return this.id;
 	}
 
 	public String getPrefix() {

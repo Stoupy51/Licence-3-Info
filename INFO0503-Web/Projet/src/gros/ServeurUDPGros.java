@@ -139,13 +139,14 @@ public class ServeurUDPGros implements Runnable {
 				switch (requete.getString("type")) {
 					case "TARE":
 						reponse = extractEnergy(requete);
-						gestionMessage.afficheMessage("Requête reçue d'un TARE :\n" + requete + "\n\nRéponse envoyée :" + reponse + "\n");
+						gestionMessage.afficheMessage("Requête reçue d'un TARE :" + requete + "\nRéponse envoyée :" + reponse + "\n");
 						break;
 
 					case "PONE":
 						if (insertEnergy(requete)) {
 							reponse.put("code", "OK");
 						}
+						//gestionMessage.afficheMessage("Requête reçue d'un PONE :" + requete + "\nRéponse envoyée :" + reponse + "\n");
 						break;
 				}
 
