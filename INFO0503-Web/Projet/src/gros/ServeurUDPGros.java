@@ -155,7 +155,11 @@ public class ServeurUDPGros implements Runnable {
 					switch (requete.getString("type")) {
 						case "TARE":
 							reponse = extractEnergy(requete);
-							gestionMessage.afficheMessage("Requête reçue d'un TARE, envoie d'une énergie enregistrée !");
+							if (reponse.getString("code").equals("OK")) {
+								gestionMessage.afficheMessage("Energie extraite pour un TARE !");
+							} else {
+								gestionMessage.afficheMessage("Aucune énergie disponible pour un TARE !");
+							}
 							break;
 
 						case "PONE":

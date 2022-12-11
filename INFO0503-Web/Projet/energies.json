@@ -1,16 +1,1 @@
-{"energies": [{
-  "signature": "cTvoMg6hqv7IF6HU2hmGcwGseyTR9fUIm5Q8exzQtV/puG0ripTzP7px/EKwpSacv5tutd4xnjPuPygsd5lPeF+g1T4a5Zo3qD9jAdOD+a4+5dDK3d7BV2pUiA2lWl2Cv25k8Jf2IVxPJusT+Vt1ZIwML7MuLD/ro/i/OQ9Sxh99TzM/EmmRXD1JMaXHWuhmyvUXbc4vQjDgxj9njlmmC7nIs7EgP/ouCPJC+hSObYVRokAMoeN/Le+LpvjrI3QB/ILeepV5qTkXEIwSyFCOHP9lCCVjXife6Rq8Glkc5QXyQf6i4dMir30xwdOSrEGhRJryX9msBpe7rXwHyD9lCg==",
-  "codeDeSuivi": {
-    "energyType": 0,
-    "date": 1670782675,
-    "code": "0-1500.0-0.0-3-N-FR-0.05-0.0-1670782675-MyLittlePONE",
-    "quantity": 1500,
-    "minQuantity": 0,
-    "extractMode": 3,
-    "maxBudget": 0,
-    "fournisseur": "MyLittlePONE",
-    "energyFromCountry": "FR",
-    "extractModeStrict": "N",
-    "maxPrice": 0.05
-  }
-}]}
+{"energies": []}

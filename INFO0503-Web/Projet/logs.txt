@@ -1,15 +1,27 @@
 
-2022/12/11 19:17:56 -> WARN [ ServeurUDPGros ] : Serveur UDP Gros démarré.
-2022/12/11 19:17:56 -> WARN [ ServeurTCPAMI ] : Serveur TCP AMI démarré.
-2022/12/11 19:17:56 -> WARN [ ClientPoneUDP ] : Client UDP PONE démarré.
-2022/12/11 19:17:56 -> WARN [ ServeurHTTPTare ] : Serveur HTTP TARE démarré.
-2022/12/11 19:17:57 -> [ ClientPoneUDP ] : Demande d'une signature à l'AMI.
-2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=50986,localport=5001]
-2022/12/11 19:17:57 -> [ ServeurTCPAMI:Thread-7 ] : Demande d'une signature par un PONE validée.
-2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI:Thread-7 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=50986,localport=5001]
-2022/12/11 19:17:57 -> [ ClientPoneUDP ] : Signature reçue, envoie de l'énergie au Marché de Gros.
-2022/12/11 19:17:57 -> [ ServeurUDPGros ] : Demande de vérification de signature de l'énergie d'un PONE reçue.
-2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=50987,localport=5001]
-2022/12/11 19:17:57 -> [ ServeurTCPAMI:Thread-8 ] : Demande de vérification de signature par un GROS
-2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI:Thread-8 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=50987,localport=5001]
-2022/12/11 19:17:57 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car la signature est bonne.
+2022/12/11 19:33:26 -> WARN [ ServeurTCPAMI ] : Serveur TCP AMI démarré.
+2022/12/11 19:33:26 -> WARN [ ServeurUDPGros ] : Serveur UDP Gros démarré.
+2022/12/11 19:33:26 -> WARN [ ServeurHTTPTare ] : Serveur HTTP TARE démarré.
+2022/12/11 19:33:28 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
+2022/12/11 19:33:28 -> [ ServeurUDPGros ] : Aucune énergie disponible pour un TARE !
+2022/12/11 19:33:28 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur que Aucune energie disponible pour le moment.
+2022/12/11 19:33:40 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
+2022/12/11 19:33:40 -> [ ServeurUDPGros ] : Aucune énergie disponible pour un TARE !
+2022/12/11 19:33:40 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur que Aucune energie disponible pour le moment.
+2022/12/11 19:33:57 -> WARN [ ClientPoneUDP ] : Client UDP PONE démarré.
+2022/12/11 19:33:58 -> [ ClientPoneUDP ] : Demande d'une signature à l'AMI.
+2022/12/11 19:33:58 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=51445,localport=5001]
+2022/12/11 19:33:58 -> [ ServeurTCPAMI:Thread-7 ] : Demande d'une signature par un PONE validée.
+2022/12/11 19:33:58 -> WARN [ ServeurTCPAMI:Thread-7 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=51445,localport=5001]
+2022/12/11 19:33:58 -> [ ClientPoneUDP ] : Signature reçue, envoie de l'énergie au Marché de Gros.
+2022/12/11 19:33:58 -> [ ServeurUDPGros ] : Demande de vérification de signature de l'énergie d'un PONE reçue.
+2022/12/11 19:33:58 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=51446,localport=5001]
+2022/12/11 19:33:58 -> [ ServeurTCPAMI:Thread-8 ] : Demande de vérification de signature par un GROS
+2022/12/11 19:33:58 -> WARN [ ServeurTCPAMI:Thread-8 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=51446,localport=5001]
+2022/12/11 19:33:58 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car la signature est bonne.
+2022/12/11 19:34:13 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
+2022/12/11 19:34:13 -> [ ServeurUDPGros ] : Energie extraite pour un TARE !
+2022/12/11 19:34:13 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=51452,localport=5001]
+2022/12/11 19:34:13 -> [ ServeurTCPAMI:Thread-9 ] : Demande de vérification de signature par un TARE
+2022/12/11 19:34:13 -> WARN [ ServeurTCPAMI:Thread-9 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=51452,localport=5001]
+2022/12/11 19:34:13 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur car la signature est valide !

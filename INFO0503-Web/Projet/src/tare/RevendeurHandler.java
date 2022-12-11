@@ -76,25 +76,31 @@ class RevendeurHandler implements HttpHandler {
 				JSONObject json = new JSONObject(query);
 				gestionMessage.afficheMessage("Requête reçue par le revendeur, renvoie au Marché de Gros !");
 
-				// Envoie de la commande en UDP au Marché de Gros et renvoie au revendeur
+				// Envoie de la commande en UDP au Marché de Gros et Récupération de la réponse
 				String r = ClientTareUDP.requete(gestionMessage, json, adresseServeurUDPTare, portServeurUDPGros);
 				JSONObject jsonReponse = new JSONObject(r);
 
-				// Vérification de la signature de l'énergie
-				JSONObject reqToAMI = new JSONObject();
-				reqToAMI.put("type", "TARE");
-				reqToAMI.put("energy", jsonReponse.getJSONObject("energy"));
-				String code = ClientTCP.requeteToAMI(reqToAMI, adresseServeurTCPAmi, portServeurTCPAmi, gestionMessage);
-				if (code.equals("OK")) {
+				if (jsonReponse.getString("code").equals("KO")) {
 					reponse = jsonReponse.toString();
-					gestionMessage.afficheMessage("Réponse du marché de gros reçue, renvoie au revendeur car la signature est valide !");
+					gestionMessage.afficheMessage("Réponse du marché de gros reçue, renvoie au revendeur que : "+jsonReponse.getString("message"));
 				}
 				else {
-					JSONObject jsonErreur = new JSONObject();
-					jsonErreur.put("code", "KO");
-					jsonErreur.put("message", "Erreur lors de la vérification de la signature de l'énergie");
-					reponse = jsonErreur.toString();
-					gestionMessage.afficheMessage("Réponse du marché de gros reçue, erreur lors de la vérification de la signature de l'énergie !");
+					// Vérification de la signature de l'énergie
+					JSONObject reqToAMI = new JSONObject();
+					reqToAMI.put("type", "TARE");
+					reqToAMI.put("energy", jsonReponse.getJSONObject("energy"));
+					String code = ClientTCP.requeteToAMI(reqToAMI, adresseServeurTCPAmi, portServeurTCPAmi, gestionMessage);
+					if (code.equals("OK")) {
+						reponse = jsonReponse.toString();
+						gestionMessage.afficheMessage("Réponse du marché de gros reçue, renvoie au revendeur car la signature est valide !");
+					}
+					else {
+						JSONObject jsonErreur = new JSONObject();
+						jsonErreur.put("code", "KO");
+						jsonErreur.put("message", "Erreur lors de la vérification de la signature de l'énergie");
+						reponse = jsonErreur.toString();
+						gestionMessage.afficheMessage("Réponse du marché de gros reçue, erreur lors de la vérification de la signature de l'énergie !");
+					}
 				}
 
             } catch (UnsupportedEncodingException e) {

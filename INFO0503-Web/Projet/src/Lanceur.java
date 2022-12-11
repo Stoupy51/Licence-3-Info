@@ -32,11 +32,12 @@ public class Lanceur {
 		int portServeurPHP = config.getInt("portServeurPHP");
 
 		System.err.println(ConsoleColors.GREEN_BRIGHT + "Entrez une action entre 1 et 6 : " + ConsoleColors.RESET);
-		System.err.println("0 - Scénario A : Système avec une entité de chaque (Revendeur, TARÉ, Marché de Gros, PONE, Ami). Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande est toute de suite satisfaite car le PONE produit exactement le type d'énergie demandé. L'AMI enregistre donc l'achat et le Revendeur valide la commande au Client.");
-		System.err.println("1 - Scénario B : ?");
+		System.err.println("\n0 - Scénario A : Système avec une entité de chaque (Revendeur, TARÉ, Marché de Gros, PONE, Ami). Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande est toute de suite satisfaite car le PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
+		System.err.println("\n1 - Scénario B : Système avec une entité de chaque (Revendeur, TARÉ, Marché de Gros, PONE, Ami). Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande n'est pas satisfaite car le Marché de Gros ne possède aucune énergie enregistrée. Mais la commande peut être satisfaite au bout d'un certain temps (30 secondes) où PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
 		Scanner in = new Scanner(System.in);
 		String action = in.nextLine();
 
+		Energie energy = null;
 		switch (action) {
 
 			case "0": // Scénario A
@@ -47,15 +48,30 @@ public class Lanceur {
 				new Thread(new ServeurUDPGros(adresseServeurs, portServeurTCP, portServeurUDP, true)).start();
 				new Thread(new ServeurHttpTARE(adresseServeurs, portServeurTCP, adresseServeurs, portServeurHTTP, portServeurUDP)).start();
 
-				Energie energy = new Energie(new CodeDeSuivi("0-1500.0-0.0-3-N-FR-0.05-0.0-"+System.currentTimeMillis()/1000+"-MyLittlePONE"), "");
+				energy = new Energie(new CodeDeSuivi("0-1500.0-0.0-3-N-FR-0.05-0.0-"+System.currentTimeMillis()/1000+"-MyLittlePONE"), "");
 				new Thread(new ClientPONE(adresseServeurs, portServeurUDP, adresseServeurs, portServeurTCP, 1, energy)).start();
 
 				sleepPls(4000);
-				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Et vous pouvez maintenant commander en allant sur le site\n" + ConsoleColors.RESET);
 				break;
 
 			case "1": // Scénario B
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "Lancement du scénario B...\n" + ConsoleColors.RESET);
+				
+				// Lancement du Serveur TCP AMI, puis du Serveur UDP Gros, puis du Serveur HTTP TARE, puis du Client UDP PONE
+				new Thread(new ServeurTCPAMI(portServeurTCP)).start();
+				new Thread(new ServeurUDPGros(adresseServeurs, portServeurTCP, portServeurUDP, true)).start();
+				new Thread(new ServeurHttpTARE(adresseServeurs, portServeurTCP, adresseServeurs, portServeurHTTP, portServeurUDP)).start();
+
+				sleepPls(1000);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "Et vous pouvez maintenant commander en allant sur le site\n" + ConsoleColors.RESET);
+
+				// Ajout du PONE qui va produire de l'énergie
+				sleepPls(30000);
+				energy = new Energie(new CodeDeSuivi("0-1500.0-0.0-3-N-FR-0.05-0.0-"+System.currentTimeMillis()/1000+"-MyLittlePONE"), "");
+				new Thread(new ClientPONE(adresseServeurs, portServeurUDP, adresseServeurs, portServeurTCP, 1, energy)).start();
 				break;
 
 			case "10":
