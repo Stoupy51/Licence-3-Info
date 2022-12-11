@@ -82,7 +82,7 @@ class RevendeurHandler implements HttpHandler {
 
 				if (jsonReponse.getString("code").equals("KO")) {
 					reponse = jsonReponse.toString();
-					gestionMessage.afficheMessage("Réponse du marché de gros reçue, renvoie au revendeur que : "+jsonReponse.getString("message"));
+					gestionMessage.afficheMessage("Réponse du marché de gros reçue, renvoie au revendeur que : " + jsonReponse.getString("message"));
 				}
 				else {
 					// Vérification de la signature de l'énergie
