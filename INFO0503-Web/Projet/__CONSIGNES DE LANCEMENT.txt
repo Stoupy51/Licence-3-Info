@@ -1,0 +1,13 @@
+
+Lancez la méthode static main de la classe Lanceur.java
+Pas besoin d'arguments
+
+Elle indique les scénarios et l'avancement du projet.
+Et vous pouvez choisir le scénario à lancer avec la console.
+
+Les fichiers suivants peuvent être supprimés et sont générés au besoin :
+- energies.json
+- logs.txt
+- privateKey.bin
+- publicKey.bin
+

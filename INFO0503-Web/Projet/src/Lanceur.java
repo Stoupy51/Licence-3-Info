@@ -57,7 +57,7 @@ public class Lanceur {
 				new Thread(new ClientPONE(adresseServeurs, portServeurUDP, adresseServeurs, portServeurTCP, 1, energy)).start();
 
 				sleepPls(4000);
-				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP dans un autre terminal si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Et vous pouvez maintenant commander en allant sur le site\n" + ConsoleColors.RESET);
 				break;
 
@@ -70,7 +70,7 @@ public class Lanceur {
 				new Thread(new ServeurHttpTARE(adresseServeurs, portServeurTCP, adresseServeurs, portServeurHTTP, portServeurUDP)).start();
 
 				sleepPls(1000);
-				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP dans un autre terminal si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Et vous pouvez maintenant commander en allant sur le site\n" + ConsoleColors.RESET);
 
 				// Ajout du PONE qui va produire de l'énergie
@@ -91,7 +91,7 @@ public class Lanceur {
 				new Thread(new ClientPONE(adresseServeurs, portServeurUDP, adresseServeurs, portServeurTCP, 1, energy)).start();
 
 				sleepPls(4000);
-				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP dans un autre terminal si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Et vous pouvez maintenant commander en allant sur le site\n" + ConsoleColors.RESET);
 
 				// Ajout du PONE qui va produire de l'énergie
@@ -102,7 +102,7 @@ public class Lanceur {
 
 			case "10":
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Lancement du scénario A...\n" + ConsoleColors.RESET);
-				System.err.println("Veuillez lancer le serveur PHP : 'cd php/' && 'php -S localhost:" + portServeurPHP + "'");
+				System.err.println("Veuillez lancer le serveur PHP dans un autre terminal : 'cd php/' && 'php -S localhost:" + portServeurPHP + "'");
 
 				// Lancement du Serveur UDP Gros
 				Thread threadGros = new Thread(new ServeurUDPGros(adresseServeurs, portServeurTCP, portServeurUDP, false));
