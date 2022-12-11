@@ -11,7 +11,9 @@ import java.net.Socket;
 
 import org.json.JSONObject;
 
+import src.Energie;
 import src.Messenger;
+import src.SignatureUtils;
 
 /**
  * Classe correspondant au thread associe à chaque connexion d'un client.
@@ -44,19 +46,42 @@ public class ThreadConnexionAMI extends Thread {
 			String req = input.readLine();
 			JSONObject json = new JSONObject(req);
 			String type = json.getString("type");
-			switch (type) {
-				case "hmm":
-					break;
+			String reponse = "";
+			Energie energy = null;
+
+			if (type.equals("PONE")) {
+				// Si l'énergie est valide, alors créer une signature
+				// Sinon réponse vide
+				energy = Energie.fromJSON(json.getJSONObject("energy"));
+				if (checkEnergy(energy)) {
+					String signature = SignatureUtils.newSignature(ServeurTCPAMI.privateKeyFile, energy.getCodeDeSuivi().getCode());
+					energy.setSignature(signature);
+					reponse = energy.toJSON().toString();
+					gestionMessage.afficheMessage("Demande d'une signature par un PONE validée.");
+				}
+				else {
+					gestionMessage.afficheMessage("Demande d'une signature par un PONE refusée car il ne respecte pas les conditions.");
+				}
 			}
-
-			// Envoie en réponse le contenu toString de la requête
-			gestionMessage.afficheMessage("Lu    " + req);
-			
-			String msg = "Requête lue par le serveur, avec contenu : \"" + req + "\"";
-			gestionMessage.afficheMessage("Envoi  " + msg);
-			output.println(msg);
+			else {
+				// Requête du Marché de Gros, du TARÉ, du Revendeur, du Client
+				// Demande vérification de l'énergie (énergie valide et signature valide)
+				gestionMessage.afficheMessage("Demande de vérification de signature par un " + type);
+				energy = Energie.fromJSON(json.getJSONObject("energy"));
+				if (
+					checkEnergy(energy)
+					&&
+					SignatureUtils.newSignature(ServeurTCPAMI.privateKeyFile, energy.getCodeDeSuivi().getCode())
+						.equals(energy.getSignature())
+				) {
+					reponse = "OK";
+				}
+				else {
+					reponse = "KO";
+				}
+			}
+			output.println(reponse);
 		}
-
 		// Ensemble des catches
 		catch (Exception e) {
 			gestionMessage.afficheErreur("Erreur lors de la lecture de la requête : " + e);
@@ -75,5 +100,15 @@ public class ThreadConnexionAMI extends Thread {
 			gestionMessage.afficheErreur("Extinction du thread");
 			return;
 		}
+	}
+
+	/**
+	 * Vérifie si l'énergie est valide (prix pas au dessus de 5€ par unité)
+	 * 
+	 * @param energy
+	 * @return true si l'énergie est valide, false sinon
+	 */
+	private Boolean checkEnergy(Energie energy) {
+		return energy.getCodeDeSuivi().getMaxPrice() <= 5;
 	}
 }

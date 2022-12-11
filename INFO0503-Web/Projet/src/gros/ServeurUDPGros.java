@@ -9,6 +9,7 @@ import java.net.SocketException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import src.ClientTCP;
 import src.CodeDeSuivi;
 import src.Energie;
 import src.JSONFile;
@@ -19,6 +20,8 @@ import src.Messenger;
  * Serveur pour le Marché de Gros
  */
 public class ServeurUDPGros implements Runnable {
+	private final String adresseServeurTCPAmi;
+	private final int portServeurTCPAmi;
 	private final int portServeurUDP;
 	private final Messenger gestionMessage;
 	private JSONFile energiesFile;
@@ -27,22 +30,34 @@ public class ServeurUDPGros implements Runnable {
 	/**
 	 * Constructeur du ServeurTCP (utilisable dans un Thread)
 	 */
-	public ServeurUDPGros(int portServeurUDP) {
+	public ServeurUDPGros(String adresseServeurTCPAmi, int portServeurTCPAmi, int portServeurUDP, Boolean newFile) {
+		this.adresseServeurTCPAmi = adresseServeurTCPAmi;
+		this.portServeurTCPAmi = portServeurTCPAmi;
 		this.portServeurUDP = portServeurUDP;
 		this.gestionMessage = new Messenger("ServeurUDPGros");
 
-		// Charge le fichier JSON
-		String fileString = "energies.json";
-		energiesFile = new JSONFile(fileString, !JSONFile.fichierExiste(fileString));
-		energiesObject = energiesFile.getJSON();
-
-		// Charge les énergies dans le JSONArray
-		try {
-			energiesObject.getJSONArray("energies");
-		} catch (Exception e) {
+		if (newFile) {
+			// Création du fichier JSON
+			energiesFile = new JSONFile("energies.json", true);
+			energiesObject = new JSONObject();
 			energiesObject.put("energies", new JSONArray());
 			energiesFile.setJSON(energiesObject);
 			energiesFile.sauvegarder();
+		}
+		else {
+			// Charge le fichier JSON
+			String fileString = "energies.json";
+			energiesFile = new JSONFile(fileString, !JSONFile.fichierExiste(fileString));
+			energiesObject = energiesFile.getJSON();
+
+			// Charge les énergies dans le JSONArray
+			try {
+				energiesObject.getJSONArray("energies");
+			} catch (Exception e) {
+				energiesObject.put("energies", new JSONArray());
+				energiesFile.setJSON(energiesObject);
+				energiesFile.sauvegarder();
+			}
 		}
 	}
 
@@ -136,18 +151,29 @@ public class ServeurUDPGros implements Runnable {
 				// Traitement de la requête
 				JSONObject reponse = new JSONObject();
 				reponse.put("code", "KO");
-				switch (requete.getString("type")) {
-					case "TARE":
-						reponse = extractEnergy(requete);
-						gestionMessage.afficheMessage("Requête reçue d'un TARE :" + requete + "\nRéponse envoyée :" + reponse + "\n");
-						break;
+				try {
+					switch (requete.getString("type")) {
+						case "TARE":
+							reponse = extractEnergy(requete);
+							gestionMessage.afficheMessage("Requête reçue d'un TARE, envoie d'une énergie enregistrée !");
+							break;
 
-					case "PONE":
-						if (insertEnergy(requete)) {
-							reponse.put("code", "OK");
-						}
-						//gestionMessage.afficheMessage("Requête reçue d'un PONE :" + requete + "\nRéponse envoyée :" + reponse + "\n");
-						break;
+						case "PONE":
+							// Vérification de l'énergie reçue
+							gestionMessage.afficheMessage("Demande de vérification de signature de l'énergie d'un PONE reçue.");
+							JSONObject reqToAMI = new JSONObject();
+							reqToAMI.put("type", "GROS");
+							reqToAMI.put("energy", requete.getJSONObject("energy"));
+							String code = ClientTCP.requeteToAMI(reqToAMI, adresseServeurTCPAmi, portServeurTCPAmi, gestionMessage);
+							if (code.equals("OK") && insertEnergy(requete)) {
+								gestionMessage.afficheMessage("Enregistrement de l'énergie car la signature est bonne.");
+								reponse.put("code", "OK");
+							}
+							//gestionMessage.afficheMessage("Requête reçue d'un PONE :" + requete + "\nRéponse envoyée :" + reponse + "\n");
+							break;
+					}
+				} catch (Exception e) {
+					gestionMessage.afficheErreur("Erreur lors du traitement de la requête : " + e + "\nRequête : " + requete);
 				}
 
 				// Envoie de la réponse au client : Création et envoi du segment UDP

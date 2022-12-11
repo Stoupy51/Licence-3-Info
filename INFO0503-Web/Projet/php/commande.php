@@ -43,7 +43,6 @@ if (
 		<h2>Energie reçue : </h2>
 		<table>
 			<tr>
-				<th>| Signature |</th>
 				<th>| Quantité |</th>
 				<th>| Quantité minimale |</th>
 				<th>| Mode d'extraction |</th>
@@ -55,7 +54,6 @@ if (
 				<th>| Date |</th>
 			</tr>
 			<tr>
-				<td>{$tableau["energy"]["signature"]}</td>
 				<td>{$tableau["energy"]["codeDeSuivi"]["quantity"]}</td>
 				<td>{$tableau["energy"]["codeDeSuivi"]["minQuantity"]}</td>
 				<td>{$tableau["energy"]["codeDeSuivi"]["extractMode"]}</td>

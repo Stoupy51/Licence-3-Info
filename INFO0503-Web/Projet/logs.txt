@@ -1,6 +1,15 @@
 
-2022/12/09 17:12:51 -> WARN [ ServeurTCPAMI ] : Serveur TCP AMI dÃ©marrÃ©.
-2022/12/09 17:12:54 -> WARN [ ServeurUDPGros ] : Serveur UDP Gros dÃ©marrÃ©.
-2022/12/09 17:12:54 -> WARN [ ClientPoneUDP ] : Client UDP PONE dÃ©marrÃ©.
-2022/12/09 17:12:54 -> WARN [ ServeurHTTPTare ] : Serveur HTTP TARE dÃ©marrÃ©.
-
+2022/12/11 19:17:56 -> WARN [ ServeurUDPGros ] : Serveur UDP Gros démarré.
+2022/12/11 19:17:56 -> WARN [ ServeurTCPAMI ] : Serveur TCP AMI démarré.
+2022/12/11 19:17:56 -> WARN [ ClientPoneUDP ] : Client UDP PONE démarré.
+2022/12/11 19:17:56 -> WARN [ ServeurHTTPTare ] : Serveur HTTP TARE démarré.
+2022/12/11 19:17:57 -> [ ClientPoneUDP ] : Demande d'une signature à l'AMI.
+2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=50986,localport=5001]
+2022/12/11 19:17:57 -> [ ServeurTCPAMI:Thread-7 ] : Demande d'une signature par un PONE validée.
+2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI:Thread-7 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=50986,localport=5001]
+2022/12/11 19:17:57 -> [ ClientPoneUDP ] : Signature reçue, envoie de l'énergie au Marché de Gros.
+2022/12/11 19:17:57 -> [ ServeurUDPGros ] : Demande de vérification de signature de l'énergie d'un PONE reçue.
+2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=50987,localport=5001]
+2022/12/11 19:17:57 -> [ ServeurTCPAMI:Thread-8 ] : Demande de vérification de signature par un GROS
+2022/12/11 19:17:57 -> WARN [ ServeurTCPAMI:Thread-8 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=50987,localport=5001]
+2022/12/11 19:17:57 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car la signature est bonne.

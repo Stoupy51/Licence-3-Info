@@ -15,6 +15,8 @@ import java.net.InetSocketAddress;
  * @author Alexandre Collignon
  */
 public class ServeurHttpTARE implements Runnable {
+	private final String adresseServeurTCPAmi;
+	private final int portServeurTCPAmi;
 	private final String adresseServeurUDPTare;
 	private final int portServeurHTTP;
 	private final int portServeurUDPGros;
@@ -23,7 +25,9 @@ public class ServeurHttpTARE implements Runnable {
 	/**
 	 * Constructeur du ServeurHTTP (utilisable dans un Thread)
 	 */
-	public ServeurHttpTARE(String adresseServeurUDPTare, int portServeurHTTP, int portServeurUDPGros) {
+	public ServeurHttpTARE(String adresseServeurTCPAmi, int portServeurTCPAmi, String adresseServeurUDPTare, int portServeurHTTP, int portServeurUDPGros) {
+		this.adresseServeurTCPAmi = adresseServeurTCPAmi;
+		this.portServeurTCPAmi = portServeurTCPAmi;
 		this.adresseServeurUDPTare = adresseServeurUDPTare;
 		this.portServeurHTTP = portServeurHTTP;
 		this.portServeurUDPGros = portServeurUDPGros;
@@ -40,7 +44,7 @@ public class ServeurHttpTARE implements Runnable {
 			return;
 		}
 
-		serveur.createContext("/", new RevendeurHandler(adresseServeurUDPTare, portServeurUDPGros, gestionMessage));
+		serveur.createContext("/", new RevendeurHandler(adresseServeurTCPAmi, portServeurTCPAmi, adresseServeurUDPTare, portServeurUDPGros, gestionMessage));
 		serveur.setExecutor(null);
 		serveur.start();
 

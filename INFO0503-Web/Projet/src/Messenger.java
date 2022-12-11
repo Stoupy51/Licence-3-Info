@@ -10,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Messenger {
-	private final String fichierLogs = "logs.txt";
-	private final Path filePath = new File(fichierLogs).toPath();
+	private final static String fichierLogs = "logs.txt";
+	private final static Path filePath = new File(fichierLogs).toPath();
 	private final String id;
 	private final char delimAV;
 	private final char delimAP;
@@ -89,6 +89,15 @@ public class Messenger {
 				).getBytes(),
 				StandardOpenOption.APPEND
 			);
+		} catch (IOException e) {
+			System.err.println(e);
+		}
+	}
+	public static void resetLogsFile() {
+		try {
+			if (new java.io.File(fichierLogs).exists()) {
+				java.nio.file.Files.write(filePath, "\n".getBytes());
+			}
 		} catch (IOException e) {
 			System.err.println(e);
 		}
