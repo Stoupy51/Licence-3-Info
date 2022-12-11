@@ -100,7 +100,7 @@ public class ClientPONE implements Runnable {
 				obj.put("date", System.currentTimeMillis() / 1000L);
 				obj.put("fournisseur", nomDuPONE);
 				CodeDeSuivi code = CodeDeSuivi.fromJSON(obj);
-				ener = new Energie(code, "signature");
+				ener = new Energie(code, "CRADO");
 
 			} else {
 				ener = energie;
@@ -109,12 +109,12 @@ public class ClientPONE implements Runnable {
 
 			// json == null si l'énergie est invalide selon l'AMI
 			System.err.println("");
-			gestionMessage.afficheMessage("Demande d'une signature à l'AMI.");
-			json = demandeSignature(json);
+			gestionMessage.afficheMessage("Demande d'un CRADO à l'AMI.");
+			json = demandeCRADO(json);
 			if (json == null)
 				gestionMessage.afficheWarning("L'énergie est invalide selon l'AMI, elle ne sera pas envoyée.");
 			else {
-				gestionMessage.afficheMessage("Signature reçue, envoie de l'énergie au Marché de Gros.");
+				gestionMessage.afficheMessage("CRADO reçu, envoie de l'énergie au Marché de Gros.");
 				envoieEnergie(json);
 			}
 		}
@@ -122,11 +122,11 @@ public class ClientPONE implements Runnable {
 
 	/**
 	 * Envoie l'énergie au serveur TCP de l'AMI
-	 * afin de recevoir une signature
+	 * afin de recevoir un CRADO
 	 * 
 	 * @param json L'énergie à envoyer
 	 */
-	private JSONObject demandeSignature(JSONObject json) {
+	private JSONObject demandeCRADO(JSONObject json) {
 		Socket socket = null;
 		try {
 			socket = new Socket(adresseServeurTCPAmi, portServeurTCPAMI);

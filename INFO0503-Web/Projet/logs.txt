@@ -1,44 +1,35 @@
 
-2022/12/11 20:1:6 -> WARN [ ServeurTCPAMI ] : Serveur TCP AMI démarré.
-2022/12/11 20:1:6 -> WARN [ ServeurUDPGros ] : Serveur UDP Gros démarré.
-2022/12/11 20:1:6 -> WARN [ MyLittlePONE_Charbon ] : Client UDP PONE démarré.
-2022/12/11 20:1:6 -> WARN [ ServeurHTTPTare ] : Serveur HTTP TARE démarré.
-2022/12/11 20:1:7 -> [ MyLittlePONE_Charbon ] : Demande d'une signature à l'AMI.
-2022/12/11 20:1:7 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=52112,localport=5001]
-2022/12/11 20:1:7 -> [ ServeurTCPAMI:Thread-7 ] : Demande d'une signature par un PONE validée.
-2022/12/11 20:1:7 -> WARN [ ServeurTCPAMI:Thread-7 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=52112,localport=5001]
-2022/12/11 20:1:7 -> [ MyLittlePONE_Charbon ] : Signature reçue, envoie de l'énergie au Marché de Gros.
-2022/12/11 20:1:7 -> [ ServeurUDPGros ] : Demande de vérification de signature de l'énergie d'un PONE reçue.
-2022/12/11 20:1:7 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=52113,localport=5001]
-2022/12/11 20:1:7 -> [ ServeurTCPAMI:Thread-8 ] : Demande de vérification de signature par un GROS
-2022/12/11 20:1:7 -> WARN [ ServeurTCPAMI:Thread-8 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=52113,localport=5001]
-2022/12/11 20:1:7 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car la signature est bonne.
-2022/12/11 20:1:11 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
-2022/12/11 20:1:11 -> [ ServeurUDPGros ] : Aucune énergie disponible pour un TARE !
-2022/12/11 20:1:11 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur que : Aucune energie disponible pour le moment.
-2022/12/11 20:1:24 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
-2022/12/11 20:1:24 -> [ ServeurUDPGros ] : Energie extraite pour un TARE !
-2022/12/11 20:1:24 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=52125,localport=5001]
-2022/12/11 20:1:24 -> [ ServeurTCPAMI:Thread-9 ] : Demande de vérification de signature par un TARE
-2022/12/11 20:1:24 -> WARN [ ServeurTCPAMI:Thread-9 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=52125,localport=5001]
-2022/12/11 20:1:24 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur car la signature est valide !
-2022/12/11 20:1:28 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
-2022/12/11 20:1:28 -> [ ServeurUDPGros ] : Aucune énergie disponible pour un TARE !
-2022/12/11 20:1:28 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur que : Aucune energie disponible pour le moment.
-2022/12/11 20:1:40 -> WARN [ PONE_2_Nucleaire ] : Client UDP PONE démarré.
-2022/12/11 20:1:41 -> [ PONE_2_Nucleaire ] : Demande d'une signature à l'AMI.
-2022/12/11 20:1:41 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=52130,localport=5001]
-2022/12/11 20:1:41 -> [ ServeurTCPAMI:Thread-11 ] : Demande d'une signature par un PONE validée.
-2022/12/11 20:1:41 -> WARN [ ServeurTCPAMI:Thread-11 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=52130,localport=5001]
-2022/12/11 20:1:41 -> [ PONE_2_Nucleaire ] : Signature reçue, envoie de l'énergie au Marché de Gros.
-2022/12/11 20:1:41 -> [ ServeurUDPGros ] : Demande de vérification de signature de l'énergie d'un PONE reçue.
-2022/12/11 20:1:41 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=52131,localport=5001]
-2022/12/11 20:1:41 -> [ ServeurTCPAMI:Thread-12 ] : Demande de vérification de signature par un GROS
-2022/12/11 20:1:41 -> WARN [ ServeurTCPAMI:Thread-12 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=52131,localport=5001]
-2022/12/11 20:1:41 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car la signature est bonne.
-2022/12/11 20:1:46 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
-2022/12/11 20:1:46 -> [ ServeurUDPGros ] : Energie extraite pour un TARE !
-2022/12/11 20:1:46 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=52139,localport=5001]
-2022/12/11 20:1:46 -> [ ServeurTCPAMI:Thread-13 ] : Demande de vérification de signature par un TARE
-2022/12/11 20:1:46 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur car la signature est valide !
-2022/12/11 20:1:46 -> WARN [ ServeurTCPAMI:Thread-13 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=52139,localport=5001]
+2022/12/11 21:10:3 -> WARN [ ServeurTCPAMI ] : Serveur TCP AMI démarré.
+2022/12/11 21:10:3 -> WARN [ MyLittlePONE_Charbon ] : Client UDP PONE démarré.
+2022/12/11 21:10:3 -> WARN [ ServeurUDPGros ] : Serveur UDP Gros démarré.
+2022/12/11 21:10:3 -> WARN [ ServeurHTTPTare ] : Serveur HTTP TARE démarré.
+2022/12/11 21:10:4 -> [ MyLittlePONE_Charbon ] : Demande d'un CRADO à l'AMI.
+2022/12/11 21:10:4 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=56814,localport=5001]
+2022/12/11 21:10:4 -> [ ServeurTCPAMI:Thread-7 ] : Demande d'un CRADO par un PONE validée.
+2022/12/11 21:10:4 -> WARN [ ServeurTCPAMI:Thread-7 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=56814,localport=5001]
+2022/12/11 21:10:4 -> [ MyLittlePONE_Charbon ] : CRADO reçu, envoie de l'énergie au Marché de Gros.
+2022/12/11 21:10:4 -> [ ServeurUDPGros ] : Demande de vérification du CRADO de l'énergie d'un PONE reçue.
+2022/12/11 21:10:4 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=56815,localport=5001]
+2022/12/11 21:10:4 -> [ ServeurTCPAMI:Thread-8 ] : Demande de vérification du CRADO par un GROS
+2022/12/11 21:10:4 -> WARN [ ServeurTCPAMI:Thread-8 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=56815,localport=5001]
+2022/12/11 21:10:4 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car le CRADO est valide.
+2022/12/11 21:10:30 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
+2022/12/11 21:10:30 -> [ ServeurUDPGros ] : Aucune énergie disponible pour un TARE !
+2022/12/11 21:10:30 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur que : Aucune energie disponible pour le moment.
+2022/12/11 21:10:37 -> WARN [ PONE_2_Nucleaire ] : Client UDP PONE démarré.
+2022/12/11 21:10:38 -> [ PONE_2_Nucleaire ] : Demande d'un CRADO à l'AMI.
+2022/12/11 21:10:38 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=56837,localport=5001]
+2022/12/11 21:10:38 -> [ ServeurTCPAMI:Thread-10 ] : Demande d'un CRADO par un PONE validée.
+2022/12/11 21:10:38 -> WARN [ ServeurTCPAMI:Thread-10 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=56837,localport=5001]
+2022/12/11 21:10:38 -> [ PONE_2_Nucleaire ] : CRADO reçu, envoie de l'énergie au Marché de Gros.
+2022/12/11 21:10:38 -> [ ServeurUDPGros ] : Demande de vérification du CRADO de l'énergie d'un PONE reçue.
+2022/12/11 21:10:38 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=56838,localport=5001]
+2022/12/11 21:10:38 -> [ ServeurTCPAMI:Thread-11 ] : Demande de vérification du CRADO par un GROS
+2022/12/11 21:10:38 -> WARN [ ServeurTCPAMI:Thread-11 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=56838,localport=5001]
+2022/12/11 21:10:38 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car le CRADO est valide.
+2022/12/11 21:10:44 -> [ ServeurHTTPTare ] : Requête reçue par le revendeur, renvoie au Marché de Gros !
+2022/12/11 21:10:44 -> [ ServeurUDPGros ] : Energie extraite pour un TARE !
+2022/12/11 21:10:44 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=56842,localport=5001]
+2022/12/11 21:10:44 -> [ ServeurTCPAMI:Thread-12 ] : Demande de vérification du CRADO par un TARE
+2022/12/11 21:10:44 -> WARN [ ServeurTCPAMI:Thread-12 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=56842,localport=5001]
+2022/12/11 21:10:44 -> [ ServeurHTTPTare ] : Réponse du marché de gros reçue, renvoie au revendeur car le CRADO est valide !

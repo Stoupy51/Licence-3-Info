@@ -164,13 +164,13 @@ public class ServeurUDPGros implements Runnable {
 
 						case "PONE":
 							// Vérification de l'énergie reçue
-							gestionMessage.afficheMessage("Demande de vérification de signature de l'énergie d'un PONE reçue.");
+							gestionMessage.afficheMessage("Demande de vérification du CRADO de l'énergie d'un PONE reçue.");
 							JSONObject reqToAMI = new JSONObject();
 							reqToAMI.put("type", "GROS");
 							reqToAMI.put("energy", requete.getJSONObject("energy"));
 							String code = ClientTCP.requeteToAMI(reqToAMI, adresseServeurTCPAmi, portServeurTCPAmi, gestionMessage);
 							if (code.equals("OK") && insertEnergy(requete)) {
-								gestionMessage.afficheMessage("Enregistrement de l'énergie car la signature est bonne.");
+								gestionMessage.afficheMessage("Enregistrement de l'énergie car le CRADO est valide.");
 								reponse.put("code", "OK");
 							}
 							//gestionMessage.afficheMessage("Requête reçue d'un PONE :" + requete + "\nRéponse envoyée :" + reponse + "\n");

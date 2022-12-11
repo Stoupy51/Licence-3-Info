@@ -1,1 +1,16 @@
-{"energies": []}
+{"energies": [{
+  "crado": "ewZ/5dn1C3VUwy2H9jlX99xUYn336xjvYHAM7j9XbDymi3j+CBRFyxv1uYAmPO0Ebi4mu4CbJ5po4NhRhBs/Rzcd0NlQFD46EfiDoq0Nm13aG3obrcaHyih7rfibX3nropXxolFLr7X92sOe82pzZ1LI/tL/5sMX6+owETUSeoC5/pFj2MsYhrZxF4sGztZFZT8cKQ/CgIcQoumTq/apF7B9XyibltscEJu9s+D/z9WAoYQKiWL3wpRYpPpW+bonsz/SedjSsNt/NEJT8e2tqZ46BaCJjBqmF4KL2KcM1tS5vi/ehoxgZMlgrQdetwlyjjsqsdICStIgPIMa96zxSA==",
+  "codeDeSuivi": {
+    "energyType": 0,
+    "date": 1670789403,
+    "code": "0-1500.0-0.0-4-N-FR-0.05-0.0-1670789403-MyLittlePONE_Charbon",
+    "quantity": 1500,
+    "minQuantity": 0,
+    "extractMode": 4,
+    "maxBudget": 0,
+    "fournisseur": "MyLittlePONE_Charbon",
+    "energyFromCountry": "FR",
+    "extractModeStrict": "N",
+    "maxPrice": 0.05
+  }
+}]}

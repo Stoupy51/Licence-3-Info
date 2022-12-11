@@ -67,7 +67,7 @@ public class ServeurTCPAMI implements Runnable {
 		}
 	}
 
-	// Partie Signatures
+	// Partie Signatures et Certificats
 	public static final String privateKeyFile = "privateKey.bin";
 	public static final String publicKeyFile = "publicKey.bin";
 
@@ -92,12 +92,4 @@ public class ServeurTCPAMI implements Runnable {
 			gestionMessage.afficheMessage(ConsoleColors.GREEN + "Clées sauvegardées.");
 		}
 	}
-
-	/**
-	public String createSignatureCRADO() {
-		String r = "";
-
-		return r;
-	}
-	*/
 }

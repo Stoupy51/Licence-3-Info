@@ -50,29 +50,29 @@ public class ThreadConnexionAMI extends Thread {
 			Energie energy = null;
 
 			if (type.equals("PONE")) {
-				// Si l'énergie est valide, alors créer une signature
+				// Si l'énergie est valide, alors créer un CRADO
 				// Sinon réponse vide
 				energy = Energie.fromJSON(json.getJSONObject("energy"));
 				if (checkEnergy(energy)) {
-					String signature = SignatureUtils.newSignature(ServeurTCPAMI.privateKeyFile, energy.getCodeDeSuivi().getCode());
-					energy.setSignature(signature);
+					String crado = SignatureUtils.generateCRADO(ServeurTCPAMI.privateKeyFile, energy.getCodeDeSuivi().getCode());
+					energy.setCrado(crado);
 					reponse = energy.toJSON().toString();
-					gestionMessage.afficheMessage("Demande d'une signature par un PONE validée.");
+					gestionMessage.afficheMessage("Demande d'un CRADO par un PONE validée.");
 				}
 				else {
-					gestionMessage.afficheMessage("Demande d'une signature par un PONE refusée car il ne respecte pas les conditions.");
+					gestionMessage.afficheMessage("Demande d'un CRADO par un PONE refusée car il ne respecte pas les conditions.");
 				}
 			}
 			else {
 				// Requête du Marché de Gros, du TARÉ, du Revendeur, du Client
-				// Demande vérification de l'énergie (énergie valide et signature valide)
-				gestionMessage.afficheMessage("Demande de vérification de signature par un " + type);
+				// Demande vérification de l'énergie (énergie valide et CRADO valide)
+				gestionMessage.afficheMessage("Demande de vérification du CRADO par un " + type);
 				energy = Energie.fromJSON(json.getJSONObject("energy"));
 				if (
 					checkEnergy(energy)
 					&&
-					SignatureUtils.newSignature(ServeurTCPAMI.privateKeyFile, energy.getCodeDeSuivi().getCode())
-						.equals(energy.getSignature())
+					SignatureUtils.generateCRADO(ServeurTCPAMI.privateKeyFile, energy.getCodeDeSuivi().getCode())
+						.equals(energy.getCrado())
 				) {
 					reponse = "OK";
 				}

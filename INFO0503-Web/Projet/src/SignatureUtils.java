@@ -81,7 +81,12 @@ public class SignatureUtils {
 		}
 	}
 
-	public static String newSignature(String privateKeyFile, String toSign) {
+	/**
+	 * @param privateKeyFile
+	 * @param toSign
+	 * @return Un CRADO lié à la clé privée et au String toSign
+	 */
+	public static String generateCRADO(String privateKeyFile, String toSign) {
 		// Reconstruction de la clé
 		PrivateKey clePrivee = GestionClesRSA.lectureClePrivee(privateKeyFile);
 
@@ -111,11 +116,11 @@ public class SignatureUtils {
 			return null;
 		}
 
-		// Renvoie de la signature
+		// Renvoie du CRADO
 		try {
 			return Base64.getEncoder().encodeToString(new String(signature.sign()).getBytes());
 		} catch (SignatureException e) {
-			System.err.println("Erreur lors de la récupération de la signature : " + e);
+			System.err.println("Erreur lors de la récupération du CRADO : " + e);
 			return null;
 		}
 	}

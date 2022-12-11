@@ -35,6 +35,8 @@ public class Lanceur {
 		System.err.println("\n1 - Scénario A : Système avec une entité de chaque (Revendeur, TARÉ, Marché de Gros, PONE, Ami). Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande est toute de suite satisfaite car le PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
 		System.err.println("\n2 - Scénario B : Système comme le scénario A. Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande n'est pas satisfaite car le Marché de Gros ne possède aucune énergie enregistrée. Mais la commande peut être satisfaite au bout d'un certain temps (30 secondes) où PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
 		System.err.println("\n3 - Scénario C : Système comme le scénario A. Le client demande une quantité d'énergie avec la contrainte de la localisation de production de l'énergie (Nucléaire) et sa demande n'est pas satisfaite car le Marché de Gros ne possède aucune énergie enregistrée respectant la demande. Mais la commande peut être satisfaite au bout d'un certain temps (30 secondes) où un autre PONE (nommé PONE 2) arrive sur le marché et produit exactement le type d'énergie demandé. Le Revendeur valide la commande au Client.");
+		System.err.println("\nx - Scénario D : Non Fonctionnel.");
+		System.err.println("\nx - Scénario A2 : Non Fonctionnel MAIS le CRADO est généré de base dans tous les cas et scénarios.");
 		System.err.println("");
 
 		Scanner in = new Scanner(System.in);
