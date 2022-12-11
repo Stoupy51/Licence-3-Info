@@ -32,7 +32,7 @@ class Commande implements JsonSerializable {
 			'quantity' => $this->quantity,
 			'minQuantity' => $this->minQuantity,
 			'extractMode' => $this->extractMode,
-			'extractModeStrict' => $this->extractModeStrict,
+			'extractModeStrict' => $this->extractModeStrict == true ? "Y" : "N",
 			'energyFromCountry' => $this->energyFromCountry,
 			'maxPrice' => $this->maxPrice,
 			'maxBudget' => $this->maxBudget,

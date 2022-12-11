@@ -67,7 +67,7 @@ public class ClientPONE implements Runnable {
 		this.portServeurUDPGros = portServeurUDPGros;
 		this.adresseServeurTCPAmi = adresseServeurTCPAmi;
 		this.portServeurTCPAMI = portServeurTCPAMI;
-		this.gestionMessage = new Messenger(nomDuPONE);
+		this.gestionMessage = new Messenger(energie.getCodeDeSuivi().getFournisseur());
 		this.count = count;
 		this.energie = energie;
 	}
@@ -102,7 +102,6 @@ public class ClientPONE implements Runnable {
 				CodeDeSuivi code = CodeDeSuivi.fromJSON(obj);
 				ener = new Energie(code, "signature");
 
-				
 			} else {
 				ener = energie;
 			}
@@ -123,7 +122,7 @@ public class ClientPONE implements Runnable {
 
 	/**
 	 * Envoie l'énergie au serveur TCP de l'AMI
-	 * afin de recevoir une signature 
+	 * afin de recevoir une signature
 	 * 
 	 * @param json L'énergie à envoyer
 	 */

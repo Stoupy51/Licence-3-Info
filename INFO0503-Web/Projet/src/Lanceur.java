@@ -32,15 +32,18 @@ public class Lanceur {
 		int portServeurPHP = config.getInt("portServeurPHP");
 
 		System.err.println(ConsoleColors.GREEN_BRIGHT + "Entrez une action entre 1 et 6 : " + ConsoleColors.RESET);
-		System.err.println("\n0 - Scénario A : Système avec une entité de chaque (Revendeur, TARÉ, Marché de Gros, PONE, Ami). Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande est toute de suite satisfaite car le PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
-		System.err.println("\n1 - Scénario B : Système avec une entité de chaque (Revendeur, TARÉ, Marché de Gros, PONE, Ami). Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande n'est pas satisfaite car le Marché de Gros ne possède aucune énergie enregistrée. Mais la commande peut être satisfaite au bout d'un certain temps (30 secondes) où PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
+		System.err.println("\n1 - Scénario A : Système avec une entité de chaque (Revendeur, TARÉ, Marché de Gros, PONE, Ami). Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande est toute de suite satisfaite car le PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
+		System.err.println("\n2 - Scénario B : Système comme le scénario A. Le client demande une quantité d'énergie sans aucune contrainte particulière et sa demande n'est pas satisfaite car le Marché de Gros ne possède aucune énergie enregistrée. Mais la commande peut être satisfaite au bout d'un certain temps (30 secondes) où PONE produit exactement le type d'énergie demandé. Le Revendeur valide donc la commande au Client.");
+		System.err.println("\n3 - Scénario C : Système comme le scénario A. Le client demande une quantité d'énergie avec la contrainte de la localisation de production de l'énergie (Nucléaire) et sa demande n'est pas satisfaite car le Marché de Gros ne possède aucune énergie enregistrée respectant la demande. Mais la commande peut être satisfaite au bout d'un certain temps (30 secondes) où un autre PONE (nommé PONE 2) arrive sur le marché et produit exactement le type d'énergie demandé. Le Revendeur valide la commande au Client.");
+		System.err.println("");
+
 		Scanner in = new Scanner(System.in);
 		String action = in.nextLine();
 
 		Energie energy = null;
 		switch (action) {
 
-			case "0": // Scénario A
+			case "1": // Scénario A
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Lancement du scénario A...\n" + ConsoleColors.RESET);
 				
 				// Lancement du Serveur TCP AMI, puis du Serveur UDP Gros, puis du Serveur HTTP TARE, puis du Client UDP PONE
@@ -56,7 +59,7 @@ public class Lanceur {
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Et vous pouvez maintenant commander en allant sur le site\n" + ConsoleColors.RESET);
 				break;
 
-			case "1": // Scénario B
+			case "2": // Scénario B
 				System.err.println(ConsoleColors.GREEN_BRIGHT + "Lancement du scénario B...\n" + ConsoleColors.RESET);
 				
 				// Lancement du Serveur TCP AMI, puis du Serveur UDP Gros, puis du Serveur HTTP TARE, puis du Client UDP PONE
@@ -71,6 +74,27 @@ public class Lanceur {
 				// Ajout du PONE qui va produire de l'énergie
 				sleepPls(30000);
 				energy = new Energie(new CodeDeSuivi("0-1500.0-0.0-3-N-FR-0.05-0.0-"+System.currentTimeMillis()/1000+"-MyLittlePONE"), "");
+				new Thread(new ClientPONE(adresseServeurs, portServeurUDP, adresseServeurs, portServeurTCP, 1, energy)).start();
+				break;
+			
+			case "3": // Scénario C
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "Lancement du scénario C...\n" + ConsoleColors.RESET);
+				
+				// Lancement du Serveur TCP AMI, puis du Serveur UDP Gros, puis du Serveur HTTP TARE, puis du Client UDP PONE
+				new Thread(new ServeurTCPAMI(portServeurTCP)).start();
+				new Thread(new ServeurUDPGros(adresseServeurs, portServeurTCP, portServeurUDP, true)).start();
+				new Thread(new ServeurHttpTARE(adresseServeurs, portServeurTCP, adresseServeurs, portServeurHTTP, portServeurUDP)).start();
+
+				energy = new Energie(new CodeDeSuivi("0-1500.0-0.0-4-N-FR-0.05-0.0-"+System.currentTimeMillis()/1000+"-MyLittlePONE_Charbon"), "");
+				new Thread(new ClientPONE(adresseServeurs, portServeurUDP, adresseServeurs, portServeurTCP, 1, energy)).start();
+
+				sleepPls(4000);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "\nVeuillez lancer le serveur PHP si ce n'est pas déjà le cas : "+ ConsoleColors.ORANGE + "cd php/ && php -S localhost:" + portServeurPHP + ConsoleColors.RESET);
+				System.err.println(ConsoleColors.GREEN_BRIGHT + "Et vous pouvez maintenant commander en allant sur le site\n" + ConsoleColors.RESET);
+
+				// Ajout du PONE qui va produire de l'énergie
+				sleepPls(30000);
+				energy = new Energie(new CodeDeSuivi("0-1500.0-0.0-3-N-FR-0.05-0.0-"+System.currentTimeMillis()/1000+"-PONE_2_Nucleaire"), "");
 				new Thread(new ClientPONE(adresseServeurs, portServeurUDP, adresseServeurs, portServeurTCP, 1, energy)).start();
 				break;
 

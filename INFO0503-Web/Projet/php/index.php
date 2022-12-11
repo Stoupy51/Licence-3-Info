@@ -26,7 +26,7 @@ $debug
 			<option value="2">Hydrogène</option>
 		</select><br>
 		<label for="quantity">Quantité</label>
-		<input type="number" name="quantity" oninput="onQuantityUpdate();" value="2573"><label id="quantityLabel">kWh</label><br>
+		<input type="number" name="quantity" oninput="onQuantityUpdate();" value="1500"><label id="quantityLabel">kWh</label><br>
 		<label for="minQuantity">Quantité minimale</label>
 		<input type="number" name="minQuantity" value="1200" oninput="onQuantityUpdate();"><label id="minQuantityLabel">kWh</label><br>
 		<label for="extractMode">Mode d'extraction</label>
@@ -38,7 +38,7 @@ $debug
 			<option value="4">Charbon</option>
 		</select><br>
 		<label for="extractModeStrict">Est-ce que le mode d'extraction est strict ?</label>
-		<input type="checkbox" name="extractModeStrict" id="extractModeStrict"><br>
+		<input type="checkbox" name="extractModeStrict" id="extractModeStrict" checked><br>
 		<label for="energyFromCountry">Énergie provenant du pays</label>
 		<select name="energyFromCountry" id="energyFromCountry">
 			<option value="FR">France</option>
@@ -49,9 +49,9 @@ $debug
 			<option value="BE">Belgique</option>
 		</select><br>
 		<label for="maxPrice">Prix maximum</label>
-		<input type="number" step="0.0001" name="maxPrice" value="0.1546"><label id="maxPriceLabel">€/kWh</label><br>
+		<input type="number" step="0.0001" name="maxPrice" value="0.05"><label id="maxPriceLabel">€/kWh</label><br>
 		<label for="maxBudget">Budget maximum</label>
-		<input type="number" name="maxBudget" value="400"><label>€</label><br>
+		<input type="number" name="maxBudget" value="4000"><label>€</label><br>
 		<input type="submit" value="Envoyer">
 	</form>
 </body>

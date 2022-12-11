@@ -70,7 +70,12 @@ public class Energie implements Serializable, Comparable<Energie> {
 			codeDeSuivi.getMaxPrice() <= cds.getMaxPrice() &&
 			codeDeSuivi.getQuantity() * codeDeSuivi.getMaxPrice() <= cds.getMaxBudget()
 		) {
-			return 1;
+			if (cds.getExtractModeStrict().equals("N")) {
+				return 1;
+			}
+			if (cds.getExtractModeStrict().equals("Y") && codeDeSuivi.getExtractMode() == cds.getExtractMode()) {
+				return 1;
+			}
 		}
 		return 0;
 	}
