@@ -1,0 +1,15 @@
+
+2022/12/11 21:32:55 -> WARN [ ServeurUDPGros ] : Serveur UDP Gros démarré.
+2022/12/11 21:32:55 -> WARN [ ServeurTCPAMI ] : Serveur TCP AMI démarré.
+2022/12/11 21:32:55 -> WARN [ MyLittlePONE ] : Client UDP PONE démarré.
+2022/12/11 21:32:55 -> WARN [ ServeurHTTPTare ] : Serveur HTTP TARE démarré.
+2022/12/11 21:32:56 -> [ MyLittlePONE ] : Demande d'un CRADO à l'AMI.
+2022/12/11 21:32:56 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=57191,localport=5001]
+2022/12/11 21:32:56 -> [ ServeurTCPAMI:Thread-7 ] : Demande d'un CRADO par un PONE validée.
+2022/12/11 21:32:56 -> WARN [ ServeurTCPAMI:Thread-7 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=57191,localport=5001]
+2022/12/11 21:32:56 -> [ MyLittlePONE ] : CRADO reçu, envoie de l'énergie au Marché de Gros.
+2022/12/11 21:32:56 -> [ ServeurUDPGros ] : Demande de vérification du CRADO de l'énergie d'un PONE reçue.
+2022/12/11 21:32:56 -> WARN [ ServeurTCPAMI ] : Connexion d'un client : Socket[addr=/127.0.0.1,port=57192,localport=5001]
+2022/12/11 21:32:56 -> [ ServeurTCPAMI:Thread-8 ] : Demande de vérification du CRADO par un GROS
+2022/12/11 21:32:56 -> WARN [ ServeurTCPAMI:Thread-8 ] : Fermeture de la connexion avec le client : Socket[addr=/127.0.0.1,port=57192,localport=5001]
+2022/12/11 21:32:56 -> [ ServeurUDPGros ] : Enregistrement de l'énergie car le CRADO est valide.

@@ -9,33 +9,31 @@ import org.json.JSONObject;
  * 
  * @author Alexandre Collignon
  */
-public class Energie implements Serializable {
-	private int type;
-    private float quantity;
-	private String signature;
+public class Energie implements Serializable, Comparable<Energie> {
+	private CodeDeSuivi codeDeSuivi;
+	private String crado;
 
-	public Energie(int type, float quantity, String signature) {
-		this.type = type;
-		this.quantity = quantity;
-		this.signature = signature;
+	/** 
+	 * Création de l'énergie à partir d'un CodeDeSuivi
+	 */
+	public Energie(CodeDeSuivi codeDeSuivi, String crado) {
+		this.codeDeSuivi = codeDeSuivi;
+		this.crado = crado;
 	}
 
 	// Getters & Setters
-	public int getType() { return type; }
-	public float getQuantity() { return quantity; }
-	public String getSignature() { return signature; }
-	public void setType(int type) { this.type = type; }
-	public void setQuantity(float quantity) { this.quantity = quantity; }
-	public void setSignature(String signature) { this.signature = signature; }
+	public CodeDeSuivi getCodeDeSuivi() { return codeDeSuivi; }
+	public String getCrado() { return crado; }
+	public void setCodeDeSuivi(CodeDeSuivi codeDeSuivi) { this.codeDeSuivi = codeDeSuivi; }
+	public void setCrado(String crado) { this.crado = crado; }
 
 	/**
      * @return l'energie convertie en objet JSON
      */
     public JSONObject toJSON() {
         JSONObject objet = new JSONObject();
-        objet.put("type", type);
-        objet.put("quantity", quantity);
-        objet.put("signature", signature);
+		objet.put("codeDeSuivi", codeDeSuivi.toJSON());
+        objet.put("crado", crado);
         return objet;
     }
 	
@@ -45,10 +43,41 @@ public class Energie implements Serializable {
      */
     public static Energie fromJSON(JSONObject json) {
         return new Energie(
-			json.getInt("type"),
-			json.getFloat("quantity"),
-			json.getString("signature")
+			CodeDeSuivi.fromJSON(json.getJSONObject("codeDeSuivi")),
+			json.getString("crado")
 		);
     }
+
+	/**
+	 * Compare l'énergie avec une autre énergie.
+	 * - EnergyType
+	 * - EnergyFromCountry
+	 * - Quantity
+	 * - MaxPrice
+	 * - MaxBudget
+	 * 
+	 * @param commande
+	 * @return 1 si l'énergie respectre la commande
+	 */
+	@Override
+	public int compareTo(Energie commande) {
+		CodeDeSuivi cds = commande.getCodeDeSuivi();
+		if (
+			codeDeSuivi.getEnergyType() == cds.getEnergyType() &&
+			codeDeSuivi.getEnergyFromCountry().equals(cds.getEnergyFromCountry()) &&
+
+			codeDeSuivi.getQuantity() > cds.getMinQuantity() &&
+			codeDeSuivi.getMaxPrice() <= cds.getMaxPrice() &&
+			codeDeSuivi.getQuantity() * codeDeSuivi.getMaxPrice() <= cds.getMaxBudget()
+		) {
+			if (cds.getExtractModeStrict().equals("N")) {
+				return 1;
+			}
+			if (cds.getExtractModeStrict().equals("Y") && codeDeSuivi.getExtractMode() == cds.getExtractMode()) {
+				return 1;
+			}
+		}
+		return 0;
+	}
 }
 

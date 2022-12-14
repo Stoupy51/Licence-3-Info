@@ -1,4 +1,7 @@
 {
-	"adresseServeurTCP": "localhost",
-	"portServeurTCP": 5001
+	"adresseServeurs": "localhost",
+	"portServeurTCP": 5001,
+	"portServeurUDP": 5002,
+	"portServeurHTTP": 5003,
+	"portServeurPHP": 5004
 }

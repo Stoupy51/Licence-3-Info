@@ -3,6 +3,7 @@ package src;
 
 import java.security.Signature;
 import java.security.SignatureException;
+import java.util.Base64;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -77,6 +78,50 @@ public class SignatureUtils {
 		} catch (IOException e) {
 			System.err.println("Erreur lors de la sauvegarde de la signature : " + e);
 			return false;
+		}
+	}
+
+	/**
+	 * @param privateKeyFile
+	 * @param toSign
+	 * @return Un CRADO lié à la clé privée et au String toSign
+	 */
+	public static String generateCRADO(String privateKeyFile, String toSign) {
+		// Reconstruction de la clé
+		PrivateKey clePrivee = GestionClesRSA.lectureClePrivee(privateKeyFile);
+
+		// Création de la signature
+		Signature signature = null;
+		try {
+			signature = Signature.getInstance("SHA256withRSA");
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println("Erreur lors de l'initialisation de la signature : " + e);
+			return null;
+		}
+
+		// Initialisation de la signature
+		try {
+			signature.initSign(clePrivee);
+		} catch (InvalidKeyException e) {
+			System.err.println("Clé privée invalide : " + e);
+			return null;
+		}
+
+		// Mise-à-jour de la signature par rapport au String toSign
+		try {
+			byte[] toSignBytes = toSign.getBytes();
+			signature.update(toSignBytes, 0, toSignBytes.length);
+		} catch (SignatureException e) {
+			System.err.println("Erreur lors de la mise-à-jour de la signature : " + e);
+			return null;
+		}
+
+		// Renvoie du CRADO
+		try {
+			return Base64.getEncoder().encodeToString(new String(signature.sign()).getBytes());
+		} catch (SignatureException e) {
+			System.err.println("Erreur lors de la récupération du CRADO : " + e);
+			return null;
 		}
 	}
 

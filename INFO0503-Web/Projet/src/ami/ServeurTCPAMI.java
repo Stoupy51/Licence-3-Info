@@ -46,8 +46,8 @@ public class ServeurTCPAMI implements Runnable {
 		// Attente des connexions des clients
 		try {
 			Socket socketClient;
+			gestionMessage.afficheWarning("Serveur TCP AMI démarré.");
 			while (true) {
-				gestionMessage.afficheWarning("En attente d'une connexion...");
 				socketClient = socketServeur.accept();
 				gestionMessage.afficheWarning("Connexion d'un client : " + socketClient);
 				ThreadConnexionAMI t = new ThreadConnexionAMI(socketClient, gestionMessage);
@@ -67,7 +67,7 @@ public class ServeurTCPAMI implements Runnable {
 		}
 	}
 
-	// Partie Signatures
+	// Partie Signatures et Certificats
 	public static final String privateKeyFile = "privateKey.bin";
 	public static final String publicKeyFile = "publicKey.bin";
 
@@ -80,6 +80,7 @@ public class ServeurTCPAMI implements Runnable {
 				generateurCles.initialize(2048);
 			} catch (NoSuchAlgorithmException e) {
 				gestionMessage.afficheErreur("Erreur lors de l'initialisation du générateur de clés : " + e);
+				gestionMessage.afficheErreur("Extinction du serveur");
 				return;
 			}
 			// Génération de la paire de clés
@@ -91,12 +92,4 @@ public class ServeurTCPAMI implements Runnable {
 			gestionMessage.afficheMessage(ConsoleColors.GREEN + "Clées sauvegardées.");
 		}
 	}
-
-	/**
-	public String createSignatureCRADO() {
-		String r = "";
-
-		return r;
-	}
-	*/
 }
