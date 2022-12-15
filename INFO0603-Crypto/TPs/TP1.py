@@ -72,7 +72,7 @@ class ElmtZnZ(object):
 		return f"ElmtZnZ({self.rep}, {self.n})"
 
 	def __eq__(self, other):
-		"""Compare deux nombrez
+		"""Compare deux nombres
 		>>> ElmtZnZ(9, 10) == ElmtZnZ(9, 20)
 		True
 		"""
