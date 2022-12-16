@@ -1,10 +1,13 @@
+
 from copy import copy
 from random import randint
 from math import sqrt,log
 from sympy import isprime
+
 def secondDiviseur(a):
     """Renvoie le premier diviseur de a supérieur à 1
     Ce diviseur est nécessairement premier
+    
     >>> secondDiviseur(15845465)
     5
     >>> secondDiviseur(1)==1 and secondDiviseur(2)==2 and secondDiviseur(6)==2
@@ -12,7 +15,18 @@ def secondDiviseur(a):
     >>> secondDiviseur(153)==3 and secondDiviseur(157)==157 and secondDiviseur(13)==13
     True
     """
-    raise NotImplementedError
+    # Cas a = 1 ou 2
+    if a == 1:
+        return 1
+    if a % 2 == 0:
+        return 2
+    
+    # On teste de 3 jusqu'à la racine carré de a en pas de 2
+    for b in range(3, int(sqrt(a)) + 1, 2):
+        if a % b == 0:
+            return b
+    return a
+
 
 def eDiviseurs(a):
     """renvoie la liste croissante des diviseurs positifs de a
@@ -24,10 +38,19 @@ def eDiviseurs(a):
     >>> eDiviseurs(13)
     {1, 13}
     """
-    raise NotImplementedError
+    r = set({1, a})
+    
+    # Remplissage de l'ensemble
+    for b in range(1, int(sqrt(a)) + 1):
+        if a % b == 0:
+            r.add(b)
+            r.add(a // b)
+    return r
+
 
 def lPGCD(a,b):
     """ Renvoie le couple : (liste des dividendes,le PGCD)
+    
     >>> lPGCD(360,304)
     ([1, 5, 2], 8)
     >>> lPGCD(517,513)
@@ -45,6 +68,28 @@ def lPGCD(a,b):
             lq+=[q]
             a,b=b,r
     return lq,b
+
+def lPPCM(a,b):
+    """ Renvoie le couple : (liste des dividendes,le PPCM)
+    
+    >>> lPPCM(360,304)
+    ([1, 5, 2], 8)
+    >>> lPPCM(517,513)
+    ([1, 128], 1)
+    >>> lPPCM(513,517)
+    ([0, 1, 128], 1)
+    """
+    lq=[]
+    on_n_a_pas_fini=True
+    while (on_n_a_pas_fini):
+        q,r = a//b , a%b
+        if r==0:
+            on_n_a_pas_fini=False
+        else:
+            lq+=[q]
+            a,b=b,r
+    return lq,b
+
 def PGCD(a,b):
     """
     >>> PGCD(360,304)
@@ -53,15 +98,21 @@ def PGCD(a,b):
     1
     >>> PGCD(513,517)
     1
+
     """
     l,d=lPGCD(a,b)
     return d
+
+
 def sontPremiers(a,b):
     """
     >>> sontPremiers(10,21) and sontPremiers(100,37) and not(sontPremiers(4,2))
     True
+
     """
     return PGCD(a,b)==1
+
+
 def solDiophant(a,b,c):
     """
     Renvoie x et y de Z tels que a.x+b.y=c
@@ -79,6 +130,7 @@ def solDiophant(a,b,c):
     assert cc%dd==0," Pas de solutions à l'équation"
     ccc=cc//dd
     return  x0*ccc,y0*ccc,bb,-aa
+
 
 def bezout(a,b):
     """Renvoie (u,v,d) tel que a.u+b.v=d avec d=PGCD(a,b)
@@ -111,18 +163,22 @@ def estPremier(n):
         d+=2
     return n%d!=0
 
+
 def nbPremierSuivant(n):
     """Renvoie le plus petit nombre premier strictement supérieur à n
+    
     >>> nbPremierSuivant(1)==2 and nbPremierSuivant(3)==5 and nbPremierSuivant(20)==23
     True
     """
-
     p=n+1
     while not(estPremier(p)):
         p+=1
     return p
+
+
 def nbPremierEtMoitieSuivant(n):
     """renvoie le couple q,p de nombres premiers avec q=(p-1)/2
+    
     >>> nbPremierEtMoitieSuivant(100)
     (107, 53)
     """
@@ -130,9 +186,13 @@ def nbPremierEtMoitieSuivant(n):
     while not(estPremier((p-1)//2)):
         p=nbPremierSuivant(p+2)
     return p,(p-1)//2
+
+
 def grandEntier(n):
     """Renvoie le produit de deux nombres premiers choisis au hasard dans [n..2N]"""
     return nbPremierSuivant(randint(n,2*n))*nbPremierSuivant(randint(n,2*n))
+
+
 def strExp(p):
     """renvoie l'exposant tout beau
     >>> strExp(9)
@@ -161,8 +221,11 @@ def strExp(p):
         pt=pt%v10
     return ch
 
+
 def chFacteursPremiers(n):
-    """renvoie une chaine de caractère donnant la décomposition en facteurs premiers de n
+    """renvoie une chaine de caractère donnant la
+       décomposition en facteurs premiers de n
+    
     >>> chFacteursPremiers(120)
     '2³×3×5'
     >>> chFacteursPremiers(3600)
@@ -178,8 +241,10 @@ def chFacteursPremiers(n):
         ch+=f"{d}{strExp(p)}×"
     return ch[:-1]
 
+
 def lFacteursPremiers(n):
     """renvoie une liste donnant la décomposition en facteurs premiers de n
+    
     >>> lFacteursPremiers(18)
     [(2, 1), (3, 2)]
     >>> lFacteursPremiers(13)
@@ -190,7 +255,6 @@ def lFacteursPremiers(n):
 
     n1=n
     l,d=[],0
-
     while n1>1:
         dp=secondDiviseur(n1)
         if dp!=d:
@@ -200,6 +264,8 @@ def lFacteursPremiers(n):
             l=l[:-1]+[( dp , l[-1][1] +1) ] #On incrémente la puissance
         n1=n1//dp
     return l
+
+
 def indicatriceEuler(n):
     """
     >>> indicatriceEuler(5)==4 and indicatriceEuler(15)==8 and indicatriceEuler(125)==100
@@ -210,16 +276,24 @@ def indicatriceEuler(n):
     for p,k in lfp:
         res*=(p-1)*p**(k-1)
     return res
+
+
 def lDecompoPGCDetPPCM(a,b):
     """Renvoie ce couple de décomposition en facteurs premiers
     en utilisant la décomposition en facteurs premier de a et b
-    >> lDecompoPGCDetPPCM(60,700)
+    
+    >>> lDecompoPGCDetPPCM(60,700)
     [(2, 2),(5, 1)], [(2, 2), (5, 2), (7, 1)]
     """
-    pass
+    pgcdC, x = lPGCD(a, b)
+    ppcmC, x = lPPCM(a, b)
+    return [pgcdC,ppcmC]
+
+
 #Les méthodes magiques : https://blog.finxter.com/python-dunder-methods-cheat-sheet/
 class ElementDeZnZ(object):
     "Elément de Z/nZ"
+    
     def __init__(self,val,n=256):
         """
         >>> ElementDeZnZ(-1,10)
@@ -227,21 +301,29 @@ class ElementDeZnZ(object):
         >>> ElementDeZnZ(ElementDeZnZ(9,10))
         ElementDeZnZ(9,10)
         """
-        raise NotImplementedError
+        if isinstance(val, ElementDeZnZ):
+            self.rep = val.rep
+            self.n = val.n
+        else:
+            self.rep = val % n
+            self.n = n
+
 
     def __str__(self):
         """
         >>> print(ElementDeZnZ(-1,5))
         4[5]
         """
-        raise NotImplementedError
+        return f"{self.rep}[{self.n}]"
+
 
     def __repr__(self):
         """
         >>> ElementDeZnZ(-1,5)
         ElementDeZnZ(4,5)
         """
-        raise NotImplementedError
+        return f"ElementDeZnZ({self.rep},{self.n})"
+
 
     def __add__(self,other):
         """
@@ -250,14 +332,19 @@ class ElementDeZnZ(object):
         >>> ElementDeZnZ(2,10)+3
         ElementDeZnZ(5,10)
         """
-        raise NotImplementedError
+        if isinstance(other, ElementDeZnZ):        
+            return ElementDeZnZ(self.rep + other.rep, self.n)
+        else:
+            return ElementDeZnZ(self.rep + other, self.n)
+
 
     def __radd__(self,other):
         """
         >>> 2+ElementDeZnZ(3,10)
         ElementDeZnZ(5,10)
         """
-        raise NotImplementedError
+        return ElementDeZnZ.__add__(self, other)
+
 
     def __mul__(self,other):
         """
@@ -266,19 +353,25 @@ class ElementDeZnZ(object):
         >>> ElementDeZnZ(2,10)*3
         ElementDeZnZ(6,10)
         """
-        raise NotImplementedError
+        if isinstance(other, ElementDeZnZ):
+            return ElementDeZnZ(self.rep * other.rep, self.n)
+        else:
+            return ElementDeZnZ(self.rep * other, self.n)
+
 
     def __rmul__(self,other):
         """
         >>> 2*ElementDeZnZ(3,10)
         ElementDeZnZ(6,10)
         """
-        raise NotImplementedError
+        return ElementDeZnZ.__mul__(self, other)
 
 
     def __floordiv__(self,other):
         """
-        Opération inverse de la multiplication : ElementDeZnZ(4,10)//ElementDeZnZ(5,10) doit renvoyer une erreur
+        Opération inverse de la multiplication :
+        ElementDeZnZ(4,10)//ElementDeZnZ(5,10) doit renvoyer une erreur
+        
         >>> ElementDeZnZ(9,10)//ElementDeZnZ(3,10)
         ElementDeZnZ(3,10)
         >>> ElementDeZnZ(1,10)//ElementDeZnZ(3,10)
@@ -293,6 +386,7 @@ class ElementDeZnZ(object):
         assert self.rep %d ==0,ch
         return ElementDeZnZ(u*(self.rep//d),self.n)
 
+
     def __eq__(self,other):
         """
         >>> ElementDeZnZ(9,10)==ElementDeZnZ(-1,10)
@@ -302,7 +396,11 @@ class ElementDeZnZ(object):
         >>> ElementDeZnZ(9,10)==9
         True
         """
-        raise NotImplementedError
+        if isinstance(other, ElementDeZnZ):
+            return (self.rep - other.rep) % self.n == 0
+        else:
+            return (self.rep - other) % self.n == 0
+
 
     def __neg__(self):
         """
@@ -313,7 +411,8 @@ class ElementDeZnZ(object):
         >>> -ElementDeZnZ(9,10)==1
         True
         """
-        raise NotImplementedError
+        return ElementDeZnZ(-self.rep, self.n)
+
 
     def __sub__(self,other):
         """
@@ -322,21 +421,24 @@ class ElementDeZnZ(object):
         >>> (-a4+a4==0) and (a4//4==1) and (4*a1+(-a1*4)==0)
         True
         """
-        raise NotImplementedError
+        return ElementDeZnZ.__add__(self, -other)
+
 
     def __rsub__(self,other):
         """
         >>> 4-ElementDeZnZ(3,5)
         ElementDeZnZ(1,5)
         """
-        raise NotImplementedError
+        return ElementDeZnZ.__add__(-self, other)
+
 
     def __pow__(self,q):
         """
         >>> a=ElementDeZnZ(3,10); a**2==-1 and a**1==3 and a**0==1 and a**3==7 and a**4==1
         True
         """
-        raise NotImplementedError
+        return ElementDeZnZ(self.rep ** q, self.n)
+
 
     def __int__(self):
         """
@@ -344,35 +446,52 @@ class ElementDeZnZ(object):
         3
         """
         return self.rep
+    
+    
     def ordre(self):
         """
         Voir http://www.repcrypta.com/telechargements/fichecrypto_107.pdf
+        Retourne la puissance à partir de laquelle il est égal
+        
         >>> (ElementDeZnZ(2,7)).ordre()
         3
         >>> (ElementDeZnZ(-2,7)).ordre()
         6
         """
-        raise NotImplementedError
+        a = self * self.rep
+        b = 1
+        while (a != self.rep):
+            a = a * self.rep
+            b += 1
+        return b
+
 
     def elementPrimitif(self):
-            """Renvoie le premier élément primitif (d'ordre n-1) de Z/nZ suivant self
-            >>> ElementDeZnZ(2,7).elementPrimitif()
-            ElementDeZnZ(3,7)
-            """
+        """Renvoie le premier élément primitif (d'ordre n-1) de Z/nZ suivant self
+        
+        >>> ElementDeZnZ(2,7).elementPrimitif()
+        ElementDeZnZ(3,7)
+        """
+        res=self+1
+        while res.ordre()!=self.n-1:
             res=self+1
-            while res.ordre()!=self.n-1:
-                res=self+1
-            return res
+        return res
+    
+    
     def estPrimitif(self):
         return self.ordre()==self.n-1
+    
+    
     def estInversible(self):
-        """
+        """Il est inversible si son PGCD avec son modulo == 1
+        
         >>> ElementDeZnZ(3,5).estInversible()
         True
         >>> ElementDeZnZ(10,12).estInversible()
         False
         """
-        raise NotImplementedError
+        return PGCD(self.rep, self.n) == 1
+    
 
     def inverse(self):
         """
@@ -381,19 +500,29 @@ class ElementDeZnZ(object):
 
         ElementDeZnZ(2,10).inverse() doit renvoyer une erreur
         """
-        u,v,d=bezout(self.rep,self.n)
-        assert d==1,f"{self} n'est pas inversible !"
+        u,v,d = bezout(self.rep,self.n)
+        assert d == 1,f"{self} n'est pas inversible !"
         #a et n premiers entre eux
         return ElementDeZnZ(u,self.n)     #a.u=1(n)
+    
+    
     def logDiscret(self,b):
-        """Renvoie x tel que self.rep**x==b(self.n)
+        """Renvoie x tel que ( self.rep**x == b[self.n] )
         n doit être premier pour garantir l'existence
+        
         >>> ElementDeZnZ(2,13).logDiscret(8)
         3
         >>> ElementDeZnZ(2,13).logDiscret(3)
         4
         """
-        raise NotImplementedError
+        x = 2
+        a = self * self.rep
+        b = b % self.n
+        while (a.rep != b):
+            a *= self.rep
+            x += 1
+        return x
+
 
     def valThChinois(self,other):
         """
@@ -404,6 +533,8 @@ class ElementDeZnZ(object):
         assert PGCD(self.n,other.n)==1,"p et q ne sont pas premiers entre eux"
         u,v,d=bezout(self.n,other.n)
         return ElementDeZnZ( other.rep*self.n*u + self.rep*other.n*v, self.n*other.n)
+    
+    
     def demoDiv(self):
         for k in range(1,self.n):
             a=ElementDeZnZ(k,self.n)

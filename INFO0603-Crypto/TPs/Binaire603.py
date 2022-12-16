@@ -38,7 +38,7 @@ class Binaire603(list):#Voir Object ?
         else:
             lb=[]
             for b in param:
-                assert Binaire603.estOctet(b),"Les éléments d'un Binaire603 doivent convertible en octets"
+                assert Binaire603.estOctet(b),f"Les éléments d'un Binaire603 doivent convertible en octets, ex : {b}"
                 lb.append(int(b))
             super().__init__(lb )
     def toString(self):

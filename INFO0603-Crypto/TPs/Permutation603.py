@@ -4,7 +4,6 @@
 from random import randint
 from math import factorial
 
-
 class Permutation603(object):
     def __init__(self,l=[5,0,1,2,3,4]):
         """permuation de Sn définie par la liste l avec
