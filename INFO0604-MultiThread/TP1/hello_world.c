@@ -3,12 +3,12 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-void *hello_world(void *arg) {
-    int *v = (int*)arg;
+void *hello_world(void *args) {
+    int *v = (int*)args;
 
     printf("Hello World ! du thread %d de %d !\n", v[0], v[1]);
 
-    free(arg);
+    free(args);
     return NULL;
 }
 
@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
     
     // Démarrage des threads
     pthread_t *threads = malloc(sizeof(pthread_t) * nbThread);
-    for (int i = 1; i <= nbThread; i++) {
+    for (int i = 0; i < nbThread; i++) {
         int *args = malloc(sizeof(int) * 2);
-        args[0] = i;
+        args[0] = i + 1;
         args[1] = nbThread;
         pthread_create(&threads[i], NULL, hello_world, args);
     }
