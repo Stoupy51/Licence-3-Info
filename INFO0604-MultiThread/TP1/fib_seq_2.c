@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	time_t temps1, temps2;
 
 	if (argc != 2) {
-		printf("Usage : ./fib_seq.o n\n");
+		printf("Usage : ./fib_seq_2.o n\n");
 		printf("n : no du terme de la suite de fibonacci a calculer\n");
 		exit(EXIT_SUCCESS);
 	}
