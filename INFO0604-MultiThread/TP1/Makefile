@@ -11,6 +11,9 @@ fib_seq: fib_seq.c
 fib_seq_2: fib_seq_2.c
 	gcc $< -lpthread -o fib_seq_2.o
 
+time_to_launch: time_to_launch.c
+	gcc $< -lpthread -o time_to_launch.o
+
 
 
 
@@ -20,5 +23,5 @@ fib_seq_2: fib_seq_2.c
 clean:
 	rm -f *.o
 
-restart: clean hello_world compteur_seq fib_seq fib_seq_2
+restart: clean hello_world compteur_seq fib_seq fib_seq_2 time_to_launch
 
