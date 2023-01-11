@@ -13,10 +13,11 @@ def estPremierOuPseudoPremierDansLaBase(n, a):
 	"""
 	if n == 1:
 		return False
+	
+	# n-1 = t*(2**s)
+	# Tant que t est divisible par 2, augmenter s de 1
 	t = n - 1
 	s = 0
-
-	# n-1 = t*(2**s)
 	while t % 2 == 0:
 		t //= 2
 		s += 1
@@ -24,7 +25,6 @@ def estPremierOuPseudoPremierDansLaBase(n, a):
 	# a**(t*(2**s)) -1
 	# ==
 	# (a**t - 1)(a**t + 1)...(a**((2**s) * t) - 1)(a**((2**s) * t) + 1)
-	
 	s1 = 0
 	while s1 <= s:
 		p = t * (2**s1)
