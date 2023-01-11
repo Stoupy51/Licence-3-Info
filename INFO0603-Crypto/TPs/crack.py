@@ -1,10 +1,13 @@
 
 from math import log
 from random import random,randint
+import numpy as np
 from sympy import *
 from arithmetiqueDansZ import *
 from Binaire603 import Binaire603
 from ChiffreurAffine import ChiffreurAffine
+from ChiffreurVigenere import ChiffreurVigenere
+from ChiffreurParDecalage import ChiffreurParDecalage
 
 def crackAffine(lb: Binaire603):
     lf = lb.lFrequences()
@@ -19,8 +22,8 @@ def crackAffine(lb: Binaire603):
     # Méthode pour comparer les fréquences du français
     # avec le texte codé
     # formule :
-    # Ysp = (a * Ye + b) % 256
-    # Xsp = (a * Xe + b) % 256
+    # Ysp = (a * Xsp + b) % 256
+    # Ye = (a * Xe + b) % 256
     Ysp = lf.index(max(lf))
     lf.pop(Ysp)
     Ye = lf.index(max(lf))
@@ -29,19 +32,21 @@ def crackAffine(lb: Binaire603):
     fr.pop(Xsp)
     Xe = fr.index(max(fr))
 
-    print(f"Ysp = {Ysp}, Ye = {Ye}, Xsp = {Xsp}, Xe = {Xe}")
-
     # Résolution du système d'équations
-    a, b = symbols('a b')
-    eq1 = Eq(Ysp, (a * Ye + b) % 256)
-    eq2 = Eq(Xsp, (a * Xe + b) % 256)
-    s = solve((eq1, eq2))
+    a, b = solve_system(Xsp, Ysp, Xe, Ye)
+    return ChiffreurAffine(round(a),round(b))
 
-    return ChiffreurAffine(s["a"],s["b"])
+def solve_system(Xsp, Ysp, Xe, Ye):
+    A = np.array([[Xsp, 1], [Xe, 1]])
+    B = np.array([Ysp, Ye])
+    return np.linalg.solve(A, B)
+
+def crackVigenere(lb: Binaire603) : 
+    return ChiffreurVigenere
 
 if __name__ == "__main__":
-    f1 = Binaire603.bin603DepuisFichier("../Chiffre1.TXT")
+    # Crack Affine
+    f1 = Binaire603.bin603DepuisFichier("../Chiffre2.TXT")
     ca = crackAffine(f1)
-    print(ca)
-    print(ca.binDecode(f1))
-
+    print(ca)   
+    print(ca.binDecode(f1).toString())
