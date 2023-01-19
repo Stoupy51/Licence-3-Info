@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/time.h>
 #include <time.h>
 
@@ -20,6 +21,8 @@ unsigned long BENCH_time = 0;
 #define BENCHMARK_BETWEEN(bench_f1, bench_f2, bench_testing_time) \
 	BENCH_countF1 = 0; \
 	BENCH_countF2 = 0; \
+	BENCH_end = time(NULL) + 1; \
+	while (time(NULL) < BENCH_end) {} \
 	BENCH_end = time(NULL) + bench_testing_time; \
 	while (time(NULL) < BENCH_end) { \
 		bench_f1; \
@@ -36,6 +39,7 @@ unsigned long BENCH_time = 0;
 		printf(COLOR_RED "f1 < f2 by " COLOR_YELLOW "%f" COLOR_RED " times with" COLOR_RESET, (double)BENCH_countF2 / (double)BENCH_countF1); \
 	} \
 	printf(COLOR_RED "\nf1 executed " COLOR_YELLOW "%ld" COLOR_RED " times and f2 executed " COLOR_YELLOW "%ld" COLOR_RED " times\n\n" COLOR_RESET, BENCH_countF1, BENCH_countF2);
+
 
 #define BENCHMARK_SOLO(bench_f, bench_count) \
 	gettimeofday(&BENCH_timeval, NULL); \
@@ -61,13 +65,35 @@ int main(int argc, char *argv[]) {
 	int* tab = malloc(size);
 	int i;
 	int t = atoi(argv[1]);
-	BENCHMARK_BETWEEN(
-		memset(tab, 0, size),
-		for (i = 0; i < TAB_SIZE; i++) tab[i] = 0,
+
+	int dump;
+	BENCHMARK_BETWEEN (
+		do {
+
+			// Code 1 (f1)
+			memset(tab, 0, size);
+
+		} while (0),
+		do {
+
+			// Code 2 (f2)
+			for (i = 0; i < TAB_SIZE; i++) {
+				tab[i] = 0;
+			}
+
+		} while (0),
 		t
 	);
 
-	BENCHMARK_SOLO(memset(tab, 0, size), 10000);
+	BENCHMARK_SOLO(
+		do {
+			
+			// Code 1 (f1)
+			//memset(tab, 0, size);
+
+		} while (0),
+		10000
+	);
 
 	return 0;
 }
