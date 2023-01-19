@@ -3,7 +3,7 @@ exo1: exo1.c
 	gcc $< -lpthread -o exo1.o
 
 mat_vec: mat_vec.c
-	gcc $< -lpthread -o mat_vec.o
+	gcc $< -lpthread -lncurses -o mat_vec.o
 
 #####################################
 #####################################

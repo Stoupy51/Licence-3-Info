@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 	fflush(stdout);
 
 	pthread_t threads[NB_THREADS];
-	long th_args[NB_THREADS];
+	long th_tubes[NB_THREADS];
 
 	// Création du tableau
 	tableau = malloc(sizeof(int) * TAILLE);
@@ -41,9 +41,9 @@ int main(int argc, char *argv[]) {
 
 	// Création des threads
 	for (i = 0; i < NB_THREADS; i++) {
-		th_args[i] = i * SLICE;
-		if (pthread_create(&threads[i], NULL, thread_tableau, &th_args[i]) != 0) {
-			perror("\nErreur de création du thread increment !\n");
+		th_tubes[i] = i * SLICE;
+		if (pthread_create(&threads[i], NULL, thread_tableau, &th_tubes[i]) != 0) {
+			perror("\nErreur de création du thread !\n");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 	long somme = 0;
 	for (i = 0; i < NB_THREADS; i++) {
 		pthread_join(threads[i], NULL);
-		somme += th_args[i];
+		somme += th_tubes[i];
 	}
 
 	free(tableau);
