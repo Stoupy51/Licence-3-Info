@@ -10,10 +10,12 @@
 #define COLOR_RED "\033[0;31m"
 #define COLOR_YELLOW "\033[0;33m"
 
+int BENCH_i = 0;
 long BENCH_countF1 = 0;
 long BENCH_countF2 = 0;
-time_t BENCH_start = 0;
 time_t BENCH_end = 0;
+struct timeval BENCH_timeval, BENCH_timeval2;
+unsigned long BENCH_time = 0;
 
 #define BENCHMARK_BETWEEN(bench_f1, bench_f2, bench_testing_time) \
 	BENCH_countF1 = 0; \
@@ -29,19 +31,22 @@ time_t BENCH_end = 0;
 		BENCH_countF2 += 1; \
 	} \
 	if (BENCH_countF1 > BENCH_countF2) { \
-		printf("\nf1 > f2 by %f times with", (double)BENCH_countF1 / (double)BENCH_countF2); \
+		printf(COLOR_RED "f1 > f2 by " COLOR_YELLOW "%f" COLOR_RED " times with" COLOR_RESET, (double)BENCH_countF1 / (double)BENCH_countF2); \
 	} else { \
-		printf("\nf1 < f2 by %f times with", (double)BENCH_countF2 / (double)BENCH_countF1); \
+		printf(COLOR_RED "f1 < f2 by " COLOR_YELLOW "%f" COLOR_RED " times with" COLOR_RESET, (double)BENCH_countF2 / (double)BENCH_countF1); \
 	} \
-	printf("\n%sf1 executed %s%ld%s times and f2 executed %s%ld times%s\n\n", COLOR_RED, COLOR_YELLOW, COLOR_RED, BENCH_countF1, COLOR_YELLOW, BENCH_countF2, COLOR_RESET);
+	printf(COLOR_RED "\nf1 executed " COLOR_YELLOW "%ld" COLOR_RED " times and f2 executed " COLOR_YELLOW "%ld" COLOR_RED " times\n\n" COLOR_RESET, BENCH_countF1, BENCH_countF2);
 
 #define BENCHMARK_SOLO(bench_f, bench_count) \
-	BENCH_start = time(NULL); \
-	for (int i = 0; i < bench_count; i++) { \
+	gettimeofday(&BENCH_timeval, NULL); \
+	BENCH_time = 1000000 * BENCH_timeval.tv_sec + BENCH_timeval.tv_usec; \
+	BENCH_i = 0; \
+	for (BENCH_i = 0; BENCH_i < bench_count; BENCH_i++) { \
 		bench_f; \
 	} \
-	BENCH_end = time(NULL); \
-	printf("\nbench_f executed %d times in %ld seconds\n\n", bench_count, BENCH_end - BENCH_start);
+	gettimeofday(&BENCH_timeval2, NULL); \
+	BENCH_time = 1000000 * BENCH_timeval2.tv_sec + BENCH_timeval2.tv_usec - BENCH_time; \
+	printf(COLOR_RED "f executed " COLOR_YELLOW "%d" COLOR_RED " times in " COLOR_YELLOW "%lf" COLOR_RED "s\n\n" COLOR_RESET, bench_count, (double)BENCH_time / 1000000.0);
 
 
 int main(int argc, char *argv[]) {
@@ -61,6 +66,8 @@ int main(int argc, char *argv[]) {
 		for (i = 0; i < TAB_SIZE; i++) tab[i] = 0,
 		t
 	);
+
+	BENCHMARK_SOLO(memset(tab, 0, size), 10000);
 
 	return 0;
 }
