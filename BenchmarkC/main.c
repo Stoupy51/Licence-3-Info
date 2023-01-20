@@ -68,30 +68,24 @@ int main(int argc, char *argv[]) {
 
 	int dump;
 	BENCHMARK_BETWEEN (
-		do {
-
+		{
 			// Code 1 (f1)
 			memset(tab, 0, size);
-
-		} while (0),
-		do {
-
+		},
+		{
 			// Code 2 (f2)
 			for (i = 0; i < TAB_SIZE; i++) {
 				tab[i] = 0;
 			}
-
-		} while (0),
+		},
 		t
 	);
 
 	BENCHMARK_SOLO(
-		do {
-			
-			// Code 1 (f1)
+		{
+			// Code  (f)
 			//memset(tab, 0, size);
-
-		} while (0),
+		},
 		10000
 	);
 
