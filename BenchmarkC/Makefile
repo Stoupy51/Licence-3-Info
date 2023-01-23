@@ -1,6 +1,9 @@
 
-main: main.c
+main: st_benchmark.o
 	gcc $< -o main.exe
+
+st_benchmark: st_benchmark.c st_benchmark.h
+	gcc -c $< -o st_benchmark.o
 
 #####################################
 #####################################
@@ -8,6 +11,7 @@ main: main.c
 
 clean:
 	rm -f *.exe
+	rm -f *.o
 
-restart: clean main
+restart: clean st_benchmark main
 
