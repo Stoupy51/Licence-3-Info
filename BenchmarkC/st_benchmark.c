@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
 	int dump;
 	char buffer[1024];
-	BENCHMARK_BETWEEN (buffer,
+	ST_BENCHMARK_BETWEEN (buffer,
 		{
 			// Code 1 (f1)
 			memset(tab, 0, size);
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 	);
 	printf("%s", buffer);
 
-	BENCHMARK_SOLO(
+	ST_BENCHMARK_SOLO(
 		buffer,
 		{
 			// Code  (f)

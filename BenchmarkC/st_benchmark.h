@@ -14,7 +14,7 @@
 #define ST_COLOR_RED "\033[0;31m"
 #define ST_COLOR_YELLOW "\033[0;33m"
 
-#define BENCHMARK_BETWEEN(ST_BENCH_buffer, ST_BENCH_f1, ST_BENCH_f2, ST_BENCH_f1_name, ST_BENCH_f2_name, ST_BENCH_testing_time) \
+#define ST_BENCHMARK_BETWEEN(ST_BENCH_buffer, ST_BENCH_f1, ST_BENCH_f2, ST_BENCH_f1_name, ST_BENCH_f2_name, ST_BENCH_testing_time) \
 	{ \
 	long ST_BENCH_countF1 = 0; \
 	long ST_BENCH_countF2 = 0; \
@@ -38,7 +38,7 @@
 	}
 
 
-#define BENCHMARK_SOLO(ST_BENCH_buffer, ST_BENCH_f, ST_BENCH_f_name, ST_BENCH_count) \
+#define ST_BENCHMARK_SOLO(ST_BENCH_buffer, ST_BENCH_f, ST_BENCH_f_name, ST_BENCH_count) \
 	{ \
 	struct timeval ST_BENCH_timeval, ST_BENCH_timeval2; \
 	gettimeofday(&ST_BENCH_timeval, NULL); \
