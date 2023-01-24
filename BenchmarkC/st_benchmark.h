@@ -14,7 +14,7 @@
 #define ST_COLOR_RED "\033[0;31m"
 #define ST_COLOR_YELLOW "\033[0;33m"
 
-#define BENCHMARK_BETWEEN(ST_BENCH_f1, ST_BENCH_f2, ST_BENCH_testing_time) \
+#define BENCHMARK_BETWEEN(ST_BENCH_buffer, ST_BENCH_f1, ST_BENCH_f2, ST_BENCH_f1_name, ST_BENCH_f2_name, ST_BENCH_testing_time) \
 	{ \
 	long ST_BENCH_countF1 = 0; \
 	long ST_BENCH_countF2 = 0; \
@@ -31,15 +31,14 @@
 		ST_BENCH_countF2 += 1; \
 	} \
 	if (ST_BENCH_countF1 > ST_BENCH_countF2) { \
-		printf(ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED "f1 > f2 by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_RESET, (double)ST_BENCH_countF1 / (double)ST_BENCH_countF2); \
+		sprintf(ST_BENCH_buffer, ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " > " ST_BENCH_f2_name " by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_YELLOW "\n[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times and " ST_BENCH_f2_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times\n" ST_COLOR_RESET, (double)ST_BENCH_countF1 / (double)ST_BENCH_countF2, ST_BENCH_countF1, ST_BENCH_countF2); \
 	} else { \
-		printf(ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED "f1 < f2 by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_RESET, (double)ST_BENCH_countF2 / (double)ST_BENCH_countF1); \
+		sprintf(ST_BENCH_buffer, ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " < " ST_BENCH_f2_name " by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_YELLOW "\n[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times and " ST_BENCH_f2_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times\n" ST_COLOR_RESET, (double)ST_BENCH_countF2 / (double)ST_BENCH_countF1, ST_BENCH_countF1, ST_BENCH_countF2); \
 	} \
-	printf(ST_COLOR_YELLOW "\n[BENCHMARK] " ST_COLOR_RED "f1 executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times and f2 executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times\n" ST_COLOR_RESET, ST_BENCH_countF1, ST_BENCH_countF2); \
 	}
 
 
-#define BENCHMARK_SOLO(ST_BENCH_f, ST_BENCH_count) \
+#define BENCHMARK_SOLO(ST_BENCH_buffer, ST_BENCH_f, ST_BENCH_f_name, ST_BENCH_count) \
 	{ \
 	struct timeval ST_BENCH_timeval, ST_BENCH_timeval2; \
 	gettimeofday(&ST_BENCH_timeval, NULL); \
@@ -50,7 +49,7 @@
 	} \
 	gettimeofday(&ST_BENCH_timeval2, NULL); \
 	ST_BENCH_time = 1000000 * ST_BENCH_timeval2.tv_sec + ST_BENCH_timeval2.tv_usec - ST_BENCH_time; \
-	printf(ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED "f executed " ST_COLOR_YELLOW "%d" ST_COLOR_RED " times in " ST_COLOR_YELLOW "%lf" ST_COLOR_RED "s\n" ST_COLOR_RESET, ST_BENCH_count, (double)ST_BENCH_time / 1000000.0); \
+	sprintf(ST_BENCH_buffer, ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED ST_BENCH_f_name " executed " ST_COLOR_YELLOW "%d" ST_COLOR_RED " times in " ST_COLOR_YELLOW "%lf" ST_COLOR_RED "s\n" ST_COLOR_RESET, ST_BENCH_count, (double)ST_BENCH_time / 1000000.0); \
 	}
 
 #endif

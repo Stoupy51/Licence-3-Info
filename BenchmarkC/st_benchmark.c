@@ -16,7 +16,8 @@ int main(int argc, char *argv[]) {
 	int t = atoi(argv[1]);
 
 	int dump;
-	BENCHMARK_BETWEEN (
+	char buffer[1024];
+	BENCHMARK_BETWEEN (buffer,
 		{
 			// Code 1 (f1)
 			memset(tab, 0, size);
@@ -27,16 +28,19 @@ int main(int argc, char *argv[]) {
 				tab[i] = 0;
 			}
 		},
-		t
+		"'memset(0)'", "'boucle for'", t
 	);
+	printf("%s", buffer);
 
 	BENCHMARK_SOLO(
+		buffer,
 		{
 			// Code  (f)
 			//memset(tab, 0, size);
 		},
-		10000
+		"'boucle vide'", 10000
 	);
+	printf("%s", buffer);
 
 	free(tab);
 
