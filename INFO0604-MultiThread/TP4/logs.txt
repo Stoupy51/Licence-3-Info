@@ -1,72 +1,23 @@
-2023/01/26 14:53:38 -> WARN [ Implements ] : Début du thread
-2023/01/26 14:53:38 -> WARN [ Extends ] : Début du thread
-2023/01/26 14:53:38 -> [ Extends ] : Hello World!
-2023/01/26 14:53:38 -> [ Implements ] : Hello World!
-2023/01/26 14:53:38 -> WARN [ Extends ] : Fin du thread
-2023/01/26 14:53:38 -> WARN [ Implements ] : Fin du thread
-2023/01/26 14:54:16 -> WARN  [ Extends ] : Début du thread
-2023/01/26 14:54:16 -> WARN  [ Implements ] : Début du thread
-2023/01/26 14:54:16 -> INFO [ Implements ] : Hello World!
-2023/01/26 14:54:16 -> INFO [ Extends ] : Hello World!
-2023/01/26 14:54:16 -> WARN  [ Implements ] : Fin du thread
-2023/01/26 14:54:16 -> WARN  [ Extends ] : Fin du thread
-2023/01/26 14:54:29 -> WARN  [ Thread Implements ] : Début du thread
-2023/01/26 14:54:29 -> WARN  [ Thread Extends ] : Début du thread
-2023/01/26 14:54:29 -> INFO [ Thread Extends ] : Hello World!
-2023/01/26 14:54:29 -> INFO [ Thread Implements ] : Hello World!
-2023/01/26 14:54:29 -> WARN  [ Thread Extends ] : Fin du thread
-2023/01/26 14:54:29 -> WARN  [ Thread Implements ] : Fin du thread
-2023/01/26 14:57:11 -> WARN  
+2023/01/26 17:57:11 -> INFO  DÃ©but de la fonction main()
 
 
+2023/01/26 17:57:11 -> INFO  [ Producteur #0 ] Envoie du message "Bonjour"
+2023/01/26 17:57:11 -> INFO  [ Producteur #1 ] Envoie du message "Bonjour"
+2023/01/26 17:57:12 -> INFO  [ Producteur #0 ] Envoie du message "Je vais bien"
+2023/01/26 17:57:13 -> INFO  [ Consommateur #1 ] RÃ©cupÃ©ration du message "[ Producteur #0 ] Bonjour"
+2023/01/26 17:57:15 -> INFO  [ Producteur #0 ] Envoie du message "TerminÃ©"
+2023/01/26 17:57:16 -> INFO  [ Consommateur #1 ] RÃ©cupÃ©ration du message "[ Producteur #0 ] Je vais bien"
+2023/01/26 17:57:16 -> INFO  [ Producteur #1 ] Envoie du message "Je vais bien"
+2023/01/26 17:57:16 -> INFO  [ Consommateur #0 ] RÃ©cupÃ©ration du message "[ Producteur #1 ] Bonjour"
+2023/01/26 17:57:17 -> WARN  [ Producteur #0 ] Fin du thread
+2023/01/26 17:57:18 -> INFO  [ Consommateur #1 ] RÃ©cupÃ©ration du message "[ Producteur #0 ] TerminÃ©"
+2023/01/26 17:57:21 -> INFO  [ Producteur #1 ] Envoie du message "TerminÃ©"
+2023/01/26 17:57:22 -> WARN  [ Consommateur #1 ] Fin du thread
+2023/01/26 17:57:24 -> WARN  [ Producteur #1 ] Fin du thread
+2023/01/26 17:57:25 -> INFO  [ Consommateur #0 ] RÃ©cupÃ©ration du message "[ Producteur #1 ] Je vais bien"
+2023/01/26 17:57:29 -> INFO  [ Consommateur #0 ] RÃ©cupÃ©ration du message "[ Producteur #1 ] TerminÃ©"
+2023/01/26 17:57:31 -> WARN  [ Consommateur #0 ] Fin du thread
+2023/01/26 17:57:31 -> INFO  
 
-
-
-
-
-
-
-
-
-
-
-
-Début de la fonction main()
-
-2023/01/26 14:57:11 -> WARN  [ Thread Extends ] : Début du thread
-2023/01/26 14:57:11 -> WARN  [ Thread Implements ] : Début du thread
-2023/01/26 14:57:11 -> INFO [ Thread Extends ] : Hello World!
-2023/01/26 14:57:11 -> INFO [ Thread Implements ] : Hello World!
-2023/01/26 14:57:11 -> WARN  [ Thread Extends ] : Fin du thread
-2023/01/26 14:57:11 -> WARN  [ Thread Implements ] : Fin du thread
-2023/01/26 14:57:11 -> WARN  
-
-Fin de la fonction main() en 3ms
-
-2023/01/26 14:57:46 -> INFO  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Début de la fonction main()
-
-2023/01/26 14:57:46 -> WARN  [ Thread Extends ] : Début du thread
-2023/01/26 14:57:46 -> WARN  [ Thread Implements ] : Début du thread
-2023/01/26 14:57:46 -> INFO [ Thread Extends ] : Hello World!
-2023/01/26 14:57:46 -> INFO [ Thread Implements ] : Hello World!
-2023/01/26 14:57:46 -> WARN  [ Thread Extends ] : Fin du thread
-2023/01/26 14:57:46 -> WARN  [ Thread Implements ] : Fin du thread
-2023/01/26 14:57:46 -> INFO  
-
-Fin de la fonction main() en 3ms
+Fin de la fonction main() en 20,249s
 
