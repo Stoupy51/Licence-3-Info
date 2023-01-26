@@ -1,0 +1,72 @@
+2023/01/26 14:53:38 -> WARN [ Implements ] : Début du thread
+2023/01/26 14:53:38 -> WARN [ Extends ] : Début du thread
+2023/01/26 14:53:38 -> [ Extends ] : Hello World!
+2023/01/26 14:53:38 -> [ Implements ] : Hello World!
+2023/01/26 14:53:38 -> WARN [ Extends ] : Fin du thread
+2023/01/26 14:53:38 -> WARN [ Implements ] : Fin du thread
+2023/01/26 14:54:16 -> WARN  [ Extends ] : Début du thread
+2023/01/26 14:54:16 -> WARN  [ Implements ] : Début du thread
+2023/01/26 14:54:16 -> INFO [ Implements ] : Hello World!
+2023/01/26 14:54:16 -> INFO [ Extends ] : Hello World!
+2023/01/26 14:54:16 -> WARN  [ Implements ] : Fin du thread
+2023/01/26 14:54:16 -> WARN  [ Extends ] : Fin du thread
+2023/01/26 14:54:29 -> WARN  [ Thread Implements ] : Début du thread
+2023/01/26 14:54:29 -> WARN  [ Thread Extends ] : Début du thread
+2023/01/26 14:54:29 -> INFO [ Thread Extends ] : Hello World!
+2023/01/26 14:54:29 -> INFO [ Thread Implements ] : Hello World!
+2023/01/26 14:54:29 -> WARN  [ Thread Extends ] : Fin du thread
+2023/01/26 14:54:29 -> WARN  [ Thread Implements ] : Fin du thread
+2023/01/26 14:57:11 -> WARN  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Début de la fonction main()
+
+2023/01/26 14:57:11 -> WARN  [ Thread Extends ] : Début du thread
+2023/01/26 14:57:11 -> WARN  [ Thread Implements ] : Début du thread
+2023/01/26 14:57:11 -> INFO [ Thread Extends ] : Hello World!
+2023/01/26 14:57:11 -> INFO [ Thread Implements ] : Hello World!
+2023/01/26 14:57:11 -> WARN  [ Thread Extends ] : Fin du thread
+2023/01/26 14:57:11 -> WARN  [ Thread Implements ] : Fin du thread
+2023/01/26 14:57:11 -> WARN  
+
+Fin de la fonction main() en 3ms
+
+2023/01/26 14:57:46 -> INFO  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Début de la fonction main()
+
+2023/01/26 14:57:46 -> WARN  [ Thread Extends ] : Début du thread
+2023/01/26 14:57:46 -> WARN  [ Thread Implements ] : Début du thread
+2023/01/26 14:57:46 -> INFO [ Thread Extends ] : Hello World!
+2023/01/26 14:57:46 -> INFO [ Thread Implements ] : Hello World!
+2023/01/26 14:57:46 -> WARN  [ Thread Extends ] : Fin du thread
+2023/01/26 14:57:46 -> WARN  [ Thread Implements ] : Fin du thread
+2023/01/26 14:57:46 -> INFO  
+
+Fin de la fonction main() en 3ms
+
