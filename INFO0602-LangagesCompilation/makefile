@@ -3,7 +3,7 @@
 #
 
 EXEC = example
-OBJECTS = lex.yy.o
+OBJECTS = stack.o lex.yy.o
 PROJECT_NAME = lex_example
 
 #
@@ -92,4 +92,4 @@ archive: clean
 	@echo "Done."
 
 # DEPENDANCIES
-example.o: example.c
+example.o: example.c stack.h

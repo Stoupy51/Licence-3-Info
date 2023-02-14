@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "stack.h"
 
@@ -18,6 +19,7 @@ int popStack(stack_t *stack) {
 	stack_element_t *e = stack->head;
 	int r = e->value;
 	stack->head = e->next;
+	stack->size--;
 	free(e);
 	return r;
 }
@@ -29,7 +31,33 @@ int pushStack(stack_t *stack, int i) {
 	e->value = i;
 	e->next = stack->head;
 	stack->head = e;
+	stack->size++;
 	return 1;
 }
 
+void printStack(stack_t stack) {
+	if (stack.size == 0) {
+		printf("[]\n");
+		return;
+	}
+	printf("[%d", stack.head->value);
+	stack_element_t *e;
+	for (e = stack.head->next; e != NULL; e = e->next)
+		printf(", %d", e->value);
+	printf("]\n");
+}
+
+void swapStack(stack_t *stack) {
+	if (stack->size < 2)
+		return;
+	stack_element_t *swap = stack->head;
+	stack->head = stack->head->next;
+	swap->next = stack->head->next;
+	stack->head->next = swap;
+}
+
+void clearStack(stack_t *stack) {
+	while (stack->size != 0)
+		popStack(stack);
+}
 
