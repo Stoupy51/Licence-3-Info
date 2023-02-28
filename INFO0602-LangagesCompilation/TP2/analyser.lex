@@ -1,3 +1,4 @@
+
 %{
 #include "y.tab.h" 
 void yyerror(const char *error_msg);
@@ -15,7 +16,7 @@ extern int yylval;
         yylval = atoi(yytext);
         return integer;
     }
-[-+\.]	 return *yytext;
+[-+*/\.]	 return *yytext;
 [[:space:]]	 ;
 .        yyerror("Invalid character");
 
@@ -25,3 +26,4 @@ void yyerror(const char *error_msg) {
     fprintf(stderr, "\n Error '%s' on '%s'.\n", error_msg, yytext);
     exit(EXIT_FAILURE);
 }
+
