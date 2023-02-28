@@ -9,6 +9,8 @@ int error = 0;
 %}
 
 %token integer
+%token unaire
+
 %left '+' '-'
 %left '*' '/'
 
@@ -21,7 +23,7 @@ EXEC: EXPRESSION '.' {
 			error = 0;
 	} EXEC | ;
 
-EXPRESSION: integer
+EXPRESSION: integer | unaire
     | EXPRESSION '+' EXPRESSION {
     	$$ = $1 + $3;
     }

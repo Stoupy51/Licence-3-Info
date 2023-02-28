@@ -12,8 +12,10 @@ extern int yylval;
 
 %%
 
-[0-9]+	 {
+-?[0-9]+ {
         yylval = atoi(yytext);
+		if (yylval < 0)
+			return unaire;
         return integer;
     }
 [-+*/\.]	 return *yytext;

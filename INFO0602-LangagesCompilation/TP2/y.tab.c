@@ -72,65 +72,68 @@ int YYLEX_DECL();
 extern int YYPARSE_DECL();
 
 #define integer 257
+#define unaire 258
 #define YYERRCODE 256
 typedef int YYINT;
 static const YYINT yylhs[] = {                           -1,
-    2,    0,    0,    1,    1,    1,    1,    1,
+    2,    0,    0,    1,    1,    1,    1,    1,    1,
 };
 static const YYINT yylen[] = {                            2,
-    0,    4,    0,    1,    3,    3,    3,    3,
+    0,    4,    0,    1,    1,    3,    3,    3,    3,
 };
 static const YYINT yydefred[] = {                         0,
-    4,    0,    0,    0,    0,    0,    0,    1,    0,    0,
-    7,    8,    0,    2,
+    4,    5,    0,    0,    0,    0,    0,    0,    1,    0,
+    0,    8,    9,    0,    2,
 };
 #if defined(YYDESTRUCT_CALL) || defined(YYSTYPE_TOSTRING)
 static const YYINT yystos[] = {                           0,
-  257,  259,  260,   43,   45,   42,   47,   46,  260,  260,
-  260,  260,  261,  259,
+  257,  258,  260,  261,   43,   45,   42,   47,   46,  261,
+  261,  261,  261,  262,  260,
 };
 #endif /* YYDESTRUCT_CALL || YYSTYPE_TOSTRING */
-static const YYINT yydgoto[] = {                          2,
-    3,   13,
+static const YYINT yydgoto[] = {                          3,
+    4,   14,
 };
-static const YYINT yysindex[] = {                      -251,
-    0,    0,  -42, -251, -251, -251, -251,    0,  -40,  -40,
-    0,    0, -251,    0,
+static const YYINT yysindex[] = {                      -237,
+    0,    0,    0,  -42, -237, -237, -237, -237,    0,  -40,
+  -40,    0,    0, -237,    0,
 };
-static const YYINT yyrindex[] = {                        13,
-    0,    0,    0,    0,    0,    0,    0,    0,  -31,  -27,
-    0,    0,   13,    0,
+static const YYINT yyrindex[] = {                         6,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,  -31,
+  -27,    0,    0,    6,    0,
 };
 #if YYBTYACC
 static const YYINT yycindex[] = {                         0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,
+    0,    0,    0,    0,    0,
 };
 #endif
-static const YYINT yygindex[] = {                         7,
-    4,    0,
+static const YYINT yygindex[] = {                        -1,
+    3,    0,
 };
-#define YYTABLESIZE 20
-static const YYINT yytable[] = {                          6,
-    4,    6,    5,    8,    7,    1,    7,    9,   10,   11,
-   12,    5,    3,    5,    5,    6,    0,    6,    6,   14,
+#define YYTABLESIZE 21
+static const YYINT yytable[] = {                          7,
+    5,    7,    6,    9,    8,    3,    8,   10,   11,   12,
+   13,    6,   15,    6,    6,    7,    0,    7,    7,    1,
+    2,
 };
 static const YYINT yycheck[] = {                         42,
-   43,   42,   45,   46,   47,  257,   47,    4,    5,    6,
-    7,   43,    0,   45,   46,   43,   -1,   45,   46,   13,
+   43,   42,   45,   46,   47,    0,   47,    5,    6,    7,
+    8,   43,   14,   45,   46,   43,   -1,   45,   46,  257,
+  258,
 };
 #if YYBTYACC
 static const YYINT yyctable[] = {                        -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
 };
 #endif
-#define YYFINAL 2
+#define YYFINAL 3
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 257
-#define YYUNDFTOKEN 262
+#define YYMAXTOKEN 258
+#define YYUNDFTOKEN 263
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
@@ -142,7 +145,7 @@ static const char *const yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"error","integer",
-"$accept","EXEC","EXPRESSION","$$1","illegal-symbol",
+"unaire","$accept","EXEC","EXPRESSION","$$1","illegal-symbol",
 };
 static const char *const yyrule[] = {
 "$accept : EXEC",
@@ -150,6 +153,7 @@ static const char *const yyrule[] = {
 "EXEC : EXPRESSION '.' $$1 EXEC",
 "EXEC :",
 "EXPRESSION : integer",
+"EXPRESSION : unaire",
 "EXPRESSION : EXPRESSION '+' EXPRESSION",
 "EXPRESSION : EXPRESSION '-' EXPRESSION",
 "EXPRESSION : EXPRESSION '*' EXPRESSION",
@@ -285,10 +289,10 @@ static YYINT  *yylexp = 0;
 
 static YYINT  *yylexemes = 0;
 #endif /* YYBTYACC */
-#line 44 "analyser.yacc.y"
+#line 46 "analyser.yacc.y"
 
 
-#line 292 "y.tab.c"
+#line 296 "y.tab.c"
 
 /* For use in generated program */
 #define yydepth (int)(yystack.s_mark - yystack.s_base)
@@ -959,38 +963,38 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 17 "analyser.yacc.y"
+#line 19 "analyser.yacc.y"
 	{
 		if (error == 0)
 			printf("=%d\n", yystack.l_mark[-1]);
 		else
 			error = 0;
 	}
-#line 970 "y.tab.c"
+#line 974 "y.tab.c"
 break;
-case 5:
-#line 25 "analyser.yacc.y"
+case 6:
+#line 27 "analyser.yacc.y"
 	{
     	yyval = yystack.l_mark[-2] + yystack.l_mark[0];
     }
-#line 977 "y.tab.c"
+#line 981 "y.tab.c"
 break;
-case 6:
-#line 28 "analyser.yacc.y"
+case 7:
+#line 30 "analyser.yacc.y"
 	{
     	yyval = yystack.l_mark[-2] - yystack.l_mark[0];
     }
-#line 984 "y.tab.c"
+#line 988 "y.tab.c"
 break;
-case 7:
-#line 31 "analyser.yacc.y"
+case 8:
+#line 33 "analyser.yacc.y"
 	{
 		yyval = yystack.l_mark[-2] * yystack.l_mark[0];
 	}
-#line 991 "y.tab.c"
+#line 995 "y.tab.c"
 break;
-case 8:
-#line 34 "analyser.yacc.y"
+case 9:
+#line 36 "analyser.yacc.y"
 	{
 		if (yystack.l_mark[0] == 0) {
 			printf("Error: division by zero : %d / %d\n", yystack.l_mark[-2], yystack.l_mark[0]);
@@ -999,9 +1003,9 @@ case 8:
 		else
 			yyval = yystack.l_mark[-2] / yystack.l_mark[0];
 	}
-#line 1003 "y.tab.c"
+#line 1007 "y.tab.c"
 break;
-#line 1005 "y.tab.c"
+#line 1009 "y.tab.c"
     default:
         break;
     }
