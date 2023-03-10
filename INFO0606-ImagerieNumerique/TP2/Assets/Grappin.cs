@@ -12,28 +12,16 @@ using UnityEngine;
  */
 public class Grappin : MonoBehaviour {
 
-	// Private variables
-	private FixedJoint joint;	// Joint between the grappin and the collision
-
-	/**
-	 * Start method, called at the beginning of the game
-	 *
-	 * @brief Initialize the private variables
-	 */
-	void Start() {
-		joint = null;
-	}
-
 	/**
 	 * Update method, called once per frame
 	 *
-	 * @brief TODO
+	 * @brief 
 	 */
 	void Update() {
 
 		// Destroy the FixedJoint if the player press the space bar
-		if (joint != null && Input.GetKey(KeyCode.Space))
-			Destroy(joint);
+		if (Input.GetKey(KeyCode.Space))
+			Destroy(this.gameObject.GetComponent<FixedJoint>());
 	}
 
 	/**
@@ -49,7 +37,7 @@ public class Grappin : MonoBehaviour {
 		if (collision.gameObject.GetComponent<ArticulationBody>() != null) {
 
 			// Create a FixedJoint between the grappin and the collision
-			joint = this.gameObject.AddComponent<FixedJoint>();
+			FixedJoint joint = this.gameObject.AddComponent<FixedJoint>();
 			joint.connectedArticulationBody = collision.articulationBody;
 		}
 	}

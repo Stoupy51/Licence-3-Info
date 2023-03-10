@@ -13,7 +13,7 @@ using UnityEngine;
 public class ControlGrue : MonoBehaviour {
 	
 	// Public variables
-	public float torque = 250f;			// TODO
+	public float torque = 500f;			// TODO
 	public float forceChariot = 500f;	// TODO
 	public float forceMoufle = 500f;	// TODO
 	public ArticulationBody pivot;		// TODO
