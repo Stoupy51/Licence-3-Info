@@ -1,5 +1,4 @@
 
-INFO0606-ImagerieNumerique/TP1/Logs/
-INFO0606-ImagerieNumerique/TP1/Library/
-INFO0606-ImagerieNumerique/TP2/Logs/
-INFO0606-ImagerieNumerique/TP2/Library/
+INFO0606-ImagerieNumerique/*/Logs/
+INFO0606-ImagerieNumerique/*/Library/
+
