@@ -1,8 +1,8 @@
 
 %{
 #include "y.tab.h" 
-void yyerror(const char *error_msg);
 
+void yyerror(const char *error_msg);
 extern int yylval;
 %}
 
@@ -12,15 +12,10 @@ extern int yylval;
 
 %%
 
--?[0-9]+ {
-        yylval = atoi(yytext);
-		if (yylval < 0)
-			return unaire;
-        return integer;
-    }
-[-+*/\.]	 return *yytext;
+-?[0-9]+	{ return integer; }
+[-+*/\.]	{ return *yytext; }
 [[:space:]]	 ;
-.        yyerror("Invalid character");
+.			{ yyerror("Invalid character"); }
 
 %%
 
