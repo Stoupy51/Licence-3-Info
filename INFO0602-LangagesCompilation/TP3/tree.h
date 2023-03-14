@@ -10,7 +10,7 @@ typedef enum tree_type_t {
 	TREE_TYPE_INTEGER = 0,
 	TREE_TYPE_OPERATOR = 1,
 	TREE_TYPE_FUNCTION = 2,
-	TREE_TYPE_SYMBOL = 3
+	TREE_TYPE_SYMBOLE = 3
 } tree_type_t;
 
 // Union des différents types de valeurs
@@ -18,8 +18,16 @@ typedef union tree_value_t {
 	int integer;
 	char operator_char;
 	char* function;
-	symbole_t symbol;
+	symbole_t symbole;
 } tree_value_t;
+
+// Liste d'éléments d'arbre
+typedef struct tree_t tree_t;
+
+typedef struct tree_list_t {
+	int size;
+	tree_t *head;
+} tree_list_t;
 
 // Élement d'arbre
 typedef struct tree_t {
@@ -33,16 +41,12 @@ typedef struct tree_t {
 	struct tree_list_t childs;
 } tree_t;
 
-// Liste d'éléments d'arbre
-typedef struct tree_list_t {
-	int size;
-	tree_t *head;
-} tree_list_t;
-
-tree_t createTreeElement(tree_type_t type, tree_value_t value);
+tree_t createTree(tree_type_t type, tree_value_t value);
 tree_list_t createTreeList();
 
 int treeListAdd(tree_list_t *list, tree_t element);
+
+char* treeToString(tree_t tree);
 
 int freeTreeList(tree_list_t *list);
 int freeTreeElement(tree_t *element);

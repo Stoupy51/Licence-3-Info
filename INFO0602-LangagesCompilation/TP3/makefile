@@ -2,9 +2,9 @@
 # MAIN CONFIGURATION
 #
 
-EXEC = calculator
+EXEC = calculator tree_symbol_test
 ANALYSER = analyser
-OBJECTS = lex.yy.o y.tab.o
+OBJECTS = lex.yy.o y.tab.o tree.o symbole.o
 PROJECT_NAME = calculator
 
 #
@@ -98,3 +98,4 @@ archive: clean
 
 # DEPENDANCIES
 calculator.o: calculator.c
+tree_symbol_test.o: tree_symbol_test.c tree.h symbole.h

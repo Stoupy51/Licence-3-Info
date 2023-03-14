@@ -2,19 +2,21 @@
 #ifndef __symbole_h__
 #define __symbole_h__
 
-#define SYMBOL_TYPE_INTEGER 0
-#define SYMBOL_TYPE_DOUBLE 1
-#define SYMBOL_TYPE_FLOAT 2
-#define SYMBOL_TYPE_CHAR 3
-#define SYMBOL_TYPE_STRING 4
-#define SYMBOL_TYPE_LONG 5
-#define SYMBOL_TYPE_POINTER 6
+typedef enum symbole_type_t {
+	SYMBOL_TYPE_INTEGER = 0,
+	SYMBOL_TYPE_DOUBLE = 1,
+	SYMBOL_TYPE_FLOAT = 2,
+	SYMBOL_TYPE_CHAR = 3,
+	SYMBOL_TYPE_STRING = 4,
+	SYMBOL_TYPE_LONG = 5,
+	SYMBOL_TYPE_POINTER = 6
+} symbole_type_t;
 
 typedef union symbole_data_t {
 	int i;
 	double d;
 	float f;
-	char s;
+	char c;
 	char* s;
 	long l;
 	void* p;
@@ -26,6 +28,8 @@ typedef struct symbole_t {
 	int type;
 	symbole_data_t data;
 } symbole_t;
+
+char* symboleToString(symbole_t symbole);
 
 int freeSymbole(symbole_t *symbole);
 
