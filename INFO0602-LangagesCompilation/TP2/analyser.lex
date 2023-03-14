@@ -12,7 +12,7 @@ extern int yylval;
 
 %%
 
--?[0-9]+	{ return integer; }
+-?[0-9]+	{ yylval = atoi(yytext); return integer; }
 [-+*/\.]	{ return *yytext; }
 [[:space:]]	 ;
 .			{ yyerror("Invalid character"); }

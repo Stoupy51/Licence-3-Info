@@ -4,59 +4,71 @@
 
 #include "stack.h"
 
-stack_t initStack() {
-	stack_t r = { NULL, 0 };
+struct symbole_t initSymbole(char *name, int type, int value) {
+	struct symbole_t r = { name, type, value };
 	return r;
 }
 
-int isEmptyStack(stack_t stack) {
+struct stack_t initStack() {
+	struct stack_t r = { NULL, 0 };
+	return r;
+}
+
+int isEmptyStack(struct stack_t stack) {
 	return stack.size == 0;
 }
 
-int popStack(stack_t *stack) {
-	if (stack->size == 0)
-		return -1;
-	stack_element_t *e = stack->head;
-	int r = e->value;
+struct symbole_t popStack(struct stack_t *stack) {
+	// If the stack is empty, return an empty element
+	if (stack->size == 0) {
+		struct symbole_t r = { NULL, -1, -1 };
+		return r;
+	}
+
+	// Remove the first element of the stack
+	struct stack_element_t *e = stack->head;
 	stack->head = e->next;
 	stack->size--;
+
+	// Return the symbole of the removed element
+	struct symbole_t symbole = e->symbole;
 	free(e);
-	return r;
+	return symbole;
 }
 
-int pushStack(stack_t *stack, int i) {
-	stack_element_t *e = malloc(sizeof(stack_element_t));
+int pushStack(struct stack_t *stack, struct symbole_t symbole) {
+	struct stack_element_t *e = malloc(sizeof(struct stack_element_t));
 	if (e == NULL)
 		return -1;
-	e->value = i;
+	e->symbole = symbole;
 	e->next = stack->head;
 	stack->head = e;
 	stack->size++;
 	return 1;
 }
 
-void printStack(stack_t stack) {
+void printStack(struct stack_t stack) {
 	if (stack.size == 0) {
 		printf("[]\n");
 		return;
 	}
-	printf("[%d", stack.head->value);
-	stack_element_t *e;
+	printf("[{ %s, %d, %d }", stack.head->symbole.name, stack.head->symbole.type, stack.head->symbole.value);
+	struct stack_element_t *e;
 	for (e = stack.head->next; e != NULL; e = e->next)
-		printf(", %d", e->value);
+		printf(", { %s, %d, %d }", e->symbole.name, e->symbole.type, e->symbole.value);
 	printf("]\n");
 }
 
-void swapStack(stack_t *stack) {
+void swapStack(struct stack_t *stack) {
 	if (stack->size < 2)
 		return;
-	stack_element_t *swap = stack->head;
+	struct stack_element_t *swap = stack->head;
 	stack->head = stack->head->next;
 	swap->next = stack->head->next;
 	stack->head->next = swap;
 }
 
-void clearStack(stack_t *stack) {
+void clearStack(struct stack_t *stack) {
 	while (stack->size != 0)
 		popStack(stack);
 }

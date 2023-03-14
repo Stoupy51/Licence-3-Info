@@ -14,7 +14,12 @@
 			"string_view": "c",
 			"initializer_list": "c",
 			"random": "c",
-			"functional": "c"
+			"functional": "c",
+			"format": "c",
+			"list": "c",
+			"type_traits": "c",
+			"xstring": "c",
+			"xutility": "c"
 		}
 	}
 }

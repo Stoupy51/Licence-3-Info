@@ -7,6 +7,7 @@ void empile(int i);
 void depile(char operator);
 
 int compteur = 0;
+int num_row = 1;
 stack_t stack;
 
 %}
@@ -26,16 +27,15 @@ stack_t stack;
 =			{ printStack(stack); }
 "SWAP"		{ swapStack(&stack); }
 "CLEAR"		{ clearStack(&stack); }
-
-
-.	;
+\n			{ num_row++; }
+.			;
 
 %%
 
 // C user functions
 void empile(int i) {
-	printf("[%d] Number: %d\n", compteur++, i);
-	pushStack(&stack, i);
+	printf("[%d - %d] Number: %d\n", num_row, compteur++, i);
+	pushStack(&stack, initSymbole("int", 1, i));
 }
 
 void depile(char operator) {
@@ -52,7 +52,7 @@ void depile(char operator) {
 	else if (operator == '/')
 		c = a / b;
 
-	printf("[%d] Opération : %d %c %d = %d\n", compteur++, a, operator, b, c);
+	printf("[%d - %d] Opération : %d %c %d = %d\n", num_row, compteur++, a, operator, b, c);
 	pushStack(&stack, c);
 }
 
