@@ -25,6 +25,12 @@ typedef enum {
     BK_WHITE = 47
 } color_t;
 
+// Structure of a block
+typedef struct block_t {
+	int type;
+	int value;
+} block_t;
+
 // Grid size
 #define HEIGHT     20
 #define WIDTH      60

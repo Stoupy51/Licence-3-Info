@@ -18,8 +18,23 @@ int line = 1;
 
 %%
 
+-?[0-9]+	{ yylval = atoi(yytext); return integer; }
 "level"		{ return level; }
 "end"		{ return end; }
+"put"		{ return put; }
+"robot"		{ return robot; }
+"probe"		{ return probe; }
+"empty"		{ return empty; }
+"block"		{ return block; }
+"trap"		{ return trap; }
+"ladder"	{ return ladder; }
+"bomb"		{ return bomb; }
+"life"		{ return life; }
+"key"		{ return key; }
+"gate"		{ return gate; }
+"door"		{ return door; }
+"start"		{ return start; }
+"exite"		{ return exite; }
 \n			{ line++; }
 [[:space:]]	;
 .			{ yyerror("Invalid character"); }
