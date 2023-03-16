@@ -42,24 +42,24 @@ tree_list_t createTreeList() {
  * 
  * @return 0 si l'ajout s'est bien passé, -1 sinon
 */
-int treeListAdd(tree_list_t *list, tree_t element) {
-	if (list == NULL) {
-		fprintf(stderr,"treeListAdd: parameter list is NULL\n");
+int treeAdd(tree_t *tree, tree_t element) {
+	if (tree == NULL) {
+		fprintf(stderr,"treeAdd: parameter tree is NULL\n");
 		return -1;
 	}
 
 	// Malloc and copy the element
 	tree_t *newElement = malloc(sizeof(tree_t));
 	if (newElement == NULL) {
-		fprintf(stderr,"treeListAdd: malloc failed\n");
+		fprintf(stderr,"treeAdd: malloc failed\n");
 		return -1;
 	}
 	*newElement = element;
 
 	// Add the element to the list (at the front)
-	newElement->next = list->head;
-	list->head = newElement;
-	list->size++;
+	newElement->next = tree->childs.head;
+	tree->childs.head = newElement;
+	tree->childs.size++;
 
 	return 0;
 }

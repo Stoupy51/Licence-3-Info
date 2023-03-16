@@ -44,7 +44,7 @@ typedef struct tree_t {
 tree_t createTree(tree_type_t type, tree_value_t value);
 tree_list_t createTreeList();
 
-int treeListAdd(tree_list_t *list, tree_t element);
+int treeAdd(tree_t *tree, tree_t element);
 
 char* treeToString(tree_t tree);
 

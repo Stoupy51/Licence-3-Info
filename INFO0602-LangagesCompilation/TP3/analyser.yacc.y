@@ -2,6 +2,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "tree.h"
 
 void yyerror(const char *error_msg);
 int yylex();
