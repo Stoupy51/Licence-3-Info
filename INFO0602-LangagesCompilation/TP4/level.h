@@ -1,6 +1,8 @@
 #ifndef _LEVEL_
 #define _LEVEL_
 
+#include <wchar.h>
+
 typedef enum {
     // Foreground colors
     FG_BLACK = 30,

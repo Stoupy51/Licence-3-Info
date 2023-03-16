@@ -4,7 +4,7 @@
 
 EXEC = level_reading
 ANALYSER = analyser
-OBJECTS = lex.yy.o y.tab.o tree.o symbole.o
+OBJECTS = lex.yy.o y.tab.o tree.o symbole.o level.o
 PROJECT_NAME = level_reading
 
 #
@@ -101,4 +101,5 @@ lex.yy.o: lex.yy.c y.tab.h
 y.tab.o: y.tab.c level.h
 tree.o: tree.c tree.h symbole.h
 symbole.o: symbole.c symbole.h
+level.o: level.c level.h
 level_reading.o: level_reading.c
