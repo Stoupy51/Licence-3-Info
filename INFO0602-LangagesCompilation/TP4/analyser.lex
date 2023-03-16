@@ -22,19 +22,20 @@ int line = 1;
 "level"		{ return level; }
 "end"		{ return end; }
 "put"		{ return put; }
-"robot"		{ return robot; }
-"probe"		{ return probe; }
-"empty"		{ return empty; }
-"block"		{ return block; }
-"trap"		{ return trap; }
-"ladder"	{ return ladder; }
-"bomb"		{ return bomb; }
-"life"		{ return life; }
-"key"		{ return key; }
-"gate"		{ return gate; }
-"door"		{ return door; }
-"start"		{ return start; }
-"exite"		{ return exite; }
+"ROBOT"		{ return robot; }
+"PROBE"		{ return probe; }
+"EMPTY"		{ return empty; }
+"BLOCK"		{ return block; }
+"TRAP"		{ return trap; }
+"LADDER"	{ return ladder; }
+"BOMB"		{ return bomb; }
+"LIFE"		{ return life; }
+"KEY"		{ return key; }
+"GATE"		{ return gate; }
+"DOOR"		{ return door; }
+"START"		{ return start; }
+"EXITE"		{ return exite; }
+[(),]		{ return yytext[0]; }
 \n			{ line++; }
 [[:space:]]	;
 .			{ yyerror("Invalid character"); }

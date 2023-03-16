@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <locale.h>
 
 #define GREEN "\033[1;32m"
 #define YELLOW "\033[1;33m"
@@ -22,6 +23,9 @@ int main(int argc, char *argv[]) {
 		return EXIT_FAILURE;
 	}
 	yyin = file;
+
+	if(setlocale(LC_ALL, "") == NULL)
+        printf("setlocale failed.\n");
 
     yyparse();
     return EXIT_SUCCESS;
