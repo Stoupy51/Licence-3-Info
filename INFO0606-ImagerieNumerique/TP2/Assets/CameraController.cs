@@ -3,10 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * CameraController class : Allow to switch between cameras
+ *
+ * @brief Switch camera when pressing 'C'
+ *
+ * @author COLLIGNON Alexandre
+ */
 public class CameraController : MonoBehaviour {
 
 	// Variables
-	public Camera[] cameras;				// Array of cameras
+	public Camera[] cameras;				// Array of cameras to switch between (Defined in the Unity Editor in the Inspector of the CameraController object)
+											// Cameras are Camera objects placed in the scene (can be anywhere in the hierarchy)
 	private int currentCameraIndex = 0;		// Current camera index
 
 	/**
@@ -15,9 +23,9 @@ public class CameraController : MonoBehaviour {
 	 * @brief Initialize the private variables
 	 */
 	void Start() {
-		this.currentCameraIndex = 0;
 		
 		// Turn all cameras off, except the first default one
+		this.currentCameraIndex = 0;
 		for (int i = 1; i < cameras.Length; i++)
 			cameras[i].gameObject.SetActive(false);
 	}
