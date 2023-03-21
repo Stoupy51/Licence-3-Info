@@ -2,8 +2,8 @@
 #include "st_benchmark.h"
 
 // Functions definitions
-void testMultipleMallocs1(long long nOI);
-void testMultipleMallocs2(long long nOI);
+void testMultipleMallocs1(size_t nOI);
+void testMultipleMallocs2(size_t nOI);
 
 /**
  * @brief Benchmark main function
@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
 	char buffer[1024];
 
 	// Benchmark between two functions
-	long long nOI = LLONG_MAX;
+	size_t nOI = 2785009972;
+	printf("Size of the memory to allocate: %zu\n", nOI);
 	ST_BENCHMARK_BETWEEN (buffer,
 		{ testMultipleMallocs1(nOI); },		// Code f1
 		{ testMultipleMallocs2(nOI); },		// Code f2
@@ -43,6 +44,13 @@ int main(int argc, char *argv[]) {
 	);
 	printf("%s", buffer);
 
+	int* a = malloc(nOI * sizeof(int));
+	for (i = 0; i < nOI; i++) {
+		a[i] = i;
+	}
+	sleep(5);
+	free(a);
+
 	// Return line and exit
 	printf("\n");
 	return 0;
@@ -53,7 +61,7 @@ int main(int argc, char *argv[]) {
  * 
  * @c slower than testMultipleMallocs2 but more readable to allocate memory
 */
-void testMultipleMallocs1(long long nOI) {
+void testMultipleMallocs1(size_t nOI) {
 
 	// Allocate the memory
 	int* i = malloc(nOI * sizeof(int));
@@ -78,7 +86,7 @@ void testMultipleMallocs1(long long nOI) {
  * 
  * @c faster than testMultipleMallocs1 but less readable to allocate memory
 */
-void testMultipleMallocs2(long long nOI) {
+void testMultipleMallocs2(size_t nOI) {
 	// Calculate the total size of the memory to allocate (Could also multiply by nOI after each sizeof)
 	size_t totalSize = 0
 		+ (nOI * sizeof(int)) + (nOI * sizeof(double)) + (nOI * sizeof(char)) + (nOI * sizeof(float))
