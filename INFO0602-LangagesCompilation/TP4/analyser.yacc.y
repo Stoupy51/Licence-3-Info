@@ -17,7 +17,7 @@ int x, y;
 level_t lvl;
 block_t v_block;
 extern struct symbol_t *symbol;
-extern struct table_des_symboles_t t_d_s;
+extern symbol_table t_d_s;
 
 %}
 

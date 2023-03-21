@@ -23,7 +23,6 @@ typedef struct symbol_t {
 } symbol_t;
 
 char* symboleToString(symbol_t symbole);
-
 int freeSymbole(symbol_t *symbole);
 
 #endif

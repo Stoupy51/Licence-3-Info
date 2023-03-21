@@ -13,7 +13,7 @@ void yyerror(const char *error_msg);
 //extern int yylval;
 
 extern struct symbol_t *symbol;
-extern struct table_des_symboles_t t_d_s;
+extern symbol_table t_d_s;
 int line = 1;
 %}
 
@@ -51,7 +51,7 @@ int line = 1;
 		return id;
 	}
 	else {
-		// La variable existe déjà
+		// La variable existe déjà dans la table des symboles
 		return variable;
 	}
 }

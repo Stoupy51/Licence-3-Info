@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
  * @return Une nouvelle liste de symboles vide.
@@ -187,5 +188,94 @@ struct symbol_t* getSymbolFromTable(char* name, struct table_des_symboles_t *tab
 
 	// Retour
 	return NULL;
+}
+
+/**
+ * @brief Génère une chaîne de caractères représentant la table de symboles.
+ * 
+ * @param table La table de symboles à représenter.
+ * 
+ * @return La chaîne de caractères représentant la table de symboles.
+*/
+char* tableDesSymbolesToString(struct table_des_symboles_t table) {
+	
+	// Initialisation de la chaîne de caractères
+	char* string = malloc(sizeof(char) * 8096);
+	if (string == NULL) {
+		perror("tableDesSymbolesToString: Erreur d'allocation mémoire");
+		exit(EXIT_FAILURE);
+	}
+	string[0] = '\0';
+
+	// On parcourt la table de symboles
+	int i;
+	for (i = 0; i < table.size; i++) {
+
+		// On concatène la chaîne de caractères avec le numéro de la liste
+		strcat(string, "- ");
+
+		// On parcourt la liste
+		symbol_list_element* element = table.data[i].head;
+		while (element != NULL) {
+
+			// On concatène la chaîne de caractères
+			char* symbol_string = symboleToString(element->symbol);
+			strcat(string, symbol_string);
+			strcat(string, ", ");
+			free(symbol_string);
+
+			// On passe à l'élément suivant
+			element = element->next;
+		}
+
+		// On concatène la chaîne de caractères avec le nombre de symboles et un retour à la ligne
+		char symbol_count_string[32];
+		sprintf(symbol_count_string, "(%d symboles)\n", table.data[i].count);
+		strcat(string, symbol_count_string);
+	}
+
+	// On concatène la chaîne de caractères avec le nombre total de symboles
+	char total_symbol_count_string[32];
+	sprintf(total_symbol_count_string, "Nombre total de symboles : %d", table.total_symbol_count);
+	strcat(string, total_symbol_count_string);
+
+	// Retour
+	return string;
+}
+
+/**
+ * @brief Libère la mémoire allouée pour la table de symboles (profondément).
+ * 
+ * @param table La table de symboles à libérer.
+ * 
+ * @return -1 si erreur, 0 sinon.
+*/
+int freeTableDesSymboles(struct table_des_symboles_t *table) {
+	
+	// On parcourt la table de symboles
+	int i;
+	for (i = 0; i < table->size; i++) {
+
+		// On parcourt la liste
+		symbol_list_element* element = table->data[i].head;
+		while (element != NULL) {
+
+			// On libère la mémoire
+			if (freeSymbole(&element->symbol) == -1)
+				return -1;
+			symbol_list_element* next = element->next;
+			free(element);
+
+			// On passe à l'élément suivant
+			element = next;
+		}
+	}
+
+	// On libère la mémoire
+	free(table->data);
+	free(table);
+
+	// Retour
+	return 0;
 }
 
