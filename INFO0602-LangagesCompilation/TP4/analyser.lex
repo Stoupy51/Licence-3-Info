@@ -1,6 +1,7 @@
 
 %{
-#include "y.tab.h" 
+#include "table_des_symboles.h"
+#include "y.tab.h"
 
 #define GREEN "\033[1;32m"
 #define YELLOW "\033[1;33m"
@@ -8,7 +9,11 @@
 #define RESET "\033[0m"
 
 void yyerror(const char *error_msg);
-extern int yylval;
+
+//extern int yylval;
+
+extern struct symbol_t *symbol;
+extern struct table_des_symboles_t t_d_s;
 int line = 1;
 %}
 
@@ -18,7 +23,7 @@ int line = 1;
 
 %%
 
--?[0-9]+	{ yylval = atoi(yytext); return integer; }
+-?[0-9]+	{ yylval.value = atoi(yytext); return integer; }
 "level"		{ return level; }
 "end"		{ return end; }
 "put"		{ return put; }
@@ -35,7 +40,22 @@ int line = 1;
 "DOOR"		{ return door; }
 "START"		{ return start; }
 "EXITE"		{ return exite; }
-[(),]		{ return yytext[0]; }
+[a-zA-Z][a-zA-Z0-9_]*	{
+	symbol = getSymbolFromTable(yytext, &t_d_s);
+	if (symbol == NULL) {
+		// Ajout de la variable dans la table des symboles
+		symbol_t sym;
+		sym.name = strdup(yytext);
+		sym.type = SYMBOL_TYPE_INTEGER;
+		symbol = addSymbolInTable(sym, &t_d_s);
+		return id;
+	}
+	else {
+		// La variable existe déjà
+		return variable;
+	}
+}
+[-+*/\.(),]	{ return *yytext; }
 \n			{ line++; }
 [[:space:]]	;
 .			{ yyerror("Invalid character"); }

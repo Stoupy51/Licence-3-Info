@@ -26,11 +26,7 @@ char* symboleToString(symbol_t symbole) {
 	char tmp[100];
 	switch (symbole.type) {
 		case SYMBOL_TYPE_INTEGER: sprintf(tmp, "%d", symbole.data.i); break;
-		case SYMBOL_TYPE_DOUBLE: sprintf(tmp, "%f", symbole.data.d); break;
-		case SYMBOL_TYPE_FLOAT: sprintf(tmp, "%f", symbole.data.f); break;
-		case SYMBOL_TYPE_CHAR: sprintf(tmp, "%c", symbole.data.c); break;
 		case SYMBOL_TYPE_STRING: sprintf(tmp, "%s", symbole.data.s); break;
-		case SYMBOL_TYPE_LONG: sprintf(tmp, "%ld", symbole.data.l); break;
 		case SYMBOL_TYPE_POINTER: sprintf(tmp, "%p", symbole.data.p); break;
 		default: fprintf(stderr,"symboleToString: unknown symbole type\n"); return NULL;
 	}
@@ -58,10 +54,7 @@ int freeSymbole(symbol_t *symbole) {
 	free(symbole->name);
 
 	// Free the data if needed
-	if (symbole->type == SYMBOL_TYPE_STRING) {
-		free(symbole->data.s);
-	}
-	else if (symbole->type == SYMBOL_TYPE_POINTER) {
+	if (symbole->type == SYMBOL_TYPE_POINTER) {
 		free(symbole->data.p);
 	}
 

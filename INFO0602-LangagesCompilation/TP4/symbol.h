@@ -4,21 +4,14 @@
 
 typedef enum symbol_type_t {
 	SYMBOL_TYPE_INTEGER = 0,
-	SYMBOL_TYPE_DOUBLE = 1,
-	SYMBOL_TYPE_FLOAT = 2,
-	SYMBOL_TYPE_CHAR = 3,
-	SYMBOL_TYPE_STRING = 4,
-	SYMBOL_TYPE_LONG = 5,
-	SYMBOL_TYPE_POINTER = 6
+	SYMBOL_TYPE_STRING = 1,
+	SYMBOL_TYPE_POINTER = 2
 } symbol_type_t;
 
+#define MAX_NAME 64
 typedef union symbol_data_t {
 	int i;
-	double d;
-	float f;
-	char c;
-	char* s;
-	long l;
+	char s[MAX_NAME];
 	void* p;
 } symbol_data_t;
 

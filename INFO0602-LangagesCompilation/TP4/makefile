@@ -2,10 +2,10 @@
 # MAIN CONFIGURATION
 #
 
-EXEC = level_reading
+EXEC = tp4
 ANALYSER = analyser
-OBJECTS = lex.yy.o y.tab.o tree.o symbole.o level.o
-PROJECT_NAME = level_reading
+OBJECTS = lex.yy.o y.tab.o tree.o symbol.o table_des_symboles.o level.o
+PROJECT_NAME = tp4
 
 #
 # SUFFIXES
@@ -100,6 +100,7 @@ archive: clean
 lex.yy.o: lex.yy.c y.tab.h
 y.tab.o: y.tab.c level.h
 tree.o: tree.c tree.h symbol.h
-symbole.o: symbole.c symbol.h
+symbol.o: symbol.c symbol.h
+table_des_symboles.o: table_des_symboles.c table_des_symboles.h symbol.h
 level.o: level.c level.h
-level_reading.o: level_reading.c
+tp4.o: tp4.c

@@ -8,7 +8,7 @@
  * @return Une nouvelle liste de symboles vide.
 */
 symbol_list newSymbolList() {
-	symbol_list list = {NULL, 0};
+	symbol_list list = {0, NULL};
 	return list;
 }
 
@@ -63,16 +63,16 @@ symbol_table newTableDesSymboles(int size) {
 }
 
 /**
- * @brief Calcule une valeur de hachage pour un symbole. (Utilisé pour la table de symboles)
+ * @brief Calcule une valeur de hachage pour un char*. (Utilisé pour la table de symboles)
  * 
- * @param symbol Le symbole à hacher.
+ * @param name Le nom à hacher.
  * 
- * @return La valeur de hachage du symbole en int.
+ * @return La valeur de hachage en int.
 */
-int hashSymbol(struct symbol_t symbol) {
+int hashSymbol(char* name) {
 	
 	// Si le symbole n'a pas de nom, on retourne 0
-	if (symbol.name == NULL)
+	if (name == NULL)
 		return 0;
 
 	// Initialisation de la valeur de hachage
@@ -80,8 +80,8 @@ int hashSymbol(struct symbol_t symbol) {
 
 	// Calcul de la valeur de hachage
 	int i, multiplier = 1;
-	while (symbol.name[i] != '\0') {
-		hash += symbol.name[i] * multiplier;
+	while (name[i] != '\0') {
+		hash += name[i] * multiplier;
 		multiplier *= 256;
 		i++;
 	}
@@ -96,15 +96,15 @@ int hashSymbol(struct symbol_t symbol) {
  * @param symbol Le symbole à ajouter.
  * @param table La table de symboles à laquelle ajouter le symbole.
  * 
- * @return 0 si le symbole a été ajouté, -1 si erreur.
+ * @return Pointeur vers le symbole ajouté, NULL si l'allocation mémoire a échoué.
 */
-int addSymbolInTable(struct symbol_t symbol, struct table_des_symboles_t *table) {
-	int m = hashSymbol(symbol) % table->size;
+struct symbol_t* addSymbolInTable(struct symbol_t symbol, struct table_des_symboles_t *table) {
+	int m = hashSymbol(symbol.name) % table->size;
 
 	// On ajoute à la tête de la liste
 	symbol_list_element* element = newSymbolListElement(symbol);
 	if (element == NULL)
-		return -1;
+		return NULL;
 	element->next = table->data[m].head;
 	table->data[m].head = element;
 
@@ -113,7 +113,7 @@ int addSymbolInTable(struct symbol_t symbol, struct table_des_symboles_t *table)
 	table->total_symbol_count++;
 
 	// Retour
-	return 0;
+	return &element->symbol;
 }
 
 /**
@@ -125,7 +125,7 @@ int addSymbolInTable(struct symbol_t symbol, struct table_des_symboles_t *table)
  * @return 0 si le symbole a été supprimé, -1 si le symbole n'a pas été trouvé.
 */
 int removeSymbolFromTable(struct symbol_t symbol, struct table_des_symboles_t *table) {
-	int m = hashSymbol(symbol) % table->size;
+	int m = hashSymbol(symbol.name) % table->size;
 
 	// On parcourt la liste
 	symbol_list_element* element = table->data[m].head;
@@ -160,5 +160,32 @@ int removeSymbolFromTable(struct symbol_t symbol, struct table_des_symboles_t *t
 
 	// Retour
 	return -1;
+}
+
+/**
+ * @brief Cherche un symbole dans la table de symboles en fonction de son nom.
+ * 
+ * @param name Le nom du symbole à chercher.
+ * @param table La table de symboles dans laquelle chercher le symbole.
+ * 
+ * @return Pointeur sur le symbole trouvé, NULL si le symbole n'a pas été trouvé.
+*/
+struct symbol_t* getSymbolFromTable(char* name, struct table_des_symboles_t *table) {
+	int m = hashSymbol(name) % table->size;
+
+	// On parcourt la liste
+	symbol_list_element* element = table->data[m].head;
+	while (element != NULL) {
+
+		// Si le symbole est trouvé, on le retourne
+		if (element->symbol.name == name)
+			return &element->symbol;
+
+		// On passe à l'élément suivant
+		element = element->next;
+	}
+
+	// Retour
+	return NULL;
 }
 
