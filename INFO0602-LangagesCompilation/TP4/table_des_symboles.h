@@ -33,8 +33,7 @@ symbol_table newTableDesSymboles(int size);
 // Fonctions de manipulation
 int hashSymbol(struct symbol_t symbol);
 int addSymbolInTable(struct symbol_t symbol, struct table_des_symboles_t *table);
-
-
+int removeSymbolFromTable(struct symbol_t symbol, struct table_des_symboles_t *table);
 
 
 #endif

@@ -116,4 +116,49 @@ int addSymbolInTable(struct symbol_t symbol, struct table_des_symboles_t *table)
 	return 0;
 }
 
+/**
+ * @brief Supprime un symbole de la table de symboles.
+ * 
+ * @param symbol Le symbole à supprimer.
+ * @param table La table de symboles de laquelle supprimer le symbole.
+ * 
+ * @return 0 si le symbole a été supprimé, -1 si le symbole n'a pas été trouvé.
+*/
+int removeSymbolFromTable(struct symbol_t symbol, struct table_des_symboles_t *table) {
+	int m = hashSymbol(symbol) % table->size;
+
+	// On parcourt la liste
+	symbol_list_element* element = table->data[m].head;
+	symbol_list_element* previous = NULL;
+	while (element != NULL) {
+
+		// Si le symbole est trouvé, on le supprime (Fonctionne car même pointeur)
+		if (element->symbol.name == symbol.name) {
+
+			// Si c'est le premier élément de la liste
+			if (previous == NULL)
+				table->data[m].head = element->next;
+			else
+				previous->next = element->next;
+
+			// On libère la mémoire
+			freeSymbole(&symbol);
+			free(element);
+
+			// On décrémente le nombre de symboles dans la table
+			table->data[m].count--;
+			table->total_symbol_count--;
+
+			// Retour
+			return 0;
+		}
+
+		// On passe à l'élément suivant
+		previous = element;
+		element = element->next;
+	}
+
+	// Retour
+	return -1;
+}
 
