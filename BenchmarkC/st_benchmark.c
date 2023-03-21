@@ -22,11 +22,12 @@ int main(int argc, char *argv[]) {
 	printf("\n");
 
 	// Initialisations of variables
-	int i, testing_time = atoi(argv[1]);
+	int testing_time = atoi(argv[1]);
 	char buffer[1024];
+	long i;
 
 	// Benchmark between two functions
-	size_t nOI = 2785009972;
+	size_t nOI = 8000000000;
 	printf("Size of the memory to allocate: %zu\n", nOI);
 	ST_BENCHMARK_BETWEEN (buffer,
 		{ testMultipleMallocs1(nOI); },		// Code f1
@@ -43,13 +44,6 @@ int main(int argc, char *argv[]) {
 		"'testMultipleMallocs2'", 1000
 	);
 	printf("%s", buffer);
-
-	int* a = malloc(nOI * sizeof(int));
-	for (i = 0; i < nOI; i++) {
-		a[i] = i;
-	}
-	sleep(5);
-	free(a);
 
 	// Return line and exit
 	printf("\n");
