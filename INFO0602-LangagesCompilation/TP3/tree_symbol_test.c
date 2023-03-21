@@ -13,7 +13,7 @@ int main() {
 	int c = 1;
 
 	// Création d'un symbole
-	symbole_t symbole = {
+	symbol_t symbole = {
 		.name = "symbole test",
 		.type = SYMBOL_TYPE_INTEGER,
 		.data.i = 42

@@ -2,7 +2,7 @@
 #ifndef __tree_h__
 #define __tree_h__
 
-#include "symbole.h"
+#include "symbol.h"
 
 // Les expressions sont formées d'entiers (pour les noeuds),
 // d'opérateurs, de fonctions, de symboles (pour les variables)
@@ -18,7 +18,7 @@ typedef union tree_value_t {
 	int integer;
 	char operator_char;
 	char* function;
-	symbole_t symbole;
+	symbol_t symbole;
 } tree_value_t;
 
 // Liste d'éléments d'arbre

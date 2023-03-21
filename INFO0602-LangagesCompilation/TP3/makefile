@@ -98,4 +98,4 @@ archive: clean
 
 # DEPENDANCIES
 calculator.o: calculator.c
-tree_symbol_test.o: tree_symbol_test.c tree.h symbole.h
+tree_symbol_test.o: tree_symbol_test.c tree.h symbol.h

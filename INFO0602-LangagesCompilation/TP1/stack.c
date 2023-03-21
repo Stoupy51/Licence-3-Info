@@ -4,8 +4,8 @@
 
 #include "stack.h"
 
-struct symbole_t initSymbole(char *name, int type, int value) {
-	struct symbole_t r = { name, type, value };
+struct symbol_t initSymbole(char *name, int type, int value) {
+	struct symbol_t r = { name, type, value };
 	return r;
 }
 
@@ -18,10 +18,10 @@ int isEmptyStack(struct stack_t stack) {
 	return stack.size == 0;
 }
 
-struct symbole_t popStack(struct stack_t *stack) {
+struct symbol_t popStack(struct stack_t *stack) {
 	// If the stack is empty, return an empty element
 	if (stack->size == 0) {
-		struct symbole_t r = { NULL, -1, -1 };
+		struct symbol_t r = { NULL, -1, -1 };
 		return r;
 	}
 
@@ -31,12 +31,12 @@ struct symbole_t popStack(struct stack_t *stack) {
 	stack->size--;
 
 	// Return the symbole of the removed element
-	struct symbole_t symbole = e->symbole;
+	struct symbol_t symbole = e->symbole;
 	free(e);
 	return symbole;
 }
 
-int pushStack(struct stack_t *stack, struct symbole_t symbole) {
+int pushStack(struct stack_t *stack, struct symbol_t symbole) {
 	struct stack_element_t *e = malloc(sizeof(struct stack_element_t));
 	if (e == NULL)
 		return -1;

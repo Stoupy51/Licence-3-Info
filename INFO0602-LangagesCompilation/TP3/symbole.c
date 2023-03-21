@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "symbole.h"
+#include "symbol.h"
 
 /**
  * @brief Convertit un symbole en chaîne de caractères
@@ -12,7 +12,7 @@
  * 
  * @return La chaîne de caractères correspondant au symbole
 */
-char* symboleToString(symbole_t symbole) {
+char* symboleToString(symbol_t symbole) {
 	char* str = malloc(100 * sizeof(char));
 	if (str == NULL) {
 		fprintf(stderr,"symboleToString: malloc failed\n");
@@ -46,7 +46,7 @@ char* symboleToString(symbole_t symbole) {
  * 
  * @return 0 si la libération s'est bien passée, -1 sinon
 */
-int freeSymbole(symbole_t *symbole) {
+int freeSymbole(symbol_t *symbole) {
 	fprintf(stderr,"freeSymbole()\n");
 	if (symbole == NULL) {
 		fprintf(stderr,"freeSymbole: parameter symbole is NULL\n");

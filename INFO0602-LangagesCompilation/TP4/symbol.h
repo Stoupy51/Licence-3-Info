@@ -1,8 +1,8 @@
 
-#ifndef __symbole_h__
-#define __symbole_h__
+#ifndef __symbol_h__
+#define __symbol_h__
 
-typedef enum symbole_type_t {
+typedef enum symbol_type_t {
 	SYMBOL_TYPE_INTEGER = 0,
 	SYMBOL_TYPE_DOUBLE = 1,
 	SYMBOL_TYPE_FLOAT = 2,
@@ -10,9 +10,9 @@ typedef enum symbole_type_t {
 	SYMBOL_TYPE_STRING = 4,
 	SYMBOL_TYPE_LONG = 5,
 	SYMBOL_TYPE_POINTER = 6
-} symbole_type_t;
+} symbol_type_t;
 
-typedef union symbole_data_t {
+typedef union symbol_data_t {
 	int i;
 	double d;
 	float f;
@@ -20,18 +20,18 @@ typedef union symbole_data_t {
 	char* s;
 	long l;
 	void* p;
-} symbole_data_t;
+} symbol_data_t;
 
 // Les symboles sont des variables
-typedef struct symbole_t {
+typedef struct symbol_t {
 	char* name;
 	int type;
-	symbole_data_t data;
-} symbole_t;
+	symbol_data_t data;
+} symbol_t;
 
-char* symboleToString(symbole_t symbole);
+char* symboleToString(symbol_t symbole);
 
-int freeSymbole(symbole_t *symbole);
+int freeSymbole(symbol_t *symbole);
 
 #endif
 
