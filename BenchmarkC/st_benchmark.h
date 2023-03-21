@@ -31,9 +31,9 @@
 		ST_BENCH_countF2 += 1; \
 	} \
 	if (ST_BENCH_countF1 > ST_BENCH_countF2) { \
-		sprintf(ST_BENCH_buffer, ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " > " ST_BENCH_f2_name " by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_YELLOW "\n[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times and " ST_BENCH_f2_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times\n" ST_COLOR_RESET, (double)ST_BENCH_countF1 / (double)ST_BENCH_countF2, ST_BENCH_countF1, ST_BENCH_countF2); \
+		sprintf(ST_BENCH_buffer, ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " faster than " ST_BENCH_f2_name " by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_YELLOW "\n[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times and " ST_BENCH_f2_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times\n" ST_COLOR_RESET, (double)ST_BENCH_countF1 / (double)ST_BENCH_countF2, ST_BENCH_countF1, ST_BENCH_countF2); \
 	} else { \
-		sprintf(ST_BENCH_buffer, ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " < " ST_BENCH_f2_name " by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_YELLOW "\n[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times and " ST_BENCH_f2_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times\n" ST_COLOR_RESET, (double)ST_BENCH_countF2 / (double)ST_BENCH_countF1, ST_BENCH_countF1, ST_BENCH_countF2); \
+		sprintf(ST_BENCH_buffer, ST_COLOR_YELLOW "[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " slower than " ST_BENCH_f2_name " by " ST_COLOR_YELLOW "%f" ST_COLOR_RED " times with" ST_COLOR_YELLOW "\n[BENCHMARK] " ST_COLOR_RED ST_BENCH_f1_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times and " ST_BENCH_f2_name " executed " ST_COLOR_YELLOW "%ld" ST_COLOR_RED " times\n" ST_COLOR_RESET, (double)ST_BENCH_countF2 / (double)ST_BENCH_countF1, ST_BENCH_countF1, ST_BENCH_countF2); \
 	} \
 	}
 

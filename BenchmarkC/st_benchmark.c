@@ -1,49 +1,105 @@
 
 #include "st_benchmark.h"
 
+// Functions definitions
+void testMultipleMallocs1(long long nOI);
+void testMultipleMallocs2(long long nOI);
+
+/**
+ * @brief Benchmark main function
+ * 
+ * @param argc Number of arguments
+ * @param argv Arguments list
+ * 
+ * @return int
+*/
 int main(int argc, char *argv[]) {
+	// Check the number of arguments
 	if (argc != 2) {
 		fprintf(stderr,"\nUsage: %s <testing_time>\n", argv[0]);
 		return EXIT_FAILURE;
 	}
 	printf("\n");
 
-	int TAB_SIZE = 1000000;
-
-	size_t size = TAB_SIZE * sizeof(int);
-	int* tab = malloc(size);
-	int i;
-	int t = atoi(argv[1]);
-
-	int dump;
+	// Initialisations of variables
+	int i, testing_time = atoi(argv[1]);
 	char buffer[1024];
+
+	// Benchmark between two functions
+	long long nOI = LLONG_MAX;
 	ST_BENCHMARK_BETWEEN (buffer,
-		{
-			// Code 1 (f1)
-			memset(tab, 0, size);
-		},
-		{
-			// Code 2 (f2)
-			for (i = 0; i < TAB_SIZE; i++) {
-				tab[i] = 0;
-			}
-		},
-		"'memset(0)'", "'boucle for'", t
+		{ testMultipleMallocs1(nOI); },		// Code f1
+		{ testMultipleMallocs2(nOI); },		// Code f2
+		"'Multiple mallocs'",				// Name of code f1
+		"'one malloc'",						// Name of code f2
+		testing_time						// Max Testing time
 	);
 	printf("%s", buffer);
 
-	ST_BENCHMARK_SOLO(
-		buffer,
-		{
-			// Code  (f)
-			//memset(tab, 0, size);
-		},
-		"'boucle vide'", 10000
+	// Benchmark of a function
+	ST_BENCHMARK_SOLO(buffer,
+		{ testMultipleMallocs2(nOI); },
+		"'testMultipleMallocs2'", 1000
 	);
 	printf("%s", buffer);
 
-	free(tab);
-
+	// Return line and exit
 	printf("\n");
 	return 0;
 }
+
+/**
+ * @brief Function that uses multiple mallocs to allocate memory for different types
+ * 
+ * @c slower than testMultipleMallocs2 but more readable to allocate memory
+*/
+void testMultipleMallocs1(long long nOI) {
+
+	// Allocate the memory
+	int* i = malloc(nOI * sizeof(int));
+	double* d = malloc(nOI * sizeof(double));
+	char* c = malloc(nOI * sizeof(char));
+	float* f = malloc(nOI * sizeof(float));
+	long* l = malloc(nOI * sizeof(long));
+	long double* ld = malloc(nOI * sizeof(long double));
+	short* s = malloc(nOI * sizeof(short));
+	unsigned int* ui = malloc(nOI * sizeof(unsigned int));
+	unsigned long* ul = malloc(nOI * sizeof(unsigned long));
+	unsigned short* us = malloc(nOI * sizeof(unsigned short));
+	unsigned char* uc = malloc(nOI * sizeof(unsigned char));
+
+	// Free the memory
+	free(i); free(d); free(c); free(f); free(l); free(ld); free(s); free(ui); free(ul); free(us); free(uc);
+}
+
+/**
+ * @brief Function that uses one malloc to allocate memory for
+ * different types and then cast the pointer to the right type
+ * 
+ * @c faster than testMultipleMallocs1 but less readable to allocate memory
+*/
+void testMultipleMallocs2(long long nOI) {
+	// Calculate the total size of the memory to allocate (Could also multiply by nOI after each sizeof)
+	size_t totalSize = 0
+		+ (nOI * sizeof(int)) + (nOI * sizeof(double)) + (nOI * sizeof(char)) + (nOI * sizeof(float))
+		+ (nOI * sizeof(long)) + (nOI * sizeof(long double)) + (nOI * sizeof(short)) + (nOI * sizeof(unsigned int))
+		+ (nOI * sizeof(unsigned long)) + (nOI * sizeof(unsigned short)) + (nOI * sizeof(unsigned char));
+
+	// Allocate the memory
+	void* globalMalloc = malloc(totalSize);
+	int* i = (int*)globalMalloc;
+	double* d = (double*)(i + nOI);
+	char* c = (char*)(d + nOI);
+	float* f = (float*)(c + nOI);
+	long* l = (long*)(f + nOI);
+	long double* ld = (long double*)(l + nOI);
+	short* s = (short*)(ld + nOI);
+	unsigned int* ui = (unsigned int*)(s + nOI);
+	unsigned long* ul = (unsigned long*)(ui + nOI);
+	unsigned short* us = (unsigned short*)(ul + nOI);
+	unsigned char* uc = (unsigned char*)(us + nOI);
+
+	// Free the memory
+	free(globalMalloc);
+}
+
