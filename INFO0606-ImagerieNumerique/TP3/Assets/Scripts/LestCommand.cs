@@ -3,19 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * LestCommand class : Manage the deployment of the paws of the Lest
+ *
+ * @brief Press 'D' to deploy the paws
+ *
+ * @author COLLIGNON Alexandre
+ */
 public class LestCommand : MonoBehaviour {
-	// Public variables (pattes de la grue en anglais)
-	public GameObject[] paws;
-	public bool[] pawsDeployed;
-	public GameObject[] pawsChild;
-	public GameObject[] pawsChildChild;
+
+	// Public variables
+	public GameObject[] paws;		// Configured in the Unity Editor
+	public int deployedState = 0;	// 0 = paws are not deployed, 1 = sub-paws are deploying, 2 = paws are deployed
+	public bool moving = false;		// Boolean variable to optimize the code
 	
 	// Private variables
-	private bool moving = false;
-	private int deployedState = 0;
+	private bool[] pawsDeployed;				// Array of boolean to know if the paw is deployed
+	private GameObject[] pawsChild;				// Array of the first child of the paws to avoid using GetChild() each time
+	private GameObject[] pawsChildChild;		// Array of the first child of the first child of the paws to avoid using GetChild() each time
 	private float deployingTime = 2;
+	private float deploymentSpeed = 50.0f;
 
-	// Start is called before the first frame update
+	/**
+	 * Start method, called at the beginning of the game
+	 *
+	 * @brief Initialize the private variables
+	 */
 	void Start() {
 		// Initialize the pawsDeployed array
 		this.pawsDeployed = new bool[4];
@@ -32,12 +45,16 @@ public class LestCommand : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
-	void Update() {
+	/**
+	 * FixedUpdate method, called once per physics frame
+	 *
+	 * @brief Manage the deployment of the paws when the player press 'D'
+	 */
+	void FixedUpdate() {
 
 		// If player press 'D', start deploying the paws
-		if (Input.GetKeyDown(KeyCode.D)) {
-			Debug.Log("D pressed");
+		if (!this.moving && Input.GetKey(KeyCode.D)) {
+			Debug.Log("D pressed: deploying paws");
 			this.moving = true;
 		}
 
@@ -50,24 +67,20 @@ public class LestCommand : MonoBehaviour {
 				for (int i = 0; i < 4; i++) {
 					// If the paw is not deployed
 					if (!this.pawsDeployed[i]) {
-
+						
 						// Get the articulation body of the paw
 						ArticulationBody articulation = this.paws[i].GetComponent<ArticulationBody>();
+						float newDelta = this.deploymentSpeed * Time.fixedDeltaTime;
+						if (i == 0 || i == 3)
+							newDelta = -newDelta;
+					
+						articulation.zDrive = new ArticulationDrive {
+							lowerLimit = articulation.zDrive.lowerLimit - newDelta,
+							upperLimit = articulation.zDrive.upperLimit - newDelta
+						};
 
-						if (i == 0 || i == 3) {
-							articulation.zDrive = new ArticulationDrive {
-								lowerLimit = articulation.zDrive.lowerLimit - 135 * Time.deltaTime,
-								upperLimit = articulation.zDrive.upperLimit + 135 * Time.deltaTime
-							};
-							this.pawsDeployed[i] = (articulation.zDrive.lowerLimit <= -135);
-						}
-						else {						
-							articulation.zDrive = new ArticulationDrive {
-								lowerLimit = articulation.zDrive.lowerLimit + 135 * Time.deltaTime,
-								upperLimit = articulation.zDrive.upperLimit - 135 * Time.deltaTime
-							};
-							this.pawsDeployed[i] = (articulation.zDrive.lowerLimit >= 135);
-						}
+						// If the paw is deployed, change the boolean value
+						this.pawsDeployed[i] = (Mathf.Abs(articulation.zDrive.lowerLimit) >= 135);
 					}
 				}
 				
@@ -85,8 +98,9 @@ public class LestCommand : MonoBehaviour {
 
 			// For each paws, rotate X axis by -90 degree their first child and by 90 degree their child's child
 			else if (this.deployedState == 1) {
+
 				// Deploy for 2 seconds
-				this.deployingTime -= Time.deltaTime;
+				this.deployingTime -= Time.fixedDeltaTime;
 				if (this.deployingTime <= 0) {
 					Debug.Log("Deploying time finished, changing state to 2");
 					this.deployedState = 2;
@@ -95,13 +109,16 @@ public class LestCommand : MonoBehaviour {
 
 				// Rotate the paws
 				for (int i = 0; i < 4; i++) {
-					// First child
-					if (this.pawsChild[i].transform.rotation.x > -90)
-						this.pawsChild[i].transform.Rotate(-90 * Time.deltaTime, 0, 0);
+					// Negative if the paw is the second or third
+					int negative = i > 1 ? -1 : 1;
 
-					// Child's child
-					if (this.pawsChildChild[i].transform.rotation.x < 90)
-						this.pawsChildChild[i].transform.Rotate(90 * Time.deltaTime, 0, 0);
+					// First child
+					if (this.pawsChild[i].transform.rotation.eulerAngles.x < 340) {
+						this.pawsChild[i].transform.Rotate(this.deploymentSpeed * Time.fixedDeltaTime * -negative, 0, 0);
+
+						// Child's child
+						this.pawsChildChild[i].transform.Rotate(1.7f * this.deploymentSpeed * Time.fixedDeltaTime * negative, 0, 0);
+					}
 				}
 			}
 		}

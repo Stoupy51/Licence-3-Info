@@ -12,9 +12,13 @@ using UnityEngine;
  */
 public class Mouvement : MonoBehaviour {
 
+	// Public variables
+	public GameObject lest;		// Configured in the Unity Editor to know when the paws are deployed
+
 	// Private variables
-	private Rigidbody r_body;	// The rigidbody of the object
-	private float actualSpeed;	// The actual speed of the object
+	private Rigidbody r_body;			// The rigidbody of the object
+	private float actualSpeed;			// The actual speed of the object
+	private LestCommand lestCommand;	// The LestCommand script of the Lest
 
 	/**
 	 * Start method, called at the beginning of the game
@@ -24,6 +28,7 @@ public class Mouvement : MonoBehaviour {
 	void Start() {
 		this.r_body = GetComponent<Rigidbody>();
 		this.actualSpeed = 1.0f;
+		this.lestCommand = this.lest.GetComponent<LestCommand>();
 	}
 
 	/**
@@ -36,12 +41,15 @@ public class Mouvement : MonoBehaviour {
 	 * - RightArrow					rotate right
 	 */
 	void Update() {
+		// If the paws are deployed, the object can't move
+		if (!this.lestCommand.moving && this.lestCommand.deployedState == 0) {
 
-		// Going Forward or Backward System
-		forwardBackwardSystem();
+			// Going Forward or Backward System
+			forwardBackwardSystem();
 
-		// Rotating system
-		rotationSystem();
+			// Rotating system
+			rotationSystem();
+		}
 	}
 
 
