@@ -20,7 +20,8 @@
 			"type_traits": "c",
 			"xstring": "c",
 			"xutility": "c",
-			"xlocale": "c"
+			"xlocale": "c",
+			"table_des_symboles.h": "c"
 		}
 	}
 }
