@@ -71,6 +71,13 @@ void level_init(level_t *level);
 void level_display(level_t *level);
 
 /**
+ * Get the string representation of a level.
+ * @param level the level
+ * @return the string representation
+ */
+char* level_get_string(level_t *level);
+
+/**
  * Add a robot in a level.
  * @param level the level
  * @param posX the X position

@@ -1,0 +1,21 @@
+
+level
+	x = (5615 + 1) % 100
+	x++
+	x += 7 * 2 / 2
+	x -= 5 + 2
+	x *= 2 * 2
+	x /= 2 / 2
+	
+	y = x + 1
+	z = y * x
+
+	pos = x * y * z
+	pos *= (x + y) * z
+	pos = pos % 1000
+	pos %= 20
+	pos += 10
+	
+	put(pos, pos + 5, BLOCK)
+end
+

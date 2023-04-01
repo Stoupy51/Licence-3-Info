@@ -61,7 +61,7 @@ int line = 1;
 		return variable;
 	}
 }
-[-+*/\.(),=]	{ return *yytext; }
+[-+*/\.(),=%]	{ return *yytext; }
 \n				{ line++; }
 [[:space:]]	;
 .				{ yyerror("Invalid character"); }

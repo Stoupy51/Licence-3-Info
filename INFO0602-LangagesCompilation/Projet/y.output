@@ -39,10 +39,18 @@
   29             | '-' EXPRESSION
   30             | EXPRESSION '*' EXPRESSION
   31             | EXPRESSION '/' EXPRESSION
-  32             | '(' EXPRESSION ')'
+  32             | EXPRESSION '%' EXPRESSION
+  33             | '(' EXPRESSION ')'
 
-  33  ASSIGNMENT : id '=' EXPRESSION
-  34             | variable '=' EXPRESSION
+  34  ASSIGNMENT : id '=' EXPRESSION
+  35             | variable '=' EXPRESSION
+  36             | variable '+' '=' EXPRESSION
+  37             | variable '-' '=' EXPRESSION
+  38             | variable '*' '=' EXPRESSION
+  39             | variable '/' '=' EXPRESSION
+  40             | variable '%' '=' EXPRESSION
+  41             | variable '+' '+'
+  42             | variable '-' '-'
 
 state 0
 	$accept : . EXEC $end  (0)
@@ -124,16 +132,28 @@ state 8
 
 
 state 9
-	ASSIGNMENT : id . '=' EXPRESSION  (33)
+	ASSIGNMENT : id . '=' EXPRESSION  (34)
 
 	'='  shift 15
 	.  error
 
 
 state 10
-	ASSIGNMENT : variable . '=' EXPRESSION  (34)
+	ASSIGNMENT : variable . '=' EXPRESSION  (35)
+	ASSIGNMENT : variable . '+' '=' EXPRESSION  (36)
+	ASSIGNMENT : variable . '-' '=' EXPRESSION  (37)
+	ASSIGNMENT : variable . '*' '=' EXPRESSION  (38)
+	ASSIGNMENT : variable . '/' '=' EXPRESSION  (39)
+	ASSIGNMENT : variable . '%' '=' EXPRESSION  (40)
+	ASSIGNMENT : variable . '+' '+'  (41)
+	ASSIGNMENT : variable . '-' '-'  (42)
 
-	'='  shift 16
+	'+'  shift 16
+	'-'  shift 17
+	'*'  shift 18
+	'/'  shift 19
+	'%'  shift 20
+	'='  shift 21
 	.  error
 
 
@@ -158,133 +178,252 @@ state 13
 state 14
 	PUT_FUNC : put '(' . EXPRESSION ',' EXPRESSION ',' ITEM ')'  (9)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 21
+	EXPRESSION  goto 26
 
 
 state 15
-	ASSIGNMENT : id '=' . EXPRESSION  (33)
+	ASSIGNMENT : id '=' . EXPRESSION  (34)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 22
+	EXPRESSION  goto 27
 
 
 state 16
-	ASSIGNMENT : variable '=' . EXPRESSION  (34)
+	ASSIGNMENT : variable '+' . '=' EXPRESSION  (36)
+	ASSIGNMENT : variable '+' . '+'  (41)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	'+'  shift 28
+	'='  shift 29
 	.  error
-
-	EXPRESSION  goto 23
 
 
 state 17
+	ASSIGNMENT : variable '-' . '=' EXPRESSION  (37)
+	ASSIGNMENT : variable '-' . '-'  (42)
+
+	'-'  shift 30
+	'='  shift 31
+	.  error
+
+
+state 18
+	ASSIGNMENT : variable '*' . '=' EXPRESSION  (38)
+
+	'='  shift 32
+	.  error
+
+
+state 19
+	ASSIGNMENT : variable '/' . '=' EXPRESSION  (39)
+
+	'='  shift 33
+	.  error
+
+
+state 20
+	ASSIGNMENT : variable '%' . '=' EXPRESSION  (40)
+
+	'='  shift 34
+	.  error
+
+
+state 21
+	ASSIGNMENT : variable '=' . EXPRESSION  (35)
+
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
+	.  error
+
+	EXPRESSION  goto 35
+
+
+state 22
 	EXPRESSION : integer .  (25)
 
 	.  reduce 25
 
 
-state 18
+state 23
 	EXPRESSION : variable .  (26)
 
 	.  reduce 26
 
 
-state 19
+state 24
 	EXPRESSION : '-' . EXPRESSION  (29)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 24
+	EXPRESSION  goto 36
 
 
-state 20
-	EXPRESSION : '(' . EXPRESSION ')'  (32)
+state 25
+	EXPRESSION : '(' . EXPRESSION ')'  (33)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 25
+	EXPRESSION  goto 37
 
 
-state 21
+state 26
 	PUT_FUNC : put '(' EXPRESSION . ',' EXPRESSION ',' ITEM ')'  (9)
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	','  shift 30
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	','  shift 43
 	.  error
 
 
-state 22
+state 27
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
-	ASSIGNMENT : id '=' EXPRESSION .  (33)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	ASSIGNMENT : id '=' EXPRESSION .  (34)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	end  reduce 33
-	put  reduce 33
-	id  reduce 33
-	variable  reduce 33
-
-
-state 23
-	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
-	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
-	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
-	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
-	ASSIGNMENT : variable '=' EXPRESSION .  (34)
-
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
 	end  reduce 34
 	put  reduce 34
 	id  reduce 34
 	variable  reduce 34
 
 
-state 24
+state 28
+	ASSIGNMENT : variable '+' '+' .  (41)
+
+	.  reduce 41
+
+
+state 29
+	ASSIGNMENT : variable '+' '=' . EXPRESSION  (36)
+
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
+	.  error
+
+	EXPRESSION  goto 44
+
+
+state 30
+	ASSIGNMENT : variable '-' '-' .  (42)
+
+	.  reduce 42
+
+
+state 31
+	ASSIGNMENT : variable '-' '=' . EXPRESSION  (37)
+
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
+	.  error
+
+	EXPRESSION  goto 45
+
+
+state 32
+	ASSIGNMENT : variable '*' '=' . EXPRESSION  (38)
+
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
+	.  error
+
+	EXPRESSION  goto 46
+
+
+state 33
+	ASSIGNMENT : variable '/' '=' . EXPRESSION  (39)
+
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
+	.  error
+
+	EXPRESSION  goto 47
+
+
+state 34
+	ASSIGNMENT : variable '%' '=' . EXPRESSION  (40)
+
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
+	.  error
+
+	EXPRESSION  goto 48
+
+
+state 35
+	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
+	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
+	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
+	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	ASSIGNMENT : variable '=' EXPRESSION .  (35)
+
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	end  reduce 35
+	put  reduce 35
+	id  reduce 35
+	variable  reduce 35
+
+
+state 36
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : '-' EXPRESSION .  (29)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'*'  shift 28
-	'/'  shift 29
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
 	end  reduce 29
 	put  reduce 29
 	id  reduce 29
@@ -295,96 +434,207 @@ state 24
 	')'  reduce 29
 
 
-state 25
+state 37
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
-	EXPRESSION : '(' EXPRESSION . ')'  (32)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	EXPRESSION : '(' EXPRESSION . ')'  (33)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	')'  shift 31
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	')'  shift 49
 	.  error
 
 
-state 26
+state 38
 	EXPRESSION : EXPRESSION '+' . EXPRESSION  (27)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 32
+	EXPRESSION  goto 50
 
 
-state 27
+state 39
 	EXPRESSION : EXPRESSION '-' . EXPRESSION  (28)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 33
+	EXPRESSION  goto 51
 
 
-state 28
+state 40
 	EXPRESSION : EXPRESSION '*' . EXPRESSION  (30)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 34
+	EXPRESSION  goto 52
 
 
-state 29
+state 41
 	EXPRESSION : EXPRESSION '/' . EXPRESSION  (31)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 35
+	EXPRESSION  goto 53
 
 
-state 30
+state 42
+	EXPRESSION : EXPRESSION '%' . EXPRESSION  (32)
+
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
+	.  error
+
+	EXPRESSION  goto 54
+
+
+state 43
 	PUT_FUNC : put '(' EXPRESSION ',' . EXPRESSION ',' ITEM ')'  (9)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 36
+	EXPRESSION  goto 55
 
 
-state 31
-	EXPRESSION : '(' EXPRESSION ')' .  (32)
+state 44
+	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
+	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
+	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
+	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	ASSIGNMENT : variable '+' '=' EXPRESSION .  (36)
 
-	.  reduce 32
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	end  reduce 36
+	put  reduce 36
+	id  reduce 36
+	variable  reduce 36
 
 
-state 32
+state 45
+	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
+	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
+	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
+	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	ASSIGNMENT : variable '-' '=' EXPRESSION .  (37)
+
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	end  reduce 37
+	put  reduce 37
+	id  reduce 37
+	variable  reduce 37
+
+
+state 46
+	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
+	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
+	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
+	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	ASSIGNMENT : variable '*' '=' EXPRESSION .  (38)
+
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	end  reduce 38
+	put  reduce 38
+	id  reduce 38
+	variable  reduce 38
+
+
+state 47
+	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
+	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
+	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
+	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	ASSIGNMENT : variable '/' '=' EXPRESSION .  (39)
+
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	end  reduce 39
+	put  reduce 39
+	id  reduce 39
+	variable  reduce 39
+
+
+state 48
+	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
+	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
+	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
+	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	ASSIGNMENT : variable '%' '=' EXPRESSION .  (40)
+
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	end  reduce 40
+	put  reduce 40
+	id  reduce 40
+	variable  reduce 40
+
+
+state 49
+	EXPRESSION : '(' EXPRESSION ')' .  (33)
+
+	.  reduce 33
+
+
+state 50
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION '+' EXPRESSION .  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'*'  shift 28
-	'/'  shift 29
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
 	end  reduce 27
 	put  reduce 27
 	id  reduce 27
@@ -395,15 +645,17 @@ state 32
 	')'  reduce 27
 
 
-state 33
+state 51
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION '-' EXPRESSION .  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'*'  shift 28
-	'/'  shift 29
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
 	end  reduce 28
 	put  reduce 28
 	id  reduce 28
@@ -414,329 +666,354 @@ state 33
 	')'  reduce 28
 
 
-state 34
+state 52
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION '*' EXPRESSION .  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
 	.  reduce 30
 
 
-state 35
+state 53
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
 	EXPRESSION : EXPRESSION '/' EXPRESSION .  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
 	.  reduce 31
 
 
-state 36
+state 54
+	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
+	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
+	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
+	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
+	EXPRESSION : EXPRESSION '%' EXPRESSION .  (32)
+
+	.  reduce 32
+
+
+state 55
 	PUT_FUNC : put '(' EXPRESSION ',' EXPRESSION . ',' ITEM ')'  (9)
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	','  shift 37
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	','  shift 56
 	.  error
 
 
-state 37
+state 56
 	PUT_FUNC : put '(' EXPRESSION ',' EXPRESSION ',' . ITEM ')'  (9)
 
-	get  shift 38
-	robot  shift 39
-	probe  shift 40
-	empty  shift 41
-	block  shift 42
-	trap  shift 43
-	ladder  shift 44
-	bomb  shift 45
-	life  shift 46
-	key  shift 47
-	gate  shift 48
-	door  shift 49
-	start  shift 50
-	exite  shift 51
+	get  shift 57
+	robot  shift 58
+	probe  shift 59
+	empty  shift 60
+	block  shift 61
+	trap  shift 62
+	ladder  shift 63
+	bomb  shift 64
+	life  shift 65
+	key  shift 66
+	gate  shift 67
+	door  shift 68
+	start  shift 69
+	exite  shift 70
 	.  error
 
-	ITEM  goto 52
-	GET_FUNC  goto 53
+	ITEM  goto 71
+	GET_FUNC  goto 72
 
 
-state 38
+state 57
 	GET_FUNC : get . '(' EXPRESSION ',' EXPRESSION ')'  (10)
 
-	'('  shift 54
+	'('  shift 73
 	.  error
 
 
-state 39
+state 58
 	ITEM : robot .  (12)
 
 	.  reduce 12
 
 
-state 40
+state 59
 	ITEM : probe .  (13)
 
 	.  reduce 13
 
 
-state 41
+state 60
 	ITEM : empty .  (14)
 
 	.  reduce 14
 
 
-state 42
+state 61
 	ITEM : block .  (15)
 
 	.  reduce 15
 
 
-state 43
+state 62
 	ITEM : trap .  (16)
 
 	.  reduce 16
 
 
-state 44
+state 63
 	ITEM : ladder .  (17)
 
 	.  reduce 17
 
 
-state 45
+state 64
 	ITEM : bomb .  (18)
 
 	.  reduce 18
 
 
-state 46
+state 65
 	ITEM : life .  (19)
 
 	.  reduce 19
 
 
-state 47
+state 66
 	ITEM : key . '(' EXPRESSION ')'  (20)
 
-	'('  shift 55
+	'('  shift 74
 	.  error
 
 
-state 48
+state 67
 	ITEM : gate . '(' EXPRESSION ')'  (21)
 
-	'('  shift 56
+	'('  shift 75
 	.  error
 
 
-state 49
+state 68
 	ITEM : door . '(' EXPRESSION ')'  (22)
 
-	'('  shift 57
+	'('  shift 76
 	.  error
 
 
-state 50
+state 69
 	ITEM : start .  (23)
 
 	.  reduce 23
 
 
-state 51
+state 70
 	ITEM : exite .  (24)
 
 	.  reduce 24
 
 
-state 52
+state 71
 	PUT_FUNC : put '(' EXPRESSION ',' EXPRESSION ',' ITEM . ')'  (9)
 
-	')'  shift 58
+	')'  shift 77
 	.  error
 
 
-state 53
+state 72
 	ITEM : GET_FUNC .  (11)
 
 	.  reduce 11
 
 
-state 54
+state 73
 	GET_FUNC : get '(' . EXPRESSION ',' EXPRESSION ')'  (10)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 59
+	EXPRESSION  goto 78
 
 
-state 55
+state 74
 	ITEM : key '(' . EXPRESSION ')'  (20)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 60
+	EXPRESSION  goto 79
 
 
-state 56
+state 75
 	ITEM : gate '(' . EXPRESSION ')'  (21)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 61
+	EXPRESSION  goto 80
 
 
-state 57
+state 76
 	ITEM : door '(' . EXPRESSION ')'  (22)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 62
+	EXPRESSION  goto 81
 
 
-state 58
+state 77
 	PUT_FUNC : put '(' EXPRESSION ',' EXPRESSION ',' ITEM ')' .  (9)
 
 	.  reduce 9
 
 
-state 59
+state 78
 	GET_FUNC : get '(' EXPRESSION . ',' EXPRESSION ')'  (10)
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	','  shift 63
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	','  shift 82
 	.  error
 
 
-state 60
+state 79
 	ITEM : key '(' EXPRESSION . ')'  (20)
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	')'  shift 64
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	')'  shift 83
 	.  error
 
 
-state 61
+state 80
 	ITEM : gate '(' EXPRESSION . ')'  (21)
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	')'  shift 65
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	')'  shift 84
 	.  error
 
 
-state 62
+state 81
 	ITEM : door '(' EXPRESSION . ')'  (22)
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	')'  shift 66
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	')'  shift 85
 	.  error
 
 
-state 63
+state 82
 	GET_FUNC : get '(' EXPRESSION ',' . EXPRESSION ')'  (10)
 
-	integer  shift 17
-	variable  shift 18
-	'-'  shift 19
-	'('  shift 20
+	integer  shift 22
+	variable  shift 23
+	'-'  shift 24
+	'('  shift 25
 	.  error
 
-	EXPRESSION  goto 67
+	EXPRESSION  goto 86
 
 
-state 64
+state 83
 	ITEM : key '(' EXPRESSION ')' .  (20)
 
 	.  reduce 20
 
 
-state 65
+state 84
 	ITEM : gate '(' EXPRESSION ')' .  (21)
 
 	.  reduce 21
 
 
-state 66
+state 85
 	ITEM : door '(' EXPRESSION ')' .  (22)
 
 	.  reduce 22
 
 
-state 67
+state 86
 	GET_FUNC : get '(' EXPRESSION ',' EXPRESSION . ')'  (10)
 	EXPRESSION : EXPRESSION . '+' EXPRESSION  (27)
 	EXPRESSION : EXPRESSION . '-' EXPRESSION  (28)
 	EXPRESSION : EXPRESSION . '*' EXPRESSION  (30)
 	EXPRESSION : EXPRESSION . '/' EXPRESSION  (31)
+	EXPRESSION : EXPRESSION . '%' EXPRESSION  (32)
 
-	'+'  shift 26
-	'-'  shift 27
-	'*'  shift 28
-	'/'  shift 29
-	')'  shift 68
+	'+'  shift 38
+	'-'  shift 39
+	'*'  shift 40
+	'/'  shift 41
+	'%'  shift 42
+	')'  shift 87
 	.  error
 
 
-state 68
+state 87
 	GET_FUNC : get '(' EXPRESSION ',' EXPRESSION ')' .  (10)
 
 	.  reduce 10
 
 
-30 terminals, 11 nonterminals
-35 grammar rules, 69 states
+31 terminals, 11 nonterminals
+43 grammar rules, 88 states

@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <wchar.h>
 #include <string.h>
 
@@ -28,21 +29,53 @@ void level_init(level_t *level) {
 void level_display(level_t *level) {
 	int i, j;
 	
-	for(i = 0; i < WIDTH + 2; i++)
+	for (i = 0; i < WIDTH + 2; i++)
 		printf("*");
 	printf("\n");
 	
-	for(i = 0; i < HEIGHT; i++) {
+	for (i = 0; i < HEIGHT; i++) {
 		printf("*");
-		for(j = 0; j < WIDTH; j++) {
+		for (j = 0; j < WIDTH; j++) {
 			printf("\x1b[%dm%C\x1b[0m", level->colors[i][j], level->cells[i][j]);
 		}
 		printf("*\n");
 	}
 	
-	for(i = 0; i < WIDTH + 2; i++)
+	for (i = 0; i < WIDTH + 2; i++)
 		printf("*");
 	printf("\n");
+}
+
+/**
+ * Get the string representation of a level.
+ * @param level the level
+ * @return the string representation
+ */
+char* level_get_string(level_t *level) {
+	int i, j;
+	size_t size = HEIGHT * WIDTH * 2;
+	char *str = malloc(size);
+	memset(str, '\0', size);
+	char *str2 = str;
+
+	for (i = 0; i < WIDTH + 2; i++)
+		*str++ = '*';
+	*str++ = '\n';
+
+	for (i = 0; i < HEIGHT; i++) {
+		*str++ = '*';
+		for (j = 0; j < WIDTH; j++) {
+			*str++ = level->cells[i][j];
+		}
+		*str++ = '*';
+		*str++ = '\n';
+	}
+
+	for (i = 0; i < WIDTH + 2; i++)
+		*str++ = '*';
+	*str++ = '\n';
+
+	return str2;
 }
 
 /**
@@ -54,8 +87,8 @@ void level_display(level_t *level) {
 void level_add_robot(level_t *level, int posX, int posY) {
 	int i, j;
 	
-	for(i = posY; i < posY + 4; i++)
-		for(j = posX; j < posX + 3; j++)
+	for (i = posY; i < posY + 4; i++)
+		for (j = posX; j < posX + 3; j++)
 			level->colors[i][j] = FG_WHITE;
 	
 	level->cells[posY][posX] = 0x250C;             // ┌
@@ -86,8 +119,8 @@ void level_add_robot(level_t *level, int posX, int posY) {
 void level_add_probe(level_t *level, int posX, int posY) {
 	int i, j;
 	
-	for(i = posY; i < posY + 2; i++)
-		for(j = posX; j < posX + 3; j++)
+	for (i = posY; i < posY + 2; i++)
+		for (j = posX; j < posX + 3; j++)
 			level->colors[i][j] = FG_WHITE;
 	
 	level->cells[posY][posX] = 0x251C;             // ├
@@ -156,7 +189,7 @@ void level_add_trap(level_t *level, int posX, int posY) {
 void level_add_ladder(level_t *level, int posX, int posY) {
 	int i;
 	
-	for(i = posX; i < posX + 3; i++)
+	for (i = posX; i < posX + 3; i++)
 		level->colors[posY][i] = FG_YELLOW;
 	
 	level->cells[posY][posX] = 0x251C;             // ├
@@ -279,8 +312,8 @@ void level_add_door(level_t *level, int posX, int posY, int num) {
 	level->cells[posY][posX + 2] = btowc(' ');
 	level->colors[posY][posX + 2] = BK_GREEN;
 	
-	for(i = posY + 1; i < posY + 4; i++)
-		for(j = posX; j < posX + 3; j++) {
+	for (i = posY + 1; i < posY + 4; i++)
+		for (j = posX; j < posX + 3; j++) {
 			level->cells[i][j] = btowc(' ');
 			level->colors[i][j] = BK_GREEN;
 		}
@@ -300,8 +333,8 @@ void level_add_door(level_t *level, int posX, int posY, int num) {
 void level_add_start(level_t *level, int posX, int posY) {
 	int i, j;
 	
-	for(i = posY; i < posY + 4; i++)
-		for(j = posX; j < posX + 3; j++) {
+	for (i = posY; i < posY + 4; i++)
+		for (j = posX; j < posX + 3; j++) {
 			level->cells[i][j] = btowc(' ');
 			level->colors[i][j] = BK_MAGENTA;
 		}
@@ -320,8 +353,8 @@ void level_add_start(level_t *level, int posX, int posY) {
 void level_add_exit(level_t *level, int posX, int posY) {
 	int i, j;
 	
-	for(i = posY; i < posY + 4; i++)
-		for(j = posX; j < posX + 3; j++) {
+	for (i = posY; i < posY + 4; i++)
+		for (j = posX; j < posX + 3; j++) {
 			level->cells[i][j] = btowc(' ');
 			level->colors[i][j] = BK_YELLOW;
 		}

@@ -16,6 +16,7 @@ int yylex();
 int x, y;
 level_t lvl;
 block_t v_block;
+extern char* outputFileContent;
 extern struct symbol_t *symbol;
 extern symbol_table t_d_s;
 extern int depth;
@@ -52,7 +53,7 @@ extern int depth;
 %type <value> EXPRESSION ASSIGNMENT
 
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' '%'
 
 %%
 
@@ -63,9 +64,27 @@ EXEC: LEVEL_BLOCK EXEC | LEVEL_BLOCK {
 
 // Level
 LEVEL_BLOCK: level ENTER_LEVEL_BLOCK CONTENT_LIST end {
+	// Display the level
 	level_display(&lvl);
+
+	// Save the level in the output file
+	if (outputFileContent != NULL) {
+		// Get char* from level_t
+		char* levelStr = level_get_string(&lvl);
+
+		// Concatenate the level to the output file
+		strcat(outputFileContent, levelStr);
+		strcat(outputFileContent, "\n");
+
+		// Free the level string
+		free(levelStr);
+	}
+
+	// Free the symbols
+	fprintf(stderr,YELLOW"Freeing symbols...\n"RESET);
 	removeSymbolDepth(depth, &t_d_s);
 	depth -= 1;
+	fprintf(stderr,YELLOW"Level %d parsed.\n"RESET, depth);
 };
 ENTER_LEVEL_BLOCK: {
 	depth += 1;
@@ -159,6 +178,14 @@ EXPRESSION: integer
 		}
 		else
 			$$ = $1 / $3;
+	}
+	| EXPRESSION '%' EXPRESSION	{
+		if ($3 == 0) {
+			printf("Error: modulo by zero : %d %% %d\n", $1, $3);
+			yyerror("modulo by zero");
+		}
+		else
+			$$ = $1 % $3;
 	}
 	| '(' EXPRESSION ')'		{ $$ = $2; }
 	;
