@@ -36,8 +36,9 @@ level_t lvl;
 block_t v_block;
 extern struct symbol_t *symbol;
 extern symbol_table t_d_s;
+extern int depth;
 
-#line 41 "analyser.yacc.y"
+#line 43 "analyser.yacc.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -50,7 +51,7 @@ typedef union {
 	symbol_t symbol;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 54 "y.tab.c"
+#line 55 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -86,74 +87,86 @@ extern int YYPARSE_DECL();
 #define level 257
 #define end 258
 #define put 259
-#define robot 260
-#define probe 261
-#define empty 262
-#define block 263
-#define trap 264
-#define ladder 265
-#define bomb 266
-#define life 267
-#define key 268
-#define gate 269
-#define door 270
-#define start 271
-#define exite 272
-#define integer 273
-#define id 274
-#define variable 275
+#define get 260
+#define robot 261
+#define probe 262
+#define empty 263
+#define block 264
+#define trap 265
+#define ladder 266
+#define bomb 267
+#define life 268
+#define key 269
+#define gate 270
+#define door 271
+#define start 272
+#define exite 273
+#define integer 274
+#define id 275
+#define variable 276
 #define YYERRCODE 256
 typedef short YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,    0,    5,    3,    4,    4,    6,    7,    8,    8,
+    0,    0,    3,    4,    5,    5,    6,    6,    7,    9,
     8,    8,    8,    8,    8,    8,    8,    8,    8,    8,
-    8,    1,    1,    1,    1,    1,    1,    1,    2,    2,
+    8,    8,    8,    8,    1,    1,    1,    1,    1,    1,
+    1,    1,    2,    2,
 };
 static const YYINT yylen[] = {                            2,
-    2,    1,    0,    4,    2,    0,    1,    8,    1,    1,
-    1,    1,    1,    1,    1,    1,    4,    4,    4,    1,
-    1,    1,    3,    3,    2,    3,    3,    3,    3,    3,
+    2,    1,    4,    0,    2,    0,    1,    1,    8,    6,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    4,
+    4,    4,    1,    1,    1,    1,    3,    3,    2,    3,
+    3,    3,    3,    3,
 };
 static const YYINT yydefred[] = {                         0,
-    3,    0,    0,    6,    1,    0,    4,    0,    5,    7,
-    0,   22,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,   28,    0,    0,   26,   27,    0,    0,    9,
-   10,   11,   12,   13,   14,   15,   16,    0,    0,    0,
-   20,   21,    0,    0,    0,    0,    8,    0,    0,    0,
-   17,   18,   19,
+    4,    0,    0,    6,    1,    0,    3,    0,    0,    0,
+    8,    5,    7,    0,    0,    0,   25,   26,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   32,    0,    0,   30,   31,    0,    0,    0,   12,   13,
+   14,   15,   16,   17,   18,   19,    0,    0,    0,   23,
+   24,    0,   11,    0,    0,    0,    0,    9,    0,    0,
+    0,    0,    0,   20,   21,   22,    0,   10,
 };
 static const YYINT yydgoto[] = {                          2,
-   15,    0,    3,    6,    4,    9,   10,   43,
+   21,   11,    3,    4,    6,   12,   13,   52,   53,
 };
-static const YYINT yysindex[] = {                      -230,
-    0,    0, -230,    0,    0, -255,    0,  -11,    0,    0,
-  -40,    0,  -40,  -40,   14,   -2,  -17,  -40,  -40,  -40,
-  -40,  -40,    0,   -2,   -2,    0,    0,   20, -249,    0,
-    0,    0,    0,    0,    0,    0,    0,   -9,    7,   12,
-    0,    0,   -3,  -40,  -40,  -40,    0,   -6,    1,    8,
-    0,    0,    0,
+static const YYINT yysindex[] = {                      -256,
+    0,    0, -256,    0,    0, -237,    0,  -38,  -58,  -51,
+    0,    0,    0,  -40,  -40,  -40,    0,    0,  -40,  -40,
+   68,   86,   86,   -7,    5,  -40,  -40,  -40,  -40,  -40,
+    0,   -7,   -7,    0,    0,   74, -192,  -25,    0,    0,
+    0,    0,    0,    0,    0,    0,  -11,   -4,   -3,    0,
+    0,    8,    0,  -40,  -40,  -40,  -40,    0,   80,   41,
+   48,   55,  -40,    0,    0,    0,   62,    0,
 };
 static const YYINT yyrindex[] = {                         0,
-    0,    0,   54,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,   25,    0,    0,    0,    0,
-    0,    0,    0,   30,   35,    0,    0,    0,    0,    0,
+    0,    0,   51,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0, -233, -231,  -37,    0,    0,    0,    0,    0,    0,
+    0,  -32,  -27,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,
 };
-static const YYINT yygindex[] = {                        57,
-  -12,    0,    0,    0,    0,    0,    0,    0,
+static const YYINT yygindex[] = {                        38,
+    4,    0,    0,    0,    0,    0,    0,    0,    0,
 };
-#define YYTABLESIZE 233
-static const YYINT yytable[] = {                         14,
-   16,   17,    7,    8,   13,   24,   25,   26,   27,   28,
-   30,   31,   32,   33,   34,   35,   36,   37,   38,   39,
-   40,   41,   42,   23,   20,   18,    1,   19,   11,   21,
-   44,   48,   49,   50,   51,   20,   18,   47,   19,   20,
-   21,   52,   20,   18,   21,   19,   45,   21,   53,   20,
-   18,   46,   19,    2,   21,   20,   18,   22,   19,    5,
-   21,   20,   18,   29,   19,   25,   21,   25,   25,   25,
-   23,    0,   23,   23,   23,   24,    0,   24,   24,   24,
+#define YYTABLESIZE 249
+static const YYINT yytable[] = {                         20,
+    1,   14,   15,   29,   19,   29,   29,   29,   27,   16,
+   27,   27,   27,   28,   54,   28,   28,   28,   22,   23,
+    7,    8,   24,   25,   33,   33,   34,   34,   55,   32,
+   33,   34,   35,   36,   28,   56,   57,    9,   10,   29,
+    5,   33,   33,   34,   34,   31,   28,   26,   58,   27,
+    2,   29,    0,    0,    0,    0,    0,   59,   60,   61,
+   62,    0,    0,    0,    0,    0,   67,   38,   39,   40,
+   41,   42,   43,   44,   45,   46,   47,   48,   49,   50,
+   51,   64,   28,   26,    0,   27,    0,   29,   65,   28,
+   26,    0,   27,    0,   29,   66,   28,   26,    0,   27,
+    0,   29,   68,   28,   26,    0,   27,    0,   29,   28,
+   26,   30,   27,    0,   29,   28,   26,   37,   27,    0,
+   29,   28,   26,   63,   27,    0,   29,   28,   26,    0,
+   27,    0,   29,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -162,24 +175,25 @@ static const YYINT yytable[] = {                         14,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,   12,
+   29,   29,    0,    0,    0,   27,   27,    0,    0,    0,
+   28,   28,    0,   17,    0,   18,    0,   29,   29,    0,
+    0,    0,   27,   27,    0,    0,    0,   28,   28,
 };
 static const YYINT yycheck[] = {                         40,
-   13,   14,  258,  259,   45,   18,   19,   20,   21,   22,
-  260,  261,  262,  263,  264,  265,  266,  267,  268,  269,
-  270,  271,  272,   41,   42,   43,  257,   45,   40,   47,
-   40,   44,   45,   46,   41,   42,   43,   41,   45,   42,
-   47,   41,   42,   43,   47,   45,   40,   47,   41,   42,
-   43,   40,   45,    0,   47,   42,   43,   44,   45,    3,
-   47,   42,   43,   44,   45,   41,   47,   43,   44,   45,
-   41,   -1,   43,   44,   45,   41,   -1,   43,   44,   45,
+  257,   40,   61,   41,   45,   43,   44,   45,   41,   61,
+   43,   44,   45,   41,   40,   43,   44,   45,   15,   16,
+  258,  259,   19,   20,  258,  259,  258,  259,   40,   26,
+   27,   28,   29,   30,   42,   40,   40,  275,  276,   47,
+    3,  275,  276,  275,  276,   41,   42,   43,   41,   45,
+    0,   47,   -1,   -1,   -1,   -1,   -1,   54,   55,   56,
+   57,   -1,   -1,   -1,   -1,   -1,   63,  260,  261,  262,
+  263,  264,  265,  266,  267,  268,  269,  270,  271,  272,
+  273,   41,   42,   43,   -1,   45,   -1,   47,   41,   42,
+   43,   -1,   45,   -1,   47,   41,   42,   43,   -1,   45,
+   -1,   47,   41,   42,   43,   -1,   45,   -1,   47,   42,
+   43,   44,   45,   -1,   47,   42,   43,   44,   45,   -1,
+   47,   42,   43,   44,   45,   -1,   47,   42,   43,   -1,
+   45,   -1,   47,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -188,21 +202,16 @@ static const YYINT yycheck[] = {                         40,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,  273,
+  258,  259,   -1,   -1,   -1,  258,  259,   -1,   -1,   -1,
+  258,  259,   -1,  274,   -1,  276,   -1,  275,  276,   -1,
+   -1,   -1,  275,  276,   -1,   -1,   -1,  275,  276,
 };
 #define YYFINAL 2
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 275
-#define YYUNDFTOKEN 286
+#define YYMAXTOKEN 276
+#define YYUNDFTOKEN 288
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
@@ -214,20 +223,23 @@ static const char *const yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-"level","end","put","robot","probe","empty","block","trap","ladder","bomb",
-"life","key","gate","door","start","exite","integer","id","variable",0,0,0,0,0,
-0,0,0,0,0,"illegal-symbol",
+"level","end","put","get","robot","probe","empty","block","trap","ladder",
+"bomb","life","key","gate","door","start","exite","integer","id","variable",0,0,
+0,0,0,0,0,0,0,0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
 "$accept : EXEC",
 "EXEC : LEVEL_BLOCK EXEC",
 "EXEC : LEVEL_BLOCK",
-"$$1 :",
-"LEVEL_BLOCK : level $$1 CONTENT_LIST end",
+"LEVEL_BLOCK : level ENTER_LEVEL_BLOCK CONTENT_LIST end",
+"ENTER_LEVEL_BLOCK :",
 "CONTENT_LIST : CONTENT_LIST CONTENT",
 "CONTENT_LIST :",
 "CONTENT : PUT_FUNC",
+"CONTENT : ASSIGNMENT",
 "PUT_FUNC : put '(' EXPRESSION ',' EXPRESSION ',' ITEM ')'",
+"GET_FUNC : get '(' EXPRESSION ',' EXPRESSION ')'",
+"ITEM : GET_FUNC",
 "ITEM : robot",
 "ITEM : probe",
 "ITEM : empty",
@@ -242,6 +254,7 @@ static const char *const yyrule[] = {
 "ITEM : start",
 "ITEM : exite",
 "EXPRESSION : integer",
+"EXPRESSION : variable",
 "EXPRESSION : EXPRESSION '+' EXPRESSION",
 "EXPRESSION : EXPRESSION '-' EXPRESSION",
 "EXPRESSION : '-' EXPRESSION",
@@ -287,9 +300,9 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 143 "analyser.yacc.y"
+#line 178 "analyser.yacc.y"
 
-#line 293 "y.tab.c"
+#line 306 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -492,122 +505,158 @@ yyreduce:
     switch (yyn)
     {
 case 2:
-#line 58 "analyser.yacc.y"
+#line 60 "analyser.yacc.y"
 	{
 	printf(GREEN"\nValid input!\n"RESET);
 }
 break;
 case 3:
-#line 63 "analyser.yacc.y"
-	{ level_init(&lvl); }
+#line 65 "analyser.yacc.y"
+	{
+	level_display(&lvl);
+	removeSymbolDepth(depth, &t_d_s);
+	depth -= 1;
+}
 break;
 case 4:
-#line 63 "analyser.yacc.y"
-	{ level_display(&lvl); }
-break;
-case 8:
-#line 69 "analyser.yacc.y"
+#line 70 "analyser.yacc.y"
 	{
+	depth += 1;
+	level_init(&lvl);
+}
+break;
+case 9:
+#line 79 "analyser.yacc.y"
+	{
+
+	/* Check if the position is valid*/
+	if (yystack.l_mark[-5].value < 0 || yystack.l_mark[-5].value >= WIDTH || yystack.l_mark[-3].value < 0 || yystack.l_mark[-3].value >= HEIGHT)
+		yyerror("Invalid position.");
+
+	/* Put the item*/
 	switch (v_block.type) {
-		case 1 : level_add_robot(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 2 : level_add_probe(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 3 : level_add_empty(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 4 : level_add_block(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 5 : level_add_trap(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 6 : level_add_ladder(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 7 : level_add_bomb(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 8 : level_add_life(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 9 : level_add_key(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value, v_block.value); break;
-		case 10 : level_add_gate(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value, v_block.value); break;
-		case 11 : level_add_door(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value, v_block.value); break;
-		case 12 : level_add_start(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
-		case 13 : level_add_exit(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case ROBOT_B : level_add_robot(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case PROBE_B : level_add_probe(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case EMPTY_B : level_add_empty(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case BLOCK_B : level_add_block(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case TRAP_B : level_add_trap(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case LADDER_B : level_add_ladder(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case BOMB_B : level_add_bomb(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case LIFE_B : level_add_life(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case KEY_B : level_add_key(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value, v_block.value); break;
+		case GATE_B : level_add_gate(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value, v_block.value); break;
+		case DOOR_B : level_add_door(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value, v_block.value); break;
+		case START_B : level_add_start(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
+		case EXIT_B : level_add_exit(&lvl, yystack.l_mark[-5].value, yystack.l_mark[-3].value); break;
 		default : break;
 	}
 }
 break;
-case 9:
-#line 88 "analyser.yacc.y"
-	{ v_block = (block_t){1, 0}; }
-break;
 case 10:
-#line 89 "analyser.yacc.y"
-	{ v_block = (block_t){2, 0}; }
-break;
-case 11:
-#line 90 "analyser.yacc.y"
-	{ v_block = (block_t){3, 0}; }
+#line 104 "analyser.yacc.y"
+	{
+
+	/* Check if the position is valid*/
+	if (yystack.l_mark[-3].value < 0 || yystack.l_mark[-3].value >= WIDTH || yystack.l_mark[-1].value < 0 || yystack.l_mark[-1].value >= HEIGHT)
+		yyerror("Invalid position.");
+
+	/* Get the item*/
+	v_block = level_get_block(&lvl, yystack.l_mark[-3].value, yystack.l_mark[-1].value);
+}
 break;
 case 12:
-#line 91 "analyser.yacc.y"
-	{ v_block = (block_t){4, 0}; }
+#line 115 "analyser.yacc.y"
+	{ v_block = (block_t){ROBOT_B, 0}; }
 break;
 case 13:
-#line 92 "analyser.yacc.y"
-	{ v_block = (block_t){5, 0}; }
+#line 116 "analyser.yacc.y"
+	{ v_block = (block_t){PROBE_B, 0}; }
 break;
 case 14:
-#line 93 "analyser.yacc.y"
-	{ v_block = (block_t){6, 0}; }
+#line 117 "analyser.yacc.y"
+	{ v_block = (block_t){EMPTY_B, 0}; }
 break;
 case 15:
-#line 94 "analyser.yacc.y"
-	{ v_block = (block_t){7, 0}; }
+#line 118 "analyser.yacc.y"
+	{ v_block = (block_t){BLOCK_B, 0}; }
 break;
 case 16:
-#line 95 "analyser.yacc.y"
-	{ v_block = (block_t){8, 0}; }
+#line 119 "analyser.yacc.y"
+	{ v_block = (block_t){TRAP_B, 0}; }
 break;
 case 17:
-#line 96 "analyser.yacc.y"
+#line 120 "analyser.yacc.y"
+	{ v_block = (block_t){LADDER_B, 0}; }
+break;
+case 18:
+#line 121 "analyser.yacc.y"
+	{ v_block = (block_t){BOMB_B, 0}; }
+break;
+case 19:
+#line 122 "analyser.yacc.y"
+	{ v_block = (block_t){LIFE_B, 0}; }
+break;
+case 20:
+#line 123 "analyser.yacc.y"
 	{
 		if (yystack.l_mark[-1].value < 1 || yystack.l_mark[-1].value > 4)
 			yyerror("Invalid key value (must be between 1 and 4).");
-		v_block = (block_t){9, yystack.l_mark[-1].value};
+		v_block = (block_t){KEY_B, yystack.l_mark[-1].value};
 	}
 break;
-case 18:
-#line 101 "analyser.yacc.y"
+case 21:
+#line 128 "analyser.yacc.y"
 	{
 		if (yystack.l_mark[-1].value < 1 || yystack.l_mark[-1].value > 4)
 			yyerror("Invalid gate value (must be between 1 and 4).");
-		v_block = (block_t){10, yystack.l_mark[-1].value};
+		v_block = (block_t){GATE_B, yystack.l_mark[-1].value};
 	}
 break;
-case 19:
-#line 106 "analyser.yacc.y"
+case 22:
+#line 133 "analyser.yacc.y"
 	{
 		if (yystack.l_mark[-1].value < 1 || yystack.l_mark[-1].value > 99)
 			yyerror("Invalid door value (must be between 1 and 99).");
-		v_block = (block_t){11, yystack.l_mark[-1].value};
+		v_block = (block_t){DOOR_B, yystack.l_mark[-1].value};
 	}
 break;
-case 20:
-#line 111 "analyser.yacc.y"
-	{ v_block = (block_t){12, 0}; }
-break;
-case 21:
-#line 112 "analyser.yacc.y"
-	{ v_block = (block_t){13, 0}; }
-break;
 case 23:
-#line 116 "analyser.yacc.y"
-	{ yyval.value = yystack.l_mark[-2].value + yystack.l_mark[0].value; }
+#line 138 "analyser.yacc.y"
+	{ v_block = (block_t){START_B, 0}; }
 break;
 case 24:
-#line 117 "analyser.yacc.y"
-	{ yyval.value = yystack.l_mark[-2].value - yystack.l_mark[0].value; }
-break;
-case 25:
-#line 118 "analyser.yacc.y"
-	{ yyval.value = -yystack.l_mark[0].value; }
+#line 139 "analyser.yacc.y"
+	{ v_block = (block_t){EXIT_B, 0}; }
 break;
 case 26:
-#line 119 "analyser.yacc.y"
-	{ yyval.value = yystack.l_mark[-2].value * yystack.l_mark[0].value; }
+#line 143 "analyser.yacc.y"
+	{
+		/* Recherche de la variable dans la table des symboles*/
+		symbol = getSymbolFromTable(yystack.l_mark[0].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
+		else
+			yyval.value = symbol->data.i;
+	}
 break;
 case 27:
-#line 120 "analyser.yacc.y"
+#line 151 "analyser.yacc.y"
+	{ yyval.value = yystack.l_mark[-2].value + yystack.l_mark[0].value; }
+break;
+case 28:
+#line 152 "analyser.yacc.y"
+	{ yyval.value = yystack.l_mark[-2].value - yystack.l_mark[0].value; }
+break;
+case 29:
+#line 153 "analyser.yacc.y"
+	{ yyval.value = -yystack.l_mark[0].value; }
+break;
+case 30:
+#line 154 "analyser.yacc.y"
+	{ yyval.value = yystack.l_mark[-2].value * yystack.l_mark[0].value; }
+break;
+case 31:
+#line 155 "analyser.yacc.y"
 	{
 		if (yystack.l_mark[0].value == 0) {
 			printf("Error: division by zero : %d / %d\n", yystack.l_mark[-2].value, yystack.l_mark[0].value);
@@ -617,27 +666,27 @@ case 27:
 			yyval.value = yystack.l_mark[-2].value / yystack.l_mark[0].value;
 	}
 break;
-case 28:
-#line 128 "analyser.yacc.y"
+case 32:
+#line 163 "analyser.yacc.y"
 	{ yyval.value = yystack.l_mark[-1].value; }
 break;
-case 29:
-#line 131 "analyser.yacc.y"
+case 33:
+#line 166 "analyser.yacc.y"
 	{
 		/* Ajout de la variable dans la table des symboles*/
 		symbol->data.i = yystack.l_mark[0].value;
 		printf(GREEN"[+] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
-case 30:
-#line 136 "analyser.yacc.y"
+case 34:
+#line 171 "analyser.yacc.y"
 	{
 		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i = yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
-#line 641 "y.tab.c"
+#line 690 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

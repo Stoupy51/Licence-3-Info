@@ -10,10 +10,9 @@
 
 void yyerror(const char *error_msg);
 
-//extern int yylval;
-
 extern struct symbol_t *symbol;
 extern symbol_table t_d_s;
+extern int depth;
 int line = 1;
 %}
 
@@ -27,6 +26,7 @@ int line = 1;
 "level"		{ return level; }
 "end"		{ return end; }
 "put"		{ return put; }
+"get"		{ return get; }
 "ROBOT"		{ return robot; }
 "PROBE"		{ return probe; }
 "EMPTY"		{ return empty; }
@@ -41,13 +41,17 @@ int line = 1;
 "START"		{ return start; }
 "EXITE"		{ return exite; }
 [a-zA-Z][a-zA-Z0-9_]*	{
+
 	// Recherche de la variable dans la table des symboles
 	symbol = getSymbolFromTable(yytext, &t_d_s);
+
 	if (symbol == NULL) {
+
 		// Ajout de la variable dans la table des symboles
 		symbol_t sym;
 		sym.name = strdup(yytext);
 		sym.type = SYMBOL_TYPE_INTEGER;
+		sym.depth = depth;
 		symbol = addSymbolInTable(sym, &t_d_s);
 		return id;
 	}

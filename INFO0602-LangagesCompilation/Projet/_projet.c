@@ -15,6 +15,7 @@ extern FILE *yyin;
 
 struct symbol_t *symbol;
 symbol_table t_d_s;
+int depth = 0;
 
 /**
  * @brief Fonction main du programme, qui gère les arguments et appelle le parser.

@@ -1,33 +1,49 @@
+
 #ifndef _LEVEL_
 #define _LEVEL_
 
 #include <wchar.h>
 
 typedef enum {
-    // Foreground colors
-    FG_BLACK = 30,
-    FG_RED =31,
-    FG_GREEN = 32,
-    FG_YELLOW = 33,
-    FG_BLUE = 34,
-    FG_MAGENTA = 35,
-    FG_CYAN = 36,
-    FG_WHITE = 37,
+	// Foreground colors
+	FG_BLACK = 30,
+	FG_RED =31,
+	FG_GREEN = 32,
+	FG_YELLOW = 33,
+	FG_BLUE = 34,
+	FG_MAGENTA = 35,
+	FG_CYAN = 36,
+	FG_WHITE = 37,
 
-    // Background Colors
-    BK_BLACK = 40,
-    BK_RED = 41,
-    BK_GREEN = 42,
-    BK_YELLOW = 43,
-    BK_BLUE = 44,
-    BK_MAGENTA = 45,
-    BK_CYAN = 46,
-    BK_WHITE = 47
+	// Background Colors
+	BK_BLACK = 40,
+	BK_RED = 41,
+	BK_GREEN = 42,
+	BK_YELLOW = 43,
+	BK_BLUE = 44,
+	BK_MAGENTA = 45,
+	BK_CYAN = 46,
+	BK_WHITE = 47
 } color_t;
 
 // Structure of a block
 typedef struct block_t {
-	int type;
+	enum {
+		ROBOT_B = 1,
+		PROBE_B = 2,
+		EMPTY_B = 3,
+		BLOCK_B = 4,
+		TRAP_B = 5,
+		LADDER_B = 6,
+		BOMB_B = 7,
+		LIFE_B = 8,
+		KEY_B = 9,
+		GATE_B = 10,
+		DOOR_B = 11,
+		START_B = 12,
+		EXIT_B = 13
+	} type;
+
 	int value;
 } block_t;
 
@@ -37,8 +53,9 @@ typedef struct block_t {
 
 // Structure of a level
 typedef struct {
-    wint_t cells[HEIGHT][WIDTH];
-    color_t colors[HEIGHT][WIDTH];
+	wint_t cells[HEIGHT][WIDTH];
+	color_t colors[HEIGHT][WIDTH];
+	block_t blocks[HEIGHT][WIDTH];
 } level_t;
 
 /**
@@ -161,4 +178,7 @@ void level_add_start(level_t *level, int posX, int posY);
  */
 void level_add_exit(level_t *level, int posX, int posY);
 
+block_t level_get_block(level_t *level, int posX, int posY);
+
 #endif
+

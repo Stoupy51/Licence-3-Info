@@ -35,6 +35,7 @@ int hashSymbol(char* name);
 struct symbol_t* addSymbolInTable(struct symbol_t symbol, struct table_des_symboles_t *table);
 int removeSymbolFromTable(struct symbol_t symbol, struct table_des_symboles_t *table);
 struct symbol_t* getSymbolFromTable(char* name, struct table_des_symboles_t *table);
+void removeSymbolDepth(int depth, struct table_des_symboles_t *table);
 
 // Fonctions d'affichage et de libération
 char* tableDesSymbolesToString(struct table_des_symboles_t table);

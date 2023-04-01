@@ -191,6 +191,52 @@ struct symbol_t* getSymbolFromTable(char* name, struct table_des_symboles_t *tab
 }
 
 /**
+ * @brief Supprime tous les symboles de la table de symboles à une certaine profondeur.
+ * 
+ * @param table La table de symboles à vider.
+*/
+void removeSymbolDepth(int depth, struct table_des_symboles_t *table) {
+	
+	// On parcourt la table de symboles
+	int i;
+	for (i = 0; i < table->size; i++) {
+
+		// On parcourt la liste
+		symbol_list_element* element = table->data[i].head;
+		symbol_list_element* previous = NULL;
+		while (element != NULL) {
+
+			// Si le symbole est trouvé, on le supprime
+			if (element->symbol.depth >= depth) {
+
+				// Si c'est le premier élément de la liste
+				if (previous == NULL)
+					table->data[i].head = element->next;
+				else
+					previous->next = element->next;
+
+				// On libère la mémoire
+				freeSymbole(&element->symbol);
+				free(element);
+
+				// On décrémente le nombre de symboles dans la table
+				table->data[i].count--;
+				table->total_symbol_count--;
+
+				// On passe à l'élément suivant
+				element = previous->next;
+			}
+			else {
+				// On passe à l'élément suivant
+				previous = element;
+				element = element->next;
+			}
+		}
+	}
+}
+
+
+/**
  * @brief Génère une chaîne de caractères représentant la table de symboles.
  * 
  * @param table La table de symboles à représenter.

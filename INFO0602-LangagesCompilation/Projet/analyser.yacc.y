@@ -18,12 +18,14 @@ level_t lvl;
 block_t v_block;
 extern struct symbol_t *symbol;
 extern symbol_table t_d_s;
+extern int depth;
 
 %}
 
 %token level
 %token end
 %token put
+%token get
 %token robot
 %token probe
 %token empty
@@ -60,59 +62,92 @@ EXEC: LEVEL_BLOCK EXEC | LEVEL_BLOCK {
 };
 
 // Level
-LEVEL_BLOCK: level { level_init(&lvl); } CONTENT_LIST end { level_display(&lvl); };
+LEVEL_BLOCK: level ENTER_LEVEL_BLOCK CONTENT_LIST end {
+	level_display(&lvl);
+	removeSymbolDepth(depth, &t_d_s);
+	depth -= 1;
+};
+ENTER_LEVEL_BLOCK: {
+	depth += 1;
+	level_init(&lvl);
+};
 
-// Analyze put functions
+// Analyze put or get functions
 CONTENT_LIST: CONTENT_LIST CONTENT | ;
-CONTENT: PUT_FUNC;
+CONTENT: PUT_FUNC | ASSIGNMENT;
 
 PUT_FUNC: put '(' EXPRESSION ',' EXPRESSION ',' ITEM ')' {
+
+	// Check if the position is valid
+	if ($3 < 0 || $3 >= WIDTH || $5 < 0 || $5 >= HEIGHT)
+		yyerror("Invalid position.");
+
+	// Put the item
 	switch (v_block.type) {
-		case 1 : level_add_robot(&lvl, $3, $5); break;
-		case 2 : level_add_probe(&lvl, $3, $5); break;
-		case 3 : level_add_empty(&lvl, $3, $5); break;
-		case 4 : level_add_block(&lvl, $3, $5); break;
-		case 5 : level_add_trap(&lvl, $3, $5); break;
-		case 6 : level_add_ladder(&lvl, $3, $5); break;
-		case 7 : level_add_bomb(&lvl, $3, $5); break;
-		case 8 : level_add_life(&lvl, $3, $5); break;
-		case 9 : level_add_key(&lvl, $3, $5, v_block.value); break;
-		case 10 : level_add_gate(&lvl, $3, $5, v_block.value); break;
-		case 11 : level_add_door(&lvl, $3, $5, v_block.value); break;
-		case 12 : level_add_start(&lvl, $3, $5); break;
-		case 13 : level_add_exit(&lvl, $3, $5); break;
+		case ROBOT_B : level_add_robot(&lvl, $3, $5); break;
+		case PROBE_B : level_add_probe(&lvl, $3, $5); break;
+		case EMPTY_B : level_add_empty(&lvl, $3, $5); break;
+		case BLOCK_B : level_add_block(&lvl, $3, $5); break;
+		case TRAP_B : level_add_trap(&lvl, $3, $5); break;
+		case LADDER_B : level_add_ladder(&lvl, $3, $5); break;
+		case BOMB_B : level_add_bomb(&lvl, $3, $5); break;
+		case LIFE_B : level_add_life(&lvl, $3, $5); break;
+		case KEY_B : level_add_key(&lvl, $3, $5, v_block.value); break;
+		case GATE_B : level_add_gate(&lvl, $3, $5, v_block.value); break;
+		case DOOR_B : level_add_door(&lvl, $3, $5, v_block.value); break;
+		case START_B : level_add_start(&lvl, $3, $5); break;
+		case EXIT_B : level_add_exit(&lvl, $3, $5); break;
 		default : break;
 	}
 };
 
-ITEM: robot { v_block = (block_t){1, 0}; }
-	| probe { v_block = (block_t){2, 0}; }
-	| empty { v_block = (block_t){3, 0}; }
-	| block { v_block = (block_t){4, 0}; }
-	| trap { v_block = (block_t){5, 0}; }
-	| ladder { v_block = (block_t){6, 0}; }
-	| bomb { v_block = (block_t){7, 0}; }
-	| life { v_block = (block_t){8, 0}; }
+GET_FUNC: get '(' EXPRESSION ',' EXPRESSION ')' {
+
+	// Check if the position is valid
+	if ($3 < 0 || $3 >= WIDTH || $5 < 0 || $5 >= HEIGHT)
+		yyerror("Invalid position.");
+
+	// Get the item
+	v_block = level_get_block(&lvl, $3, $5);
+};
+
+ITEM: GET_FUNC
+	| robot { v_block = (block_t){ROBOT_B, 0}; }
+	| probe { v_block = (block_t){PROBE_B, 0}; }
+	| empty { v_block = (block_t){EMPTY_B, 0}; }
+	| block { v_block = (block_t){BLOCK_B, 0}; }
+	| trap { v_block = (block_t){TRAP_B, 0}; }
+	| ladder { v_block = (block_t){LADDER_B, 0}; }
+	| bomb { v_block = (block_t){BOMB_B, 0}; }
+	| life { v_block = (block_t){LIFE_B, 0}; }
 	| key '(' EXPRESSION ')' {
 		if ($3 < 1 || $3 > 4)
 			yyerror("Invalid key value (must be between 1 and 4).");
-		v_block = (block_t){9, $3};
+		v_block = (block_t){KEY_B, $3};
 	}
 	| gate '(' EXPRESSION ')' {
 		if ($3 < 1 || $3 > 4)
 			yyerror("Invalid gate value (must be between 1 and 4).");
-		v_block = (block_t){10, $3};
+		v_block = (block_t){GATE_B, $3};
 	}
 	| door '(' EXPRESSION ')' {
 		if ($3 < 1 || $3 > 99)
 			yyerror("Invalid door value (must be between 1 and 99).");
-		v_block = (block_t){11, $3};
+		v_block = (block_t){DOOR_B, $3};
 	}
-	| start { v_block = (block_t){12, 0}; }
-	| exite { v_block = (block_t){13, 0}; }
+	| start { v_block = (block_t){START_B, 0}; }
+	| exite { v_block = (block_t){EXIT_B, 0}; }
 	;
 
 EXPRESSION: integer
+	| variable {
+		// Recherche de la variable dans la table des symboles
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
+		else
+			$$ = symbol->data.i;
+	}
 	| EXPRESSION '+' EXPRESSION	{ $$ = $1 + $3; }
 	| EXPRESSION '-' EXPRESSION	{ $$ = $1 - $3; }
 	| '-' EXPRESSION			{ $$ = -$2; }

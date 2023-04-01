@@ -19,6 +19,7 @@ typedef union symbol_data_t {
 typedef struct symbol_t {
 	char* name;
 	int type;
+	int depth;
 	symbol_data_t data;
 } symbol_t;
 
