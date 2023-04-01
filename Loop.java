@@ -3,13 +3,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class Mainjava {
+public class Loop {
 
 	public static void main(String[] args) throws Exception {
-		int a = 2;
 		while (true) {
-			a = (a + 1) % 3;
-			String str = a == 0 ? "109.122.198.158" : (a == 1 ? "82.64.248.19" : "89.85.97.213");
+			String str = "82.64.248.19";
 			System.out.println("IP: " + str);
 
 			// Create UDP socket on IP and port 25565
@@ -21,15 +19,12 @@ public class Mainjava {
 			byte[] tampon = "Hello".getBytes();
 			DatagramPacket packet = new DatagramPacket(tampon, tampon.length, address, 25565);
 
-			// Print packet content
-			System.out.println("Packet to send: " + packet + " " + new String(packet.getData()));
-
-			// Send the packet
-			socket.send(packet);
-
 			// Receive a packet
 			socket.receive(packet);
 			System.out.println("Packet receive: " + packet + " " + new String(packet.getData()));
+
+			// Resend the to the client
+			socket.send(packet);
 
 			// Close the socket
 			socket.close();
