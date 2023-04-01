@@ -173,6 +173,42 @@ ASSIGNMENT: id '=' EXPRESSION {
 		symbol->data.i = $3;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
+	| variable '+' '=' EXPRESSION {
+		// Modification de la variable dans la table des symboles
+		symbol->data.i += $4;
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+	}
+	| variable '-' '=' EXPRESSION {
+		// Modification de la variable dans la table des symboles
+		symbol->data.i -= $4;
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+	}
+	| variable '*' '=' EXPRESSION {
+		// Modification de la variable dans la table des symboles
+		symbol->data.i *= $4;
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+	}
+	| variable '/' '=' EXPRESSION {
+		// Modification de la variable dans la table des symboles
+		symbol->data.i /= $4;
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+	}
+	| variable '%' '=' EXPRESSION {
+		// Modification de la variable dans la table des symboles
+		symbol->data.i %= $4;
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+	}
+	| variable '+' '+' {
+		// Modification de la variable dans la table des symboles
+		symbol->data.i++;
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+	}
+	| variable '-' '-' {
+		// Modification de la variable dans la table des symboles
+		symbol->data.i--;
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+	}
+	;
 
 %%
 

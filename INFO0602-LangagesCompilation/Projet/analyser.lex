@@ -57,13 +57,14 @@ int line = 1;
 	}
 	else {
 		// La variable existe déjà dans la table des symboles
+		yylval.symbol = *symbol;
 		return variable;
 	}
 }
-[-+*/\.(),]	{ return *yytext; }
-\n			{ line++; }
+[-+*/\.(),=]	{ return *yytext; }
+\n				{ line++; }
 [[:space:]]	;
-.			{ yyerror("Invalid character"); }
+.				{ yyerror("Invalid character"); }
 
 %%
 

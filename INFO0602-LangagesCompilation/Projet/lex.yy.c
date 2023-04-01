@@ -381,7 +381,7 @@ static const YY_CHAR yy_ec[256] =
         1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
         4,    4,    4,    4,    5,    4,    4,    6,    6,    6,
         6,    6,    6,    6,    6,    6,    6,    1,    1,    1,
-        1,    1,    1,    1,    7,    8,    9,   10,   11,   12,
+        4,    1,    1,    1,    7,    8,    9,   10,   11,   12,
        13,   14,   15,   14,   16,   17,   18,   14,   19,   20,
        14,   21,   22,   23,   14,   14,   14,   24,   25,   14,
         1,    1,    1,    1,   26,    1,   14,   14,   14,   27,
@@ -895,38 +895,39 @@ YY_RULE_SETUP
 	}
 	else {
 		// La variable existe déjà dans la table des symboles
+		yylval.symbol = *symbol;
 		return variable;
 	}
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 63 "analyser.lex"
+#line 64 "analyser.lex"
 { return *yytext; }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 64 "analyser.lex"
+#line 65 "analyser.lex"
 { line++; }
 	YY_BREAK
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 65 "analyser.lex"
+#line 66 "analyser.lex"
 ;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 66 "analyser.lex"
+#line 67 "analyser.lex"
 { yyerror("Invalid character"); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 68 "analyser.lex"
+#line 69 "analyser.lex"
 ECHO;
 	YY_BREAK
-#line 930 "lex.yy.c"
+#line 931 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1894,7 +1895,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 68 "analyser.lex"
+#line 69 "analyser.lex"
 
 
 void yyerror(const char *error_msg) {

@@ -71,7 +71,7 @@ symbol_table newTableDesSymboles(int size) {
  * @return La valeur de hachage en int.
 */
 int hashSymbol(char* name) {
-	
+
 	// Si le symbole n'a pas de nom, on retourne 0
 	if (name == NULL)
 		return 0;
@@ -80,7 +80,7 @@ int hashSymbol(char* name) {
 	int hash = 0;
 
 	// Calcul de la valeur de hachage
-	int i, multiplier = 1;
+	int i = 0, multiplier = 1;
 	while (name[i] != '\0') {
 		hash += name[i] * multiplier;
 		multiplier *= 256;
@@ -172,6 +172,8 @@ int removeSymbolFromTable(struct symbol_t symbol, struct table_des_symboles_t *t
  * @return Pointeur sur le symbole trouvé, NULL si le symbole n'a pas été trouvé.
 */
 struct symbol_t* getSymbolFromTable(char* name, struct table_des_symboles_t *table) {
+
+	// On calcule la valeur de hachage
 	int m = hashSymbol(name) % table->size;
 
 	// On parcourt la liste
@@ -179,7 +181,8 @@ struct symbol_t* getSymbolFromTable(char* name, struct table_des_symboles_t *tab
 	while (element != NULL) {
 
 		// Si le symbole est trouvé, on le retourne
-		if (element->symbol.name == name)
+		int cmp = strcmp(element->symbol.name, name);
+		if (cmp == 0)
 			return &element->symbol;
 
 		// On passe à l'élément suivant
@@ -224,7 +227,10 @@ void removeSymbolDepth(int depth, struct table_des_symboles_t *table) {
 				table->total_symbol_count--;
 
 				// On passe à l'élément suivant
-				element = previous->next;
+				if (previous == NULL)
+					element = table->data[i].head;
+				else
+					element = previous->next;
 			}
 			else {
 				// On passe à l'élément suivant
