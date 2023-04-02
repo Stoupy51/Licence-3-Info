@@ -1,0 +1,27 @@
+
+level
+	put(1, 1, BLOCK)
+	put(2, 2, BLOCK)
+	put(35, 15, BLOCK)
+	put(18, 18, BLOCK)
+	put(39, 19, BLOCK)
+end
+
+
+level
+	put(6, 6, BLOCK)
+	put(26, 6, BLOCK)
+	put(48, 8, BLOCK)
+	put(12, 12, BLOCK)
+	put(32, 12, BLOCK)
+end
+
+
+level
+	put(44, 4, BLOCK)
+	put(8, 8, BLOCK)
+	put(15, 15, BLOCK)
+	put(55, 15, BLOCK)
+	put(19, 19, BLOCK)
+end
+

@@ -1,0 +1,78 @@
+
+level
+	chuck_norris = 0
+
+	put(chuck_norris % 60, chuck_norris % 20, KEY(chuck_norris % 4 + 1))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+	old_x = chuck_norris % 60
+	old_y = chuck_norris % 20
+	chuck_norris = chuck_norris + 15156 * 51447 / (old_x + 1) + 32 * 14 / (old_y + 1)
+
+	put(chuck_norris % 60, chuck_norris % 20, get(old_x, old_y))
+
+end
+

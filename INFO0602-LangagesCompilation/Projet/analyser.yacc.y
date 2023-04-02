@@ -199,34 +199,58 @@ ASSIGNMENT: id '=' EXPRESSION {
 	}
 	| variable '=' EXPRESSION {
 		// Modification de la variable dans la table des symboles
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i = $3;
-		printf(GREEN"[X] Variable %s = %d | Name : %s\n"RESET, symbol->name, symbol->data.i, $1.name);
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '+' '=' EXPRESSION {
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i += $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '-' '=' EXPRESSION {
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i -= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '*' '=' EXPRESSION {
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i *= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '/' '=' EXPRESSION {
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i /= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '%' '=' EXPRESSION {
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i %= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '+' '+' {
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i++;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '-' '-' {
+		symbol = getSymbolFromTable($1.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i--;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}

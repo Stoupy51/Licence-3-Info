@@ -62,30 +62,34 @@ char* level_get_string(level_t *level) {
 	char *str = malloc(size);
 	memset(str, '\0', size);
 
+	strcat(str, "\nlevel\n");
+
 	for (i = 0; i < HEIGHT; i++) {
 		for (j = 0; j < WIDTH; j++) {
 			char line[32];
 			memset(line, '\0', sizeof(line));
 			
 			switch (level->blocks[i][j].type) {
-				case ROBOT_B: sprintf(line, "put(%d, %d, ROBOT)\n", j, i); break;
-				case PROBE_B: sprintf(line, "put(%d, %d, PROBE)\n", j, i); break;
+				case ROBOT_B: sprintf(line, "\tput(%d, %d, ROBOT)\n", j, i); break;
+				case PROBE_B: sprintf(line, "\tput(%d, %d, PROBE)\n", j, i); break;
 				case EMPTY_B: break;
-				case BLOCK_B: sprintf(line, "put(%d, %d, BLOCK)\n", j, i); break;
-				case TRAP_B: sprintf(line, "put(%d, %d, TRAP)\n", j, i); break;
-				case LADDER_B: sprintf(line, "put(%d, %d, LADDER)\n", j, i); break;
-				case BOMB_B: sprintf(line, "put(%d, %d, BOMB)\n", j, i); break;
-				case LIFE_B: sprintf(line, "put(%d, %d, LIFE)\n", j, i); break;
-				case KEY_B: sprintf(line, "put(%d, %d, KEY)\n", j, i); break;
-				case GATE_B: sprintf(line, "put(%d, %d, GATE)\n", j, i); break;
-				case DOOR_B: sprintf(line, "put(%d, %d, DOOR)\n", j, i); break;
-				case START_B: sprintf(line, "put(%d, %d, START)\n", j, i); break;
-				case EXIT_B: sprintf(line, "put(%d, %d, EXIT)\n", j, i); break;
+				case BLOCK_B: sprintf(line, "\tput(%d, %d, BLOCK)\n", j, i); break;
+				case TRAP_B: sprintf(line, "\tput(%d, %d, TRAP)\n", j, i); break;
+				case LADDER_B: sprintf(line, "\tput(%d, %d, LADDER)\n", j, i); break;
+				case BOMB_B: sprintf(line, "\tput(%d, %d, BOMB)\n", j, i); break;
+				case LIFE_B: sprintf(line, "\tput(%d, %d, LIFE)\n", j, i); break;
+				case KEY_B: sprintf(line, "\tput(%d, %d, KEY)\n", j, i); break;
+				case GATE_B: sprintf(line, "\tput(%d, %d, GATE)\n", j, i); break;
+				case DOOR_B: sprintf(line, "\tput(%d, %d, DOOR)\n", j, i); break;
+				case START_B: sprintf(line, "\tput(%d, %d, START)\n", j, i); break;
+				case EXIT_B: sprintf(line, "\tput(%d, %d, EXIT)\n", j, i); break;
 			}
 
 			strcat(str, line);
 		}
 	}
+
+	strcat(str, "end\n");
 
 	return str;
 }

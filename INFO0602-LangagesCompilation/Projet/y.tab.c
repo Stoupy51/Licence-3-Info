@@ -317,7 +317,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 236 "analyser.yacc.y"
+#line 260 "analyser.yacc.y"
 
 #line 323 "y.tab.c"
 
@@ -730,60 +730,84 @@ case 35:
 #line 200 "analyser.yacc.y"
 	{
 		/* Modification de la variable dans la table des symboles*/
+		symbol = getSymbolFromTable(yystack.l_mark[-2].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i = yystack.l_mark[0].value;
-		printf(GREEN"[X] Variable %s = %d | Name : %s\n"RESET, symbol->name, symbol->data.i, yystack.l_mark[-2].symbol.name);
+		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 36:
-#line 205 "analyser.yacc.y"
+#line 208 "analyser.yacc.y"
 	{
+		symbol = getSymbolFromTable(yystack.l_mark[-3].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i += yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 37:
-#line 209 "analyser.yacc.y"
+#line 215 "analyser.yacc.y"
 	{
+		symbol = getSymbolFromTable(yystack.l_mark[-3].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i -= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 38:
-#line 213 "analyser.yacc.y"
+#line 222 "analyser.yacc.y"
 	{
+		symbol = getSymbolFromTable(yystack.l_mark[-3].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i *= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 39:
-#line 217 "analyser.yacc.y"
+#line 229 "analyser.yacc.y"
 	{
+		symbol = getSymbolFromTable(yystack.l_mark[-3].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i /= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 40:
-#line 221 "analyser.yacc.y"
+#line 236 "analyser.yacc.y"
 	{
+		symbol = getSymbolFromTable(yystack.l_mark[-3].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i %= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 41:
-#line 225 "analyser.yacc.y"
+#line 243 "analyser.yacc.y"
 	{
+		symbol = getSymbolFromTable(yystack.l_mark[-2].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i++;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 42:
-#line 229 "analyser.yacc.y"
+#line 250 "analyser.yacc.y"
 	{
+		symbol = getSymbolFromTable(yystack.l_mark[-2].symbol.name, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i--;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
-#line 787 "y.tab.c"
+#line 811 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;
