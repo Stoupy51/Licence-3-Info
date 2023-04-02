@@ -95,7 +95,7 @@ ENTER_LEVEL_BLOCK: {
 	level_init(&lvl);
 };
 
-// Analyze put or get functions
+// Analyze put or assignement
 CONTENT_LIST: CONTENT_LIST CONTENT | ;
 CONTENT: PUT_FUNC | ASSIGNMENT;
 
