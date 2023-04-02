@@ -53,6 +53,8 @@ int line = 1;
 		sym.type = SYMBOL_TYPE_INTEGER;
 		sym.depth = depth;
 		symbol = addSymbolInTable(sym, &t_d_s);
+		strcpy(yylval.ptr, yytext);
+		fprintf(stderr, GREEN"Variable '%s' added in the symbol table [Line %d]\n"RESET, yytext, line);
 		return id;
 	}
 	else {

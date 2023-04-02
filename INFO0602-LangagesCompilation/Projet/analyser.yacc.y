@@ -164,8 +164,7 @@ EXPRESSION: integer
 		symbol = getSymbolFromTable($1.name, &t_d_s);
 		if (symbol == NULL)
 			yyerror("Variable not found.");
-		else
-			$$ = symbol->data.i;
+		$$ = symbol->data.i;
 	}
 	| EXPRESSION '+' EXPRESSION	{ $$ = $1 + $3; }
 	| EXPRESSION '-' EXPRESSION	{ $$ = $1 - $3; }
@@ -192,46 +191,42 @@ EXPRESSION: integer
 
 ASSIGNMENT: id '=' EXPRESSION {
 		// Ajout de la variable dans la table des symboles
+		symbol = getSymbolFromTable($1, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i = $3;
 		printf(GREEN"[+] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '=' EXPRESSION {
 		// Modification de la variable dans la table des symboles
 		symbol->data.i = $3;
-		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+		printf(GREEN"[X] Variable %s = %d | Name : %s\n"RESET, symbol->name, symbol->data.i, $1.name);
 	}
 	| variable '+' '=' EXPRESSION {
-		// Modification de la variable dans la table des symboles
 		symbol->data.i += $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '-' '=' EXPRESSION {
-		// Modification de la variable dans la table des symboles
 		symbol->data.i -= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '*' '=' EXPRESSION {
-		// Modification de la variable dans la table des symboles
 		symbol->data.i *= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '/' '=' EXPRESSION {
-		// Modification de la variable dans la table des symboles
 		symbol->data.i /= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '%' '=' EXPRESSION {
-		// Modification de la variable dans la table des symboles
 		symbol->data.i %= $4;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '+' '+' {
-		// Modification de la variable dans la table des symboles
 		symbol->data.i++;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 	| variable '-' '-' {
-		// Modification de la variable dans la table des symboles
 		symbol->data.i--;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}

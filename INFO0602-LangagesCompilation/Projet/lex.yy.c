@@ -891,6 +891,8 @@ YY_RULE_SETUP
 		sym.type = SYMBOL_TYPE_INTEGER;
 		sym.depth = depth;
 		symbol = addSymbolInTable(sym, &t_d_s);
+		strcpy(yylval.ptr, yytext);
+		fprintf(stderr, GREEN"Variable '%s' added in the symbol table [Line %d]\n"RESET, yytext, line);
 		return id;
 	}
 	else {
@@ -902,32 +904,32 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 64 "analyser.lex"
+#line 66 "analyser.lex"
 { return *yytext; }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 65 "analyser.lex"
+#line 67 "analyser.lex"
 { line++; }
 	YY_BREAK
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 66 "analyser.lex"
+#line 68 "analyser.lex"
 ;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 67 "analyser.lex"
+#line 69 "analyser.lex"
 { yyerror("Invalid character"); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 69 "analyser.lex"
+#line 71 "analyser.lex"
 ECHO;
 	YY_BREAK
-#line 931 "lex.yy.c"
+#line 933 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1895,7 +1897,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 69 "analyser.lex"
+#line 71 "analyser.lex"
 
 
 void yyerror(const char *error_msg) {

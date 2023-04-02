@@ -1,0 +1,68 @@
+
+level
+	x = 0
+	y = 0
+	
+	put(x*3, y, ROBOT)
+	x++
+	y++
+	put(x*3, y, PROBE)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, TRAP)
+	x++
+	y++
+	put(x*3, y, LADDER)
+	x++
+	y++
+	put(x*3, y, BOMB)
+	x++
+	y++
+	put(x*3, y, LIFE)
+	x++
+	y++
+	put(x*3, y, KEY(x % 4))
+	x++
+	y++
+	put(x*3, y, GATE((y + 2) % 4))
+	x++
+	y++
+	put(x*3, y, DOOR((x * y) % 100))
+	x++
+	y++
+	put(x*3, y, START)
+	x++
+	y++
+	put(x*3, y, EXITE)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++
+	put(x*3, y, BLOCK)
+	x++
+	y++	
+
+end
+

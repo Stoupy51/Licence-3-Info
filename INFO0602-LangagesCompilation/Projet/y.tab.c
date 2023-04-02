@@ -317,7 +317,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 241 "analyser.yacc.y"
+#line 236 "analyser.yacc.y"
 
 #line 323 "y.tab.c"
 
@@ -670,28 +670,27 @@ case 26:
 		symbol = getSymbolFromTable(yystack.l_mark[0].symbol.name, &t_d_s);
 		if (symbol == NULL)
 			yyerror("Variable not found.");
-		else
-			yyval.value = symbol->data.i;
+		yyval.value = symbol->data.i;
 	}
 break;
 case 27:
-#line 170 "analyser.yacc.y"
+#line 169 "analyser.yacc.y"
 	{ yyval.value = yystack.l_mark[-2].value + yystack.l_mark[0].value; }
 break;
 case 28:
-#line 171 "analyser.yacc.y"
+#line 170 "analyser.yacc.y"
 	{ yyval.value = yystack.l_mark[-2].value - yystack.l_mark[0].value; }
 break;
 case 29:
-#line 172 "analyser.yacc.y"
+#line 171 "analyser.yacc.y"
 	{ yyval.value = -yystack.l_mark[0].value; }
 break;
 case 30:
-#line 173 "analyser.yacc.y"
+#line 172 "analyser.yacc.y"
 	{ yyval.value = yystack.l_mark[-2].value * yystack.l_mark[0].value; }
 break;
 case 31:
-#line 174 "analyser.yacc.y"
+#line 173 "analyser.yacc.y"
 	{
 		if (yystack.l_mark[0].value == 0) {
 			printf("Error: division by zero : %d / %d\n", yystack.l_mark[-2].value, yystack.l_mark[0].value);
@@ -702,7 +701,7 @@ case 31:
 	}
 break;
 case 32:
-#line 182 "analyser.yacc.y"
+#line 181 "analyser.yacc.y"
 	{
 		if (yystack.l_mark[0].value == 0) {
 			printf("Error: modulo by zero : %d %% %d\n", yystack.l_mark[-2].value, yystack.l_mark[0].value);
@@ -713,37 +712,38 @@ case 32:
 	}
 break;
 case 33:
-#line 190 "analyser.yacc.y"
+#line 189 "analyser.yacc.y"
 	{ yyval.value = yystack.l_mark[-1].value; }
 break;
 case 34:
-#line 193 "analyser.yacc.y"
+#line 192 "analyser.yacc.y"
 	{
 		/* Ajout de la variable dans la table des symboles*/
+		symbol = getSymbolFromTable(yystack.l_mark[-2].ptr, &t_d_s);
+		if (symbol == NULL)
+			yyerror("Variable not found.");
 		symbol->data.i = yystack.l_mark[0].value;
 		printf(GREEN"[+] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 35:
-#line 198 "analyser.yacc.y"
+#line 200 "analyser.yacc.y"
 	{
 		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i = yystack.l_mark[0].value;
-		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
+		printf(GREEN"[X] Variable %s = %d | Name : %s\n"RESET, symbol->name, symbol->data.i, yystack.l_mark[-2].symbol.name);
 	}
 break;
 case 36:
-#line 203 "analyser.yacc.y"
+#line 205 "analyser.yacc.y"
 	{
-		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i += yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 37:
-#line 208 "analyser.yacc.y"
+#line 209 "analyser.yacc.y"
 	{
-		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i -= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
@@ -751,44 +751,39 @@ break;
 case 38:
 #line 213 "analyser.yacc.y"
 	{
-		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i *= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 39:
-#line 218 "analyser.yacc.y"
+#line 217 "analyser.yacc.y"
 	{
-		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i /= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 40:
-#line 223 "analyser.yacc.y"
+#line 221 "analyser.yacc.y"
 	{
-		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i %= yystack.l_mark[0].value;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 41:
-#line 228 "analyser.yacc.y"
+#line 225 "analyser.yacc.y"
 	{
-		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i++;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
 case 42:
-#line 233 "analyser.yacc.y"
+#line 229 "analyser.yacc.y"
 	{
-		/* Modification de la variable dans la table des symboles*/
 		symbol->data.i--;
 		printf(GREEN"[X] Variable %s = %d\n"RESET, symbol->name, symbol->data.i);
 	}
 break;
-#line 792 "y.tab.c"
+#line 787 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;
