@@ -78,9 +78,9 @@ char* level_get_string(level_t *level) {
 				case LADDER_B: sprintf(line, "\tput(%d, %d, LADDER)\n", j, i); break;
 				case BOMB_B: sprintf(line, "\tput(%d, %d, BOMB)\n", j, i); break;
 				case LIFE_B: sprintf(line, "\tput(%d, %d, LIFE)\n", j, i); break;
-				case KEY_B: sprintf(line, "\tput(%d, %d, KEY)\n", j, i); break;
-				case GATE_B: sprintf(line, "\tput(%d, %d, GATE)\n", j, i); break;
-				case DOOR_B: sprintf(line, "\tput(%d, %d, DOOR)\n", j, i); break;
+				case KEY_B: sprintf(line, "\tput(%d, %d, KEY(%d))\n", j, i, level->blocks[i][j].value); break;
+				case GATE_B: sprintf(line, "\tput(%d, %d, GATE(%d))\n", j, i, level->blocks[i][j].value); break;
+				case DOOR_B: sprintf(line, "\tput(%d, %d, DOOR(%d))\n", j, i, level->blocks[i][j].value); break;
 				case START_B: sprintf(line, "\tput(%d, %d, START)\n", j, i); break;
 				case EXIT_B: sprintf(line, "\tput(%d, %d, EXIT)\n", j, i); break;
 			}
