@@ -1,7 +1,10 @@
 
+une_variable_externe = 2
+
 level
 
-	uwu = 135189 % 127
+	une_variable_externe += 56418
+	uwu = (135189 % 127) * une_variable_externe
 	put(uwu % 60, uwu % 20, BLOCK)
 	uwu *= 546848
 	uwu = uwu % 127
@@ -22,7 +25,8 @@ end
 
 level
 
-	uwu = 3156 % 127
+	une_variable_externe += 56418
+	uwu = (135189 % 127) * une_variable_externe
 	put(uwu % 60, uwu % 20, BLOCK)
 	uwu *= 546848
 	uwu = uwu % 127
@@ -43,6 +47,7 @@ end
 
 level
 
+	une_variable_externe += 56418
 	uwu = 135 % 127
 	put(uwu % 60, uwu % 20, BLOCK)
 	uwu *= 546848

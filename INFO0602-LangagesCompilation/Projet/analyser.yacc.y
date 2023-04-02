@@ -58,9 +58,13 @@ extern int depth;
 %%
 
 // Global
-EXEC: LEVEL_BLOCK EXEC | LEVEL_BLOCK {
+EXEC: GLOBAL_LIST {
 	printf(GREEN"\nValid input!\n"RESET);
 };
+
+// Analyze put or get functions
+GLOBAL_LIST: GLOBAL_LIST GLOBAL_CONTENT | ;
+GLOBAL_CONTENT: LEVEL_BLOCK | ASSIGNMENT;
 
 // Level
 LEVEL_BLOCK: level ENTER_LEVEL_BLOCK CONTENT_LIST end {
